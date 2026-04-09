@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SM Miras Calculator | Islamic Inheritance System</title>
+
+<!-- ══ PWA FIX 1: Manifest & Icons ══ -->
+<meta name="theme-color" content="#0F3D25">
+<meta name="application-name" content="SM Miras Calculator">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SM Miras">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Islamic Inheritance Faraid Calculator - Hanafi & Shafi'i">
+<link rel="manifest" id="pwa-manifest">
+
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -36,8 +47,8 @@
 html{scroll-behavior:smooth;}
 body{font-family:var(--fb);background:var(--cream);color:var(--tp);min-height:100vh;transition:var(--tr);line-height:1.6;}
 
-/* ══ HEADER — Always English ══ */
-.hdr{background:linear-gradient(135deg,#071810 0%,#0F3D25 40%,#1B6B4A 70%,#0A2518 100%);position:sticky;top:0;z-index:100;box-shadow:0 4px 24px rgba(0,0,0,0.38);border-bottom:1px solid rgba(201,168,76,0.22);}
+/* ══ HEADER ══ */
+.hdr{background:linear-gradient(135deg,#071810 0%,#0F3D25 40%,#1B6B4A 70%,#0A2518 100%);position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,0.38);border-bottom:1px solid rgba(201,168,76,0.22);}
 .hdr-top{display:flex;align-items:center;justify-content:space-between;padding:9px 18px;gap:8px;}
 .hdr-brand{display:flex;align-items:center;gap:13px;min-width:0;flex:1;}
 .logo-svg{flex-shrink:0;filter:drop-shadow(0 2px 12px rgba(201,168,76,0.55));}
@@ -53,9 +64,15 @@ body{font-family:var(--fb);background:var(--cream);color:var(--tp);min-height:10
 .btg:hover{background:rgba(201,168,76,0.25);border-color:var(--gold);}
 .btg .ic{font-size:12px;}
 
+/* ══ MOBILE NAV BAR ══ */
+.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--sb);border-top:1px solid rgba(201,168,76,0.2);padding:6px 4px;justify-content:space-around;box-shadow:0 -4px 16px rgba(0,0,0,0.3);}
+.mnv{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 8px;border:none;background:transparent;color:var(--st);font-size:0.55rem;cursor:pointer;border-radius:8px;transition:var(--tr);font-family:var(--fb);min-width:44px;}
+.mnv .mi{font-size:18px;}
+.mnv.active{color:var(--gold);background:rgba(201,168,76,0.12);}
+
 /* ══ LAYOUT ══ */
 .layout{display:flex;min-height:calc(100vh - 70px);}
-.sidebar{width:252px;background:var(--sb);flex-shrink:0;display:flex;flex-direction:column;box-shadow:4px 0 20px rgba(0,0,0,0.2);position:sticky;top:70px;height:calc(100vh - 70px);overflow-y:auto;}
+.sidebar{width:252px;background:var(--sb);flex-shrink:0;display:flex;flex-direction:column;box-shadow:4px 0 20px rgba(0,0,0,0.2);position:sticky;top:70px;height:calc(100vh - 70px);overflow-y:auto;z-index:100;}
 .sb-nav{padding:12px 9px;flex:1;}
 .sb-sec{font-size:0.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(201,168,76,0.52);padding:7px 11px 3px;font-family:var(--fd);}
 .nvi{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:var(--r);cursor:pointer;transition:var(--tr);margin:2px 0;color:var(--st);font-size:0.83rem;font-weight:400;border:none;background:transparent;width:100%;text-align:left;}
@@ -71,8 +88,9 @@ body{font-family:var(--fb);background:var(--cream);color:var(--tp);min-height:10
 
 /* ══ MAIN ══ */
 .main{flex:1;padding:20px;overflow-x:hidden;}
-.pg{display:none;animation:fi 0.35s ease;}
-.pg.active{display:block;}
+/* FIX: sections hidden by default with display:none */
+.pg{display:none;}
+.pg.active{display:block;animation:fi 0.35s ease;}
 @keyframes fi{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
 /* ══ CARDS ══ */
@@ -220,16 +238,23 @@ input:checked+.sldr:before{transform:translateX(18px);}
 /* ══ MUNASAKHA ══ */
 .mf{background:var(--cream2);border:1px solid var(--bl);border-radius:var(--r);padding:14px;margin-bottom:10px;position:relative;}
 .rmb{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:50%;background:var(--dgl);color:var(--dg);border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:700;}
-.ssub{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--tm);margin-bottom:10px;font-family:var(--fd);}
+.msub{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--tm);margin-bottom:10px;font-family:var(--fd);}
 
-/* ══ FOOTER — Always English ══ */
+/* ══ INSTALL BANNER ══ */
+#install-banner{display:none;position:fixed;bottom:70px;left:12px;right:12px;z-index:300;background:linear-gradient(135deg,#0F3D25,#1B6B4A);border:1px solid rgba(201,168,76,0.4);border-radius:14px;padding:13px 16px;box-shadow:0 8px 28px rgba(0,0,0,0.3);align-items:center;gap:12px;}
+#install-banner .ib-txt{flex:1;color:var(--gold-l);font-size:0.82rem;font-weight:600;}
+#install-banner .ib-txt span{display:block;font-size:0.7rem;color:rgba(232,204,122,0.65);font-weight:400;margin-top:2px;}
+#install-banner .ib-btn{padding:8px 16px;background:var(--gold);color:#0A2518;border:none;border-radius:9px;font-weight:700;font-size:0.82rem;cursor:pointer;white-space:nowrap;}
+#install-banner .ib-x{background:transparent;border:none;color:rgba(232,204,122,0.6);font-size:18px;cursor:pointer;padding:2px 6px;}
+
+/* ══ FOOTER ══ */
 .ftr{background:var(--sb);padding:13px 20px;text-align:center;border-top:1px solid rgba(201,168,76,0.16);}
 .ftr p{color:rgba(201,168,76,0.62);font-size:0.7rem;line-height:1.7;}
 .ftr a{color:var(--gold);text-decoration:none;}
 
 /* ══ PRINT ══ */
 @media print{
-  .sidebar,.hdr-ctrl,.brow,.ftr{display:none!important;}
+  .sidebar,.hdr-ctrl,.brow,.ftr,.mob-nav,#install-banner{display:none!important;}
   .hdr{position:relative!important;box-shadow:none!important;}
   .layout{display:block!important;}
   .main{padding:0!important;}
@@ -247,19 +272,22 @@ input:checked+.sldr:before{transform:translateX(18px);}
 
 /* ══ MOBILE ══ */
 @media(max-width:768px){
-  .sidebar{display:none;}
+  .sidebar{display:none!important;}
+  .mob-nav{display:flex;}
   .fgrid{grid-template-columns:1fr;}
   .mgrid{grid-template-columns:1fr;}
-  .main{padding:13px;}
+  .main{padding:13px;padding-bottom:90px;}
   .t-m{font-size:1.25rem;}
   .t-c,.hdr-sub{display:none;}
+  .hdr{position:fixed;top:0;left:0;right:0;}
+  .layout{margin-top:60px;}
 }
 select{appearance:auto;}
 </style>
 </head>
 <body>
 
-<!-- ═══ HEADER — ALWAYS ENGLISH ═══ -->
+<!-- ═══ HEADER ═══ -->
 <header class="hdr">
   <div class="hdr-top">
     <div class="hdr-brand">
@@ -304,6 +332,23 @@ select{appearance:auto;}
     </div>
   </div>
 </header>
+
+<!-- ═══ MOBILE BOTTOM NAV ═══ -->
+<nav class="mob-nav">
+  <button class="mnv active" id="mn-welcome" onclick="showPg('welcome')"><span class="mi">🏠</span><span>Home</span></button>
+  <button class="mnv" id="mn-deceased" onclick="showPg('deceased')"><span class="mi">👤</span><span data-t="navDeceased2">Profile</span></button>
+  <button class="mnv" id="mn-heirs" onclick="showPg('heirs')"><span class="mi">👨‍👩‍👧</span><span data-t="navHeirs2">Heirs</span></button>
+  <button class="mnv" id="mn-munasakha" onclick="showPg('munasakha')"><span class="mi">🔄</span><span>Mun.</span></button>
+  <button class="mnv" id="mn-results" onclick="calcAndShow()"><span class="mi">⚡</span><span data-t="navResults2">Calc</span></button>
+  <button class="mnv" id="mn-about" onclick="showPg('about')"><span class="mi">📖</span><span>Guide</span></button>
+</nav>
+
+<!-- ═══ INSTALL BANNER ═══ -->
+<div id="install-banner">
+  <div class="ib-txt">📲 Install SM Miras App<span>Add to Home Screen for offline use</span></div>
+  <button class="ib-btn" id="install-btn">Install</button>
+  <button class="ib-x" onclick="document.getElementById('install-banner').style.display='none'">×</button>
+</div>
 
 <div class="layout">
 
@@ -399,7 +444,7 @@ select{appearance:auto;}
       <div class="mopt" onclick="selMadh('shafii')" id="opt-shafii"><div class="aar">الشافعية</div><h3>Shafi'i</h3><p data-t="madhShafiDesc">Southeast Asia, East Africa</p></div>
     </div>
     <div class="divr"></div>
-    <div class="ssub" data-t="madhDiffTitle">KEY DIFFERENCES</div>
+    <div class="msub" data-t="madhDiffTitle">KEY DIFFERENCES</div>
     <div id="madh-diff"></div>
   </div>
   <div class="card">
@@ -548,7 +593,7 @@ select{appearance:auto;}
 </main>
 </div>
 
-<!-- ═══ FOOTER — ALWAYS ENGLISH ═══ -->
+<!-- ═══ FOOTER ═══ -->
 <footer class="ftr">
   <p><strong style="color:var(--gold)">SM Miras Calculator</strong> — Islamic Inheritance (Faraid) Distribution System<br>
   Developer: <strong>Dr. Sajid Mahmood</strong> | Hazara University Mansehra |
@@ -557,6 +602,29 @@ select{appearance:auto;}
 </footer>
 
 <script>
+// ═══════════════════════════════════════
+// PWA MANIFEST (Inline — no external file needed)
+// ═══════════════════════════════════════
+(function(){
+  const manifest={
+    name:"SM Miras Calculator",
+    short_name:"SM Miras",
+    description:"Islamic Inheritance Faraid Calculator",
+    start_url:"./",
+    display:"standalone",
+    background_color:"#0F3D25",
+    theme_color:"#0F3D25",
+    orientation:"portrait-primary",
+    icons:[
+      {src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Ccircle cx='96' cy='96' r='96' fill='%230F3D25'/%3E%3Ctext x='96' y='130' text-anchor='middle' font-family='serif' font-size='96' fill='%23C9A84C'%3Eم%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml"},
+      {src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Ccircle cx='256' cy='256' r='256' fill='%230F3D25'/%3E%3Ctext x='256' y='340' text-anchor='middle' font-family='serif' font-size='256' fill='%23C9A84C'%3Eم%3C/text%3E%3C/svg%3E",sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"}
+    ]
+  };
+  const blob=new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'});
+  const url=URL.createObjectURL(blob);
+  document.getElementById('pwa-manifest').setAttribute('href',url);
+})();
+
 // ═══════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════
@@ -577,6 +645,7 @@ const T={
  en:{
   navWelcome:'Welcome',navDeceased:'Deceased Profile',navMadhhab:'Fiqh School',
   navHeirs:'Select Heirs',navMunasakha:'Munasakha',navResults:'Calculate & Results',navAbout:'Faraid Guide',
+  navDeceased2:'Profile',navHeirs2:'Heirs',navResults2:'Calc',
   welcomeTitle:'SM MIRAS CALCULATOR',
   welcomeDesc:"A comprehensive Islamic Inheritance (Faraid) calculator supporting Hanafi and Shafi'i schools with Awl, Radd, Hajb, and Munasakha.",
   beginCalc:'Begin Calculation',
@@ -657,6 +726,7 @@ const T={
  ur:{
   navWelcome:'خوش آمدید',navDeceased:'متوفی کی معلومات',navMadhhab:'فقہی مذہب',
   navHeirs:'وارثین کا انتخاب',navMunasakha:'مناسخہ',navResults:'حساب و نتائج',navAbout:'فرائض رہنما',
+  navDeceased2:'پروفائل',navHeirs2:'وارثین',navResults2:'حساب',
   welcomeTitle:'ایس ایم میراث کیلکولیٹر',
   welcomeDesc:'کلاسیکی اسلامی فقہ پر مبنی جامع میراث کیلکولیٹر — حنفی اور شافعی مذاہب کے ساتھ عول، رد، حجب اور مناسخہ کا مکمل اطلاق۔',
   beginCalc:'حساب شروع کریں',
@@ -769,16 +839,32 @@ function toggleTheme(){
 }
 
 // ═══════════════════════════════════════
-// NAVIGATION
+// NAVIGATION — FIX: scroll to top properly
 // ═══════════════════════════════════════
 function showPg(pg){
-  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+  // Hide all pages
+  document.querySelectorAll('.pg').forEach(p=>{
+    p.classList.remove('active');
+    p.style.display='none';
+  });
+  // Show target page
   const el=document.getElementById('pg-'+pg);
-  if(el){el.classList.add('active'); el.style.display='block';}
+  if(el){
+    el.style.display='block';
+    // Small delay to allow display change before animation
+    setTimeout(()=>el.classList.add('active'), 10);
+  }
+  // Update sidebar nav
   document.querySelectorAll('.nvi').forEach(n=>n.classList.remove('active'));
   const nav=document.getElementById('nav-'+pg);
   if(nav) nav.classList.add('active');
-  window.scrollTo(0,0);
+  // Update mobile bottom nav
+  document.querySelectorAll('.mnv').forEach(n=>n.classList.remove('active'));
+  const mn=document.getElementById('mn-'+pg);
+  if(mn) mn.classList.add('active');
+  // Scroll to top
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.querySelector('.main').scrollTop=0;
 }
 
 // ═══════════════════════════════════════
@@ -899,20 +985,15 @@ function computeFaraid(h,net,madhhab,gender){
   const hi={...h};
 
   /* ══ HAJB RULES ══ */
-  // Father blocks grandfather
   if(hi.father && hi.grandfather){excl.push({heir:'Paternal Grandfather (جد)',reason:'Blocked (Hajb Hirman) by Father — closer degree',rule:'h'});hi.grandfather=false;}
-  // Mother blocks grandmother
   if(hi.mother && hi.grandmother){excl.push({heir:'Grandmother (جدة)',reason:'Blocked (Hajb Hirman) by Mother',rule:'h'});hi.grandmother=false;}
-  // Son blocks grandson/granddaughter
   if(hi.sons>0 && hi.grandsons>0){excl.push({heir:'Grandsons ×'+hi.grandsons,reason:'Blocked by Son',rule:'h'});hi.grandsons=0;}
   if(hi.sons>0 && hi.granddaughters>0){excl.push({heir:'Granddaughters ×'+hi.granddaughters,reason:'Blocked by Son',rule:'h'});hi.granddaughters=0;}
-  // 2+ daughters block granddaughters (without grandson)
   if(hi.daughters>=2 && hi.granddaughters>0 && hi.grandsons===0){excl.push({heir:'Granddaughters ×'+hi.granddaughters,reason:'Blocked — 2+ daughters already take 2/3 maximum',rule:'h'});hi.granddaughters=0;}
 
   const hasChild=hi.sons>0||hi.daughters>0||hi.grandsons>0||hi.granddaughters>0;
   const hasMale=hi.sons>0||hi.grandsons>0;
 
-  // Siblings blocked by child or father/grandfather (males)
   const blockSib=hasMale||hi.father||(hi.grandfather&&madhhab==='shafii');
   if(blockSib){
     ['fb','fs','pb','ps'].forEach(k=>{
@@ -923,17 +1004,13 @@ function computeFaraid(h,net,madhhab,gender){
       }
     });
   }
-  // Maternal siblings blocked by child/father/grandfather
   if(hasChild||hi.father||hi.grandfather){
     if(hi.mb>0){excl.push({heir:'Maternal Half Brothers ×'+hi.mb,reason:'Blocked by child/father (Quran 4:12)',rule:'h'});hi.mb=0;}
     if(hi.ms>0){excl.push({heir:'Maternal Half Sisters ×'+hi.ms,reason:'Blocked by child/father',rule:'h'});hi.ms=0;}
   }
-  // Full brothers block paternal half brothers
   if(hi.fb>0 && hi.pb>0){excl.push({heir:'Paternal Half Brothers ×'+hi.pb,reason:'Blocked by Full Brothers',rule:'h'});hi.pb=0;}
-  // Full sisters (2+) block paternal half sisters
   if(hi.fb===0 && hi.fs>=2 && hi.ps>0){excl.push({heir:'Paternal Half Sisters ×'+hi.ps,reason:'Blocked — Full Sisters taking 2/3 maximum',rule:'h'});hi.ps=0;}
 
-  // Asaba hierarchy for uncles/nephews
   const hasCloseAsaba=hi.sons>0||hi.grandsons>0||hi.fb>0||hi.pb>0||hi.fbn>0;
   if(hasCloseAsaba){
     if(hi.pbn>0){excl.push({heir:'Full Paternal Uncles ×'+hi.pbn,reason:'Blocked by closer Asaba',rule:'h'});hi.pbn=0;}
@@ -948,41 +1025,33 @@ function computeFaraid(h,net,madhhab,gender){
   /* ══ ASSIGN SHARES ══ */
   let sh=[];
 
-  // HUSBAND (deceased female)
   if(hi.husband && gender==='female'){
     sh.push({n:'Husband',ar:'الزوج',cnt:1,frac:hasChild?[1,4]:[1,2],tp:'f',rule:'Quran 4:12'});
   }
-  // WIFE/WIVES (deceased male)
   if(hi.wife && gender==='male'){
     sh.push({n:'Wife/Wives',ar:'الزوجة',cnt:hi.wc,frac:hasChild?[1,8]:[1,4],tp:'f',rule:'Quran 4:12',shared:true});
   }
 
-  // UMARIYYATAIN CHECK
   const hasSp=(hi.husband && gender==='female')||(hi.wife && gender==='male');
   const hasParent=hi.father||hi.grandfather;
   let umarCase=hasSp && hasParent && hi.mother && !hasChild;
 
-  // FATHER
   let fPA=false;
   if(hi.father){
     if(hasMale){sh.push({n:'Father',ar:'الأب',cnt:1,frac:[1,6],tp:'f',rule:'Quran 4:11',plusA:true});fPA=true;}
     else if(hi.daughters>0||hi.granddaughters>0){sh.push({n:'Father',ar:'الأب',cnt:1,frac:[1,6],tp:'f',rule:'Quran 4:11',plusA:true});fPA=true;}
     else{sh.push({n:'Father',ar:'الأب',cnt:1,frac:null,tp:'a',rule:'Takes all as Asaba — Quran 4:11'});}
   }
-  // GRANDFATHER (like father)
   if(hi.grandfather && !hi.father){
     if(hasMale){sh.push({n:'Paternal Grandfather',ar:'الجد',cnt:1,frac:[1,6],tp:'f',rule:'Ijma',plusA:true});fPA=true;}
     else if(hi.daughters>0||hi.granddaughters>0){sh.push({n:'Paternal Grandfather',ar:'الجد',cnt:1,frac:[1,6],tp:'f',rule:'Ijma',plusA:true});fPA=true;}
     else{sh.push({n:'Paternal Grandfather',ar:'الجد',cnt:1,frac:null,tp:'a',rule:'Acts like father — Ijma'});}
   }
 
-  // MOTHER — Umariyyatain
   if(hi.mother){
     let mFrac;
     if(hasChild||sibCnt>=2){mFrac=[1,6];}
     else if(umarCase){
-      // Mother gets 1/3 of remainder after spouse — calculated post-asl
-      // For now assign 1/3 and flag for adjustment
       mFrac=[1,3];
       sh.push({n:'Mother (Umariyyatain)',ar:'الأم (الغراوَين)',cnt:1,frac:[1,3],tp:'f',rule:'Umariyyatain — Quran 4:11 & ruling of Umar (ra)',umar:true});
     } else {mFrac=[1,3];}
@@ -990,14 +1059,11 @@ function computeFaraid(h,net,madhhab,gender){
     if(umarCase) steps.push({title:'Umariyyatain (الغراوَين) Case',ar:'الغراوَين',text:"Spouse + Father/Grandfather + Mother present with no children. Mother's share = 1/3 of what remains AFTER spouse. This is the ruling of Umar (ra) confirmed by Uthman (ra) and Ali (ra)."});
   }
 
-  // GRANDMOTHER
   if(hi.grandmother && !hi.mother){sh.push({n:'Grandmother',ar:'الجدة',cnt:1,frac:[1,6],tp:'f',rule:'Hadith — 1/6 for grandmothers'});}
 
-  // DAUGHTERS (no sons)
   if(hi.daughters>0 && hi.sons===0){
     sh.push({n:'Daughters',ar:'البنات',cnt:hi.daughters,frac:hi.daughters===1?[1,2]:[2,3],tp:'f',rule:'Quran 4:11',shared:true});
   }
-  // GRANDDAUGHTERS
   if(hi.granddaughters>0 && hi.sons===0 && hi.grandsons===0){
     if(hi.daughters===0){
       sh.push({n:"Granddaughters (Son's Daughter)",ar:'بنات الابن',cnt:hi.granddaughters,frac:hi.granddaughters===1?[1,2]:[2,3],tp:'f',rule:'Quran 4:11 by analogy',shared:true});
@@ -1006,28 +1072,22 @@ function computeFaraid(h,net,madhhab,gender){
     }
   }
 
-  // SONS + DAUGHTERS (Asaba 2:1)
   if(hi.sons>0){
     sh.push({n:hi.daughters>0?'Sons & Daughters':'Sons',ar:hi.daughters>0?'البنون والبنات':'البنون',
       cnt:hi.sons,cntD:hi.daughters,tp:'am',frac:null,rule:'Quran 4:11 — لِلذَّكَرِ مِثۡلُ حَظِّ ٱلۡأُنثَيَيۡنِ',sU:hi.sons*2,dU:hi.daughters});
   }
-  // GRANDSONS + GRANDDAUGHTERS
   if(hi.grandsons>0 && hi.sons===0){
     sh.push({n:hi.granddaughters>0?"Grandsons & Granddaughters":"Grandsons",ar:'أبناء الابن وبناته',
       cnt:hi.grandsons,cntD:hi.granddaughters,tp:'am',frac:null,rule:'Like sons — Quran 4:11 by analogy',sU:hi.grandsons*2,dU:hi.granddaughters});
   }
-  // FULL SISTERS alone
   if(hi.fs>0 && hi.fb===0 && !hi.father && !hi.grandfather && hi.sons===0 && hi.grandsons===0){
     sh.push({n:'Full Sisters',ar:'الأخوات الشقيقات',cnt:hi.fs,frac:hi.fs===1?[1,2]:[2,3],tp:'f',rule:'Quran 4:176',shared:true});
   }
-  // FULL BROTHERS + SISTERS (Asaba)
   if(hi.fb>0){
     sh.push({n:hi.fs>0?'Full Brothers & Sisters':'Full Brothers',ar:'الأخوة الأشقاء',
       cnt:hi.fb,cntD:hi.fs,tp:'am',frac:null,rule:'Quran 4:176',sU:hi.fb*2,dU:hi.fs});
   }
-  // PATERNAL HALF SISTERS alone
   if(hi.ps>0 && hi.pb===0 && hi.fb===0 && hi.fs===0 && !hi.father && !hi.grandfather && hi.sons===0 && hi.grandsons===0){
-    // If 1 full sister already present, paternal half sisters get 1/6 supplement
     const fsPresent=sh.some(x=>x.n==='Full Sisters' && x.frac && x.frac[0]===1 && x.frac[1]===2);
     if(fsPresent){
       sh.push({n:'Paternal Half Sisters',ar:'الأخوات لأب',cnt:hi.ps,frac:[1,6],tp:'f',rule:'1/6 supplement — Full Sister took 1/2',shared:true});
@@ -1035,36 +1095,31 @@ function computeFaraid(h,net,madhhab,gender){
       sh.push({n:'Paternal Half Sisters',ar:'الأخوات لأب',cnt:hi.ps,frac:hi.ps===1?[1,2]:[2,3],tp:'f',rule:'Quran 4:176 by analogy',shared:true});
     }
   }
-  // PATERNAL HALF BROTHERS + SISTERS
   if(hi.pb>0){
     sh.push({n:hi.ps>0?'Paternal Half Brothers & Sisters':'Paternal Half Brothers',ar:'الأخوة لأب',
       cnt:hi.pb,cntD:hi.ps,tp:'am',frac:null,rule:'Quran 4:176 by analogy',sU:hi.pb*2,dU:hi.ps});
   }
-  // MATERNAL SIBLINGS
   const ms=hi.mb+hi.ms;
   if(ms>0){
     sh.push({n:'Maternal Siblings ('+ms+')',ar:'الإخوة لأم',cnt:ms,frac:ms===1?[1,6]:[1,3],tp:'f',rule:'Quran 4:12 — يَشۡتَرِكُونَ فِي ٱلثُّلُثِ',shared:true});
   }
-  // NEPHEW
   if(hi.fbn>0){sh.push({n:"Full Brother's Sons ("+hi.fbn+')',ar:'أبناء الأخ الشقيق',cnt:hi.fbn,frac:null,tp:'a',rule:'Asaba by nasab'});}
-  // UNCLES
   if(hi.pbn>0){sh.push({n:'Full Paternal Uncles ('+hi.pbn+')',ar:'الأعمام الأشقاء',cnt:hi.pbn,frac:null,tp:'a',rule:'Asaba by nasab'});}
   if(hi.punc>0){sh.push({n:'Half Paternal Uncles ('+hi.punc+')',ar:'الأعمام لأب',cnt:hi.punc,frac:null,tp:'a',rule:'Asaba by nasab'});}
 
-  /* ══ ASL AL-MASALA (Tashih) ══ */
+  /* ══ ASL AL-MASALA ══ */
   const furud=sh.filter(x=>x.frac);
   const hasA=sh.some(x=>x.tp==='am'||x.tp==='a'||x.plusA);
   let denoms=furud.map(x=>x.frac[1]);
   let asl=denoms.length>0?lcmArr(denoms):1;
   furud.forEach(x=>{x.pts=Math.round((x.frac[0]/x.frac[1])*asl);});
 
-  // Umariyyatain adjustment: mother gets 1/3 of what remains after spouse
   if(umarCase){
     const spShare=sh.filter(x=>(x.n==='Husband'||x.n==='Wife/Wives')&&x.frac).reduce((s,x)=>s+(x.frac[0]/x.frac[1]),0);
     const remainder=1-spShare;
     const motherShare=sh.find(x=>x.umar);
     if(motherShare){
-      motherShare.frac=[Math.round(remainder*3*100),300]; // store as fraction
+      motherShare.frac=[Math.round(remainder*3*100),300];
       motherShare.pts=Math.round(remainder/3*asl);
     }
   }
@@ -1072,26 +1127,20 @@ function computeFaraid(h,net,madhhab,gender){
   let fixedTotal=furud.reduce((s,x)=>s+(x.pts||0),0);
   let rule='normal';
 
-  /* ══ AWL ══ */
   if(fixedTotal>asl && !hasA){
     const old=asl; asl=fixedTotal; rule='awl';
     steps.push({title:'Step 4 — Awl (عول) Applied',ar:'العول',
       text:`Fixed shares total ${fixedTotal}/${old} exceeds 1. Asl raised ${old}→${fixedTotal}. All shares proportionally reduced.`});
-  }
-  /* ══ RADD ══ */
-  else if(fixedTotal<asl && !hasA){
+  } else if(fixedTotal<asl && !hasA){
     const surp=asl-fixedTotal; rule='radd';
-    // Radd: distribute surplus proportionally to all furud heirs (contemporary: including spouses)
     furud.forEach(x=>{x.rE=Math.round((x.pts/fixedTotal)*surp*100)/100;x.pts=x.pts+(x.rE||0);});
     steps.push({title:'Step 4 — Radd (رد) Applied',ar:'الرد',
-      text:`Fixed shares ${fixedTotal}/${asl}. No Asaba. Remaining ${surp} parts returned proportionally to all Furud heirs including spouses (contemporary ruling — absence of Bayt al-Mal).`});
+      text:`Fixed shares ${fixedTotal}/${asl}. No Asaba. Remaining ${surp} parts returned proportionally to all Furud heirs including spouses (contemporary ruling).`});
   } else if(hasA){
     steps.push({title:'Step 4 — Asaba Distribution',ar:'العصبة',text:`Fixed shares = ${fixedTotal}/${asl}. Residue = ${asl-fixedTotal} parts → Asaba heir(s).`});
   }
 
-  /* ══ ASABA POOL ══ */
   let pool=Math.max(0,asl-fixedTotal);
-  // Father/Grandfather plusAsaba
   const fPlusA=sh.find(x=>x.plusA && (x.n==='Father'||x.n==='Paternal Grandfather'));
   if(fPlusA){fPlusA.aP=pool;fPlusA.pts=(fPlusA.pts||0)+pool;pool=0;}
   sh.filter(x=>x.tp==='am').forEach(x=>{x.aP=pool;pool=0;});
@@ -1100,7 +1149,6 @@ function computeFaraid(h,net,madhhab,gender){
   steps.push({title:'Step 3 — Tashih (تصحيح المسائل)',ar:'تصحيح المسألة',
     text:`Base (Asl al-Masala) = ${asl}. Rule applied: ${rule==='awl'?'Awl':rule==='radd'?'Radd':'Normal/Asaba'}. Net estate = PKR ${fmt(net)}.`});
 
-  /* ══ FINAL SHARES ══ */
   const final=[];
   sh.forEach(x=>{
     if(x.tp==='am'){
@@ -1130,12 +1178,10 @@ function computeFaraid(h,net,madhhab,gender){
   return{final,excl,steps,rule,asl,net,madhhab,decName:S.dec.name,decDate:S.dec.date};
 }
 
-/* ══ FORMAT ══ */
 const fmt=v=>v.toLocaleString('en-PK',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fp=v=>(Math.round(v*100)/100).toFixed(2);
 const PC=['#1B6B4A','#C9A84C','#8B1A1A','#1565C0','#6B3FA0','#D84315','#00796B','#5D4037','#E91E63','#F57C00','#2E7D32','#455A64'];
 
-/* ══ RENDER ══ */
 function renderResults(r){
   if(!r||!r.final||r.final.length===0){
     document.getElementById('res-content').innerHTML=`<div class="ib dg"><strong>${t('noHeirs')}</strong></div>`;return;
@@ -1149,10 +1195,10 @@ function renderResults(r){
   <div class="card">
     <div class="ch"><div class="ci">📊</div><div>
       <h2>${t('estateSumm')} — ${r.decName}</h2>
-      <p>${r.decDate?'Date: '+r.decDate+' | ':''} ${t('mh_h').includes('حنفی')?'School':'School'}: ${mhLbl} | ${rtag}</p>
+      <p>${r.decDate?'Date: '+r.decDate+' | ':''} School: ${mhLbl} | ${rtag}</p>
     </div></div>
     <div class="rsum">
-      <div class="sc"><div class="sl2" data-t="summNet">${t('summNet')}</div><div class="sv">${fmt(r.net)}</div><div class="ssub">PKR</div></div>
+      <div class="sc"><div class="sl2">${t('summNet')}</div><div class="sv">${fmt(r.net)}</div><div class="ssub">PKR</div></div>
       <div class="sc"><div class="sl2">${t('heirCnt')}</div><div class="sv">${r.final.length}</div><div class="ssub">${t('heirCnt')}</div></div>
       <div class="sc dng"><div class="sl2">${t('exclCnt')}</div><div class="sv">${r.excl.length}</div><div class="ssub">${t('exclCnt')}</div></div>
       <div class="sc gld"><div class="sl2">${t('baseLbl')}</div><div class="sv">÷${r.asl}</div><div class="ssub">Base</div></div>
@@ -1215,7 +1261,6 @@ function renderResults(r){
   setTimeout(()=>drawPie(pie),120);
 }
 
-/* ══ PIE CHART ══ */
 function drawPie(data){
   const cv=document.getElementById('pc');
   if(!cv)return;
@@ -1234,7 +1279,6 @@ function drawPie(data){
   ctx.fillStyle=document.documentElement.getAttribute('data-theme')==='dark'?'#221A0A':'#FDF8F0';ctx.fill();
 }
 
-/* ══ PRINT ══ */
 function printReport(){
   if(!S.results){alert(S.lang==='ur'?'پہلے حساب کریں۔':'Please calculate inheritance first.');return;}
   document.querySelectorAll('.pg').forEach(p=>{p.style.display='none';});
@@ -1242,9 +1286,68 @@ function printReport(){
   setTimeout(()=>{window.print();setTimeout(()=>{showPg('results');},600);},250);
 }
 
-/* ══ INIT ══ */
+// ═══════════════════════════════════════
+// PWA — Service Worker + Install Prompt
+// ═══════════════════════════════════════
+let deferredPrompt=null;
+
+window.addEventListener('beforeinstallprompt',(e)=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  const banner=document.getElementById('install-banner');
+  if(banner) banner.style.display='flex';
+});
+
+document.getElementById('install-btn').addEventListener('click',async()=>{
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    const{outcome}=await deferredPrompt.userChoice;
+    deferredPrompt=null;
+    document.getElementById('install-banner').style.display='none';
+  }
+});
+
+window.addEventListener('appinstalled',()=>{
+  document.getElementById('install-banner').style.display='none';
+  deferredPrompt=null;
+});
+
+// Service Worker Registration
+if('serviceWorker' in navigator){
+  const swCode=`
+const CACHE='sm-miras-v1';
+const ASSETS=['./',location.href];
+self.addEventListener('install',e=>{
+  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{}));
+  self.skipWaiting();
+});
+self.addEventListener('activate',e=>{
+  e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));
+  self.clients.claim();
+});
+self.addEventListener('fetch',e=>{
+  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{
+    const clone=res.clone();
+    caches.open(CACHE).then(c=>c.put(e.request,clone));
+    return res;
+  }).catch(()=>caches.match('./'))));
+});`;
+  try{
+    const blob=new Blob([swCode],{type:'application/javascript'});
+    const url=URL.createObjectURL(blob);
+    navigator.serviceWorker.register(url,{scope:'./'}).catch(()=>{});
+  }catch(e){}
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
 updateEstate();
 selMadh('hanafi');
+// Ensure only welcome page is shown on load
+document.querySelectorAll('.pg').forEach(p=>{p.style.display='none';});
+document.getElementById('pg-welcome').style.display='block';
+document.getElementById('pg-welcome').classList.add('active');
 </script>
 </body>
 </html>
