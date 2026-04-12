@@ -293,10 +293,19 @@ input:checked+.sldr:before{transform:translateX(17px);}
   .fgrid{grid-template-columns:1fr;}
   .mgrid{grid-template-columns:1fr;}
   .main{padding:12px;padding-bottom:88px;}
-  .hdr-main{font-size:1.1rem;}
-  .hdr-sub,.hdr-ctrl-sep{display:none;}
   .hero-title{font-size:1.3rem;}
   .dev-grid{grid-template-columns:1fr;}
+  /* Header: stack vertically, no overlap */
+  .hdr-inner{flex-direction:column;align-items:stretch;padding:8px 12px;gap:5px;}
+  .hdr-brand{gap:8px;}
+  .hdr-main{font-size:1rem;letter-spacing:2px;white-space:normal;}
+  .hdr-sub{display:block;font-size:0.54rem;white-space:normal;opacity:0.7;}
+  .hdr-ctrl{flex-wrap:wrap;gap:4px;justify-content:flex-start;}
+  .hdr-ctrl-sep{display:none;}
+  .lbtn{font-size:0.62rem;padding:4px 8px;}
+  .ico-btn{font-size:0.62rem;padding:5px 8px;}
+  .page-wrap{padding-top:115px;}
+  .layout{min-height:calc(100vh - 115px);}
 }
 select{appearance:auto;}
 </style>
@@ -369,7 +378,7 @@ select{appearance:auto;}
         <div class="dev-item"><div class="di-lbl">Institution</div><div class="di-val">Hazara University, Mansehra</div></div>
         <div class="dev-item"><div class="di-lbl">Department</div><div class="di-val">Islamic Studies</div></div>
         <div class="dev-item"><div class="di-lbl">Phone</div><div class="di-val"><a href="tel:03009080730" style="color:var(--em)">📱 03009080730</a></div></div>
-        <div class="dev-item"><div class="di-lbl">Email</div><div class="di-val"><a href="mailto:sajidzbi@gmail.com" style="color:var(--em)">✉️ sajidzbi@gmail.com</a></div></div>
+        <div class="dev-item"><div class="di-lbl">Email</div><div class="di-val"><a href="/cdn-cgi/l/email-protection#c5b6a4afaca1bfa7ac85a2a8a4aca9eba6aaa8" style="color:var(--em)">✉️ <span class="__cf_email__" data-cfemail="89fae8e3e0edf3ebe0c9eee4e8e0e5a7eae6e4">[email&#160;protected]</span></a></div></div>
       </div>
       <div class="dev-bio">
         Dr. Sajid Mahmood is an Islamic scholar and academic at Hazara University Mansehra. He specializes in Islamic jurisprudence (Fiqh), particularly the law of inheritance (Faraid), and is committed to making classical Islamic legal knowledge accessible through modern digital tools.<br><br>
@@ -575,7 +584,7 @@ select{appearance:auto;}
 <section class="pg" id="pg-results">
   <div class="phdr">
     <h1 style="font-family:'Cinzel',serif;font-size:1.3rem;color:#0F3D25;margin-bottom:2px">SM MIRAS CALCULATOR — Faraid Report</h1>
-    <p style="color:#444;font-size:0.68rem">Dr. Sajid Mahmood | Hazara University Mansehra | sajidzbi@gmail.com | 03009080730</p>
+    <p style="color:#444;font-size:0.68rem">Dr. Sajid Mahmood | Hazara University Mansehra | <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6e1d0f04070a140c072e09030f0702400d0103">[email&#160;protected]</a> | 03009080730</p>
     <hr style="border-color:#D4B86A;margin:7px 0">
   </div>
   <div class="pgt"><div class="ptic">📊</div><div class="ptt"><h2 class="t" data-k="resPageTitle">Results</h2><p class="t" data-k="resPageSub">Complete Faraid calculation</p><span class="ar">نتائج حساب الفرائض</span></div></div>
@@ -630,13 +639,13 @@ select{appearance:auto;}
   <p>
     <strong>SM Miras Calculator</strong> — Islamic Inheritance (Faraid) Distribution System<br>
     Developed by <strong>Dr. Sajid Mahmood</strong>, Associate Professor of Islamic Studies |
-    <a href="tel:03009080730">📱 03009080730</a> | <a href="mailto:sajidzbi@gmail.com">✉️ sajidzbi@gmail.com</a><br>
+    <a href="tel:03009080730">📱 03009080730</a> | <a href="/cdn-cgi/l/email-protection#5427353e3d302e363d143339353d387a373b39">✉️ <span class="__cf_email__" data-cfemail="483b2922212c322a21082f25292124662b2725">[email&#160;protected]</span></a><br>
     Hazara University Mansehra, Pakistan<br>
     <span style="opacity:0.5;font-size:0.62rem">For educational reference only. Consult a qualified Mufti for legal matters. | v2.0</span>
   </p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ═══════════════════════════════════════════════════════════
 // PWA MANIFEST
 // ═══════════════════════════════════════════════════════════
@@ -882,13 +891,22 @@ function setLang(lang){
   });
   const isRTL=(lang==='ur'||lang==='ar');
   document.documentElement.lang=lang==='ar'?'ar':lang==='ur'?'ur':'en';
+  // Body-level direction and font
+  document.body.style.direction=isRTL?'rtl':'ltr';
+  document.body.style.fontFamily=lang==='ur'?"'Noto Nastaliq Urdu',serif":lang==='ar'?"'Amiri',serif":"'Lato',sans-serif";
   // Apply translations
   document.querySelectorAll('.t[data-k]').forEach(el=>{
     const k=el.getAttribute('data-k');
     el.textContent=t(k);
   });
-  // RTL/LTR
-  document.querySelectorAll('.main,.card,.fgrid,.hgrid,.sti,.ib,.rsum,.fgr,.pgt,.ptt,.brow').forEach(el=>{
+  // RTL/LTR on main containers
+  document.querySelectorAll('.main,.card,.fgrid,.hgrid,.sti,.ib,.rsum,.fgr,.pgt,.ptt,.brow,.sb-nav,.dcard').forEach(el=>{
+    el.style.direction=isRTL?'rtl':'ltr';
+    el.style.textAlign=isRTL?'right':'left';
+  });
+  // Sidebar nav items alignment
+  document.querySelectorAll('.nvi').forEach(el=>{
+    el.style.textAlign=isRTL?'right':'left';
     el.style.direction=isRTL?'rtl':'ltr';
   });
   // Heir labels with brackets
@@ -1304,7 +1322,9 @@ function computeFaraid(h, net, madhhab, gender){
     const surp=asl-fixedPts;
     const raddTotal=fixedPts;
     furudShares.forEach(x=>{
-      x.pts=x.pts+(x.pts/raddTotal)*surp;
+      x.fardPts=x.pts; // save original fard portion
+      x.raddPts=(x.pts/raddTotal)*surp; // radd portion stored separately
+      x.pts=x.pts+x.raddPts;
     });
     log('Step 4 — Radd (الرد)','الرد',
       `Fixed shares ${fixedPts}/${asl}. No Asaba. Surplus ${surp} pts returned proportionally to all Furud heirs including spouses (contemporary ruling).`);
@@ -1409,17 +1429,20 @@ function computeFaraid(h, net, madhhab, gender){
       const poolAmt=x.plusAsaba?(pool/asl*net):0;
       const furdAmt=(pts/asl)*net;
       const amt=furdAmt+poolAmt;
+      // Radd breakdown: fard amount vs radd amount
+      const fardAmt=x.fardPts!=null?((x.fardPts/asl)*net)+poolAmt:null;
+      const raddAmt=x.raddPts!=null?((x.raddPts/asl)*net):null;
       if(x.shared&&x.cnt>1){
         final.push({
           key:x.key,label:x.label,ar:x.ar,cnt:x.cnt,
           pct:net>0?amt/net*100:0,total:amt,indiv:amt/x.cnt,
-          type:'furud',frac:x.frac,note:x.note
+          type:'furud',frac:x.frac,note:x.note,fardAmt,raddAmt
         });
       } else {
         final.push({
           key:x.key,label:x.label,ar:x.ar,cnt:x.cnt||1,
           pct:net>0?amt/net*100:0,total:amt,indiv:x.cnt?amt/x.cnt:amt,
-          type:'furud',frac:x.frac,note:x.note
+          type:'furud',frac:x.frac,note:x.note,fardAmt,raddAmt
         });
       }
     }
@@ -1477,21 +1500,27 @@ function renderResults(r){
 
   <div class="card" style="direction:${isRTL?'rtl':'ltr'}">
     <div class="ch"><div class="ci">⚖️</div><div><h2>${t('detTitle')||'Heir Details'}</h2></div></div>
+    ${r.rule==='radd'?`<div class="ib gl" style="font-size:0.78rem;margin-bottom:10px"><strong>📋 ${isRTL?(S.lang==='ar'?'تفصيل الفريضة والرد':'فرض اور رد کی تفصیل'):'Fard & Radd Breakdown'}</strong><p>${isRTL?(S.lang==='ar'?'كل وارث يحصل على حصته الشرعية المقررة (فرض) ثم يُضاف إليها نصيبه من الفائض (رد)':'ہر وارث کو پہلے اس کا مقررہ فقہی حصہ (فرض) ملتا ہے، پھر باقی ترکہ "رد" کے اصول کے تحت واپس دیا جاتا ہے'):'Each heir first receives their prescribed Islamic share (Fard), then the remaining estate is returned to them via Radd.'}</p></div>`:''}
     <div class="rtw"><table class="rt">
-      <thead><tr><th>${t('col_heir')}</th><th>${t('col_cnt')}</th><th>${t('col_fix')}</th><th>${t('col_pct')}</th><th>${t('col_total')}</th><th>${t('col_per')}</th></tr></thead>
+      <thead><tr><th>${t('col_heir')}</th><th>${t('col_cnt')}</th><th>${t('col_fix')}</th>
+      ${r.rule==='radd'?`<th>${isRTL?(S.lang==='ar'?'الفرض (PKR)':'فرض (PKR)'):'Fard (PKR)'}</th><th>${isRTL?(S.lang==='ar'?'الرد (PKR)':'رد (PKR)'):'Radd (PKR)'}</th>`:''}
+      <th>${t('col_pct')}</th><th>${t('col_total')}</th><th>${t('col_per')}</th></tr></thead>
       <tbody>
       ${r.final.map(x=>{
         const tag=x.type==='furud'?'<span class="rtag tf">Furud</span>':'<span class="rtag ta">Asaba</span>';
         const fr=x.frac?`<span class="frc"><span class="ft">${x.frac[0]}</span><span>${x.frac[1]}</span></span>${x.note?'<br><span style="font-size:0.65rem;color:var(--tm)">'+x.note+'</span>':''}`:tag;
+        const raddCols=r.rule==='radd'&&x.fardAmt!=null
+          ?`<td style="color:var(--em);font-weight:700">${fmtPKR(x.fardAmt)}</td><td style="color:var(--gold-d);font-weight:700">${fmtPKR(x.raddAmt||0)}</td>`
+          :(r.rule==='radd'?'<td>—</td><td>—</td>':'');
         return`<tr><td><span class="hn">${x.label}</span><br><span style="font-family:var(--fa);font-size:0.82rem;color:var(--tm)">${x.ar||''}</span></td>
-          <td>${x.cnt}</td><td>${fr}</td>
+          <td>${x.cnt}</td><td>${fr}</td>${raddCols}
           <td><span class="pb">${fmtPct(r.net>0?x.total/r.net*100:0)}%</span></td>
           <td><span class="mn">${fmtPKR(x.total)}</span></td>
           <td><span class="mn" style="color:var(--gold-d)">${fmtPKR(x.indiv)}</span></td></tr>`;
       }).join('')}
       </tbody>
       <tfoot><tr>
-        <td colspan="3"><strong>${t('totalRow')}</strong></td>
+        <td colspan="${r.rule==='radd'?'5':'3'}"><strong>${t('totalRow')}</strong></td>
         <td><span class="pb">${fmtPct(r.net>0?totD/r.net*100:0)}%</span></td>
         <td><strong class="mn">${fmtPKR(totD)}</strong></td>
         <td style="font-size:0.72rem;color:var(--tm)">${Math.abs(totD-r.net)<1?t('balanced'):'Δ '+fmtPKR(Math.abs(r.net-totD))}</td>
@@ -1564,38 +1593,90 @@ function printReport(){
 }
 
 // ═══════════════════════════════════════════════════════════
-// PWA
+// PWA — WhatsApp compatible install + full offline support
 // ═══════════════════════════════════════════════════════════
 let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault();deferredPrompt=e;
-  document.getElementById('install-banner').style.display='flex';
-});
-document.getElementById('install-btn').addEventListener('click',async()=>{
-  if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;}
-  document.getElementById('install-banner').style.display='none';
-});
-window.addEventListener('appinstalled',()=>document.getElementById('install-banner').style.display='none');
 
+// Show install banner when browser triggers install prompt
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  const banner=document.getElementById('install-banner');
+  if(banner) banner.style.display='flex';
+});
+
+document.getElementById('install-btn').addEventListener('click',async()=>{
+  const banner=document.getElementById('install-banner');
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    const{outcome}=await deferredPrompt.userChoice;
+    deferredPrompt=null;
+  }
+  if(banner) banner.style.display='none';
+});
+
+window.addEventListener('appinstalled',()=>{
+  const banner=document.getElementById('install-banner');
+  if(banner) banner.style.display='none';
+  deferredPrompt=null;
+});
+
+// Service Worker — full offline with complete page caching
 if('serviceWorker' in navigator){
-  const sw=`const C='sm-miras-v2';
-self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./',location.href]).catch(()=>{})));self.skipWaiting();});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});
-self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('./'))));});`;
-  try{const b=new Blob([sw],{type:'application/javascript'});navigator.serviceWorker.register(URL.createObjectURL(b),{scope:'./'}).catch(()=>{});}catch(e){}
+  // Inline SW with comprehensive caching — caches entire page HTML for offline use
+  const sw=`
+const CACHE='sm-miras-v3';
+const FONTS=[
+  'https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap'
+];
+// On install: cache the app page itself
+self.addEventListener('install',e=>{
+  e.waitUntil(
+    caches.open(CACHE).then(async c=>{
+      try{ await c.addAll([self.registration.scope]); }catch(err){}
+      // Try to cache fonts too
+      for(const url of FONTS){try{await c.add(url);}catch(err){}}
+    })
+  );
+  self.skipWaiting();
+});
+// On activate: clean old caches
+self.addEventListener('activate',e=>{
+  e.waitUntil(
+    caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))
+  );
+  self.clients.claim();
+});
+// Fetch: cache-first for same-origin, network-first for fonts/external
+self.addEventListener('fetch',e=>{
+  const url=new URL(e.request.url);
+  if(url.origin===self.location.origin||url.hostname==='fonts.googleapis.com'||url.hostname==='fonts.gstatic.com'){
+    e.respondWith(
+      caches.match(e.request).then(cached=>{
+        if(cached) return cached;
+        return fetch(e.request).then(res=>{
+          if(res&&res.status===200){
+            const clone=res.clone();
+            caches.open(CACHE).then(c=>c.put(e.request,clone));
+          }
+          return res;
+        }).catch(()=>caches.match(self.registration.scope)||new Response('<h1>Offline</h1>',{headers:{'Content-Type':'text/html'}}));
+      })
+    );
+  }
+});`;
+  try{
+    const blob=new Blob([sw],{type:'application/javascript'});
+    const swUrl=URL.createObjectURL(blob);
+    navigator.serviceWorker.register(swUrl,{scope:'./'})
+      .then(reg=>{
+        // On SW registration success, cache current page
+        reg.addEventListener('updatefound',()=>{});
+      })
+      .catch(()=>{});
+  }catch(e){}
 }
 
 // ═══════════════════════════════════════════════════════════
 // INIT
-// ═══════════════════════════════════════════════════════════
-updateEstate();
-selMadh('hanafi');
-// Show only welcome
-document.querySelectorAll('.pg').forEach(p=>{p.style.display='none';});
-document.getElementById('pg-welcome').style.display='block';
-document.getElementById('pg-welcome').classList.add('active');
-// Apply initial language labels
-setLang('en');
-</script>
-</body>
-</html>
+// ═══
