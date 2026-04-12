@@ -1679,4 +1679,15 @@ self.addEventListener('fetch',e=>{
 
 // ═══════════════════════════════════════════════════════════
 // INIT
-// ═══
+// ═════════════════════════════════════════
+updateEstate();
+selMadh('hanafi');
+// Show only welcome page on load
+document.querySelectorAll('.pg').forEach(p=>{p.style.display='none';});
+document.getElementById('pg-welcome').style.display='block';
+document.getElementById('pg-welcome').classList.add('active');
+// Apply initial language
+setLang('en');
+</script>
+</body>
+</html>
