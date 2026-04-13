@@ -44,9 +44,9 @@
 html{scroll-behavior:smooth;}
 body{font-family:var(--fb);background:var(--cream);color:var(--tp);min-height:100vh;transition:var(--tr);line-height:1.6;}
 
-/* ══ HEADER — Always English ══ */
-.hdr{background:linear-gradient(135deg,#071810 0%,#0F3D25 40%,#1B6B4A 70%,#0A2518 100%);position:fixed;top:0;left:0;right:0;z-index:300;box-shadow:0 4px 24px rgba(0,0,0,0.38);border-bottom:1px solid rgba(201,168,76,0.22);}
-.hdr-inner{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:8px;max-width:1200px;margin:0 auto;}
+/* ══ HEADER — Always English, Always LTR ══ */
+.hdr{background:linear-gradient(135deg,#071810 0%,#0F3D25 40%,#1B6B4A 70%,#0A2518 100%);position:fixed;top:0;left:0;right:0;z-index:300;box-shadow:0 4px 24px rgba(0,0,0,0.38);border-bottom:1px solid rgba(201,168,76,0.22);direction:ltr!important;}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:8px;max-width:1200px;margin:0 auto;direction:ltr!important;}
 .hdr-brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
 .logo-wrap{flex-shrink:0;}
 .hdr-titles{min-width:0;}
@@ -62,7 +62,7 @@ body{font-family:var(--fb);background:var(--cream);color:var(--tp);min-height:10
 .ico-btn:hover{background:rgba(201,168,76,0.22);border-color:var(--gold);}
 
 /* ══ MOBILE NAV ══ */
-.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--sb);border-top:1px solid rgba(201,168,76,0.2);padding:4px 2px;justify-content:space-around;box-shadow:0 -4px 16px rgba(0,0,0,0.3);}
+.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--sb);border-top:1px solid rgba(201,168,76,0.2);padding:4px 2px;justify-content:space-around;box-shadow:0 -4px 16px rgba(0,0,0,0.3);direction:ltr!important;}
 .mnv{display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 6px;border:none;background:transparent;color:rgba(232,212,154,0.6);font-size:0.5rem;cursor:pointer;border-radius:8px;transition:var(--tr);font-family:var(--fb);min-width:40px;}
 .mnv .mi{font-size:19px;line-height:1;}
 .mnv.active{color:var(--gold);}
@@ -317,14 +317,43 @@ select{appearance:auto;}
   <div class="hdr-inner">
     <div class="hdr-brand">
       <div class="logo-wrap">
-        <svg width="42" height="42" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Scale of Justice Logo — ترازوِ عدل -->
+        <svg width="44" height="44" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="lg1" x1="0" y1="0" x2="50" y2="50" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#071810"/><stop offset="50%" stop-color="#1B6B4A"/><stop offset="100%" stop-color="#0A2518"/></linearGradient>
-            <linearGradient id="lg2" x1="0" y1="0" x2="50" y2="50" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#C9A84C"/><stop offset="100%" stop-color="#E8CC7A"/></linearGradient>
+            <linearGradient id="lgbg" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#071810"/>
+              <stop offset="55%" stop-color="#1B6B4A"/>
+              <stop offset="100%" stop-color="#0A2518"/>
+            </linearGradient>
+            <linearGradient id="lggold" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#E8CC7A"/>
+              <stop offset="100%" stop-color="#C9A84C"/>
+            </linearGradient>
           </defs>
-          <circle cx="25" cy="25" r="25" fill="url(#lg1)"/>
-          <circle cx="25" cy="25" r="21.5" fill="none" stroke="url(#lg2)" stroke-width="0.75" opacity="0.45"/>
-          <text x="25" y="32" text-anchor="middle" font-family="Amiri,serif" font-size="20" font-weight="700" fill="url(#lg2)">م</text>
+          <!-- Background rounded rect -->
+          <rect width="60" height="60" rx="14" fill="url(#lgbg)"/>
+          <!-- Subtle ring -->
+          <rect width="60" height="60" rx="14" fill="none" stroke="url(#lggold)" stroke-width="1" opacity="0.35"/>
+          <!-- Central pole -->
+          <line x1="30" y1="12" x2="30" y2="48" stroke="url(#lggold)" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- Base -->
+          <line x1="22" y1="48" x2="38" y2="48" stroke="url(#lggold)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Top pivot circle -->
+          <circle cx="30" cy="13" r="2.2" fill="url(#lggold)"/>
+          <!-- Horizontal beam -->
+          <line x1="14" y1="20" x2="46" y2="20" stroke="url(#lggold)" stroke-width="2" stroke-linecap="round"/>
+          <!-- Left pan chain -->
+          <line x1="14" y1="20" x2="12" y2="29" stroke="url(#lggold)" stroke-width="1.4" stroke-linecap="round"/>
+          <!-- Right pan chain -->
+          <line x1="46" y1="20" x2="48" y2="29" stroke="url(#lggold)" stroke-width="1.4" stroke-linecap="round"/>
+          <!-- Left pan (slightly up = balanced) -->
+          <path d="M7 29 Q12 27 17 29" stroke="url(#lggold)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <!-- Right pan -->
+          <path d="M43 29 Q48 27 53 29" stroke="url(#lggold)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <!-- Left pan bowl fill subtle -->
+          <path d="M7.5 29.5 Q12 32 16.5 29.5" stroke="url(#lggold)" stroke-width="1" opacity="0.5" fill="none"/>
+          <!-- Right pan bowl fill subtle -->
+          <path d="M43.5 29.5 Q48 32 52.5 29.5" stroke="url(#lggold)" stroke-width="1" opacity="0.5" fill="none"/>
         </svg>
       </div>
       <div class="hdr-titles">
@@ -372,9 +401,25 @@ select{appearance:auto;}
     </div>
     <div class="modal-body">
       <div style="text-align:center;margin-bottom:16px;">
-        <svg width="56" height="56" viewBox="0 0 56 56" style="margin:0 auto 8px;display:block;">
-          <circle cx="28" cy="28" r="28" fill="#0F3D25"/>
-          <text x="28" y="37" text-anchor="middle" font-family="Amiri,serif" font-size="26" font-weight="700" fill="#C9A84C">م</text>
+        <svg width="64" height="64" viewBox="0 0 60 60" style="margin:0 auto 8px;display:block;">
+          <defs>
+            <linearGradient id="abgbg" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#071810"/><stop offset="55%" stop-color="#1B6B4A"/><stop offset="100%" stop-color="#0A2518"/>
+            </linearGradient>
+            <linearGradient id="abggold" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#E8CC7A"/><stop offset="100%" stop-color="#C9A84C"/>
+            </linearGradient>
+          </defs>
+          <rect width="60" height="60" rx="14" fill="url(#abgbg)"/>
+          <rect width="60" height="60" rx="14" fill="none" stroke="url(#abggold)" stroke-width="1" opacity="0.35"/>
+          <line x1="30" y1="12" x2="30" y2="48" stroke="url(#abggold)" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="22" y1="48" x2="38" y2="48" stroke="url(#abggold)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="30" cy="13" r="2.2" fill="url(#abggold)"/>
+          <line x1="14" y1="20" x2="46" y2="20" stroke="url(#abggold)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="14" y1="20" x2="12" y2="29" stroke="url(#abggold)" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="46" y1="20" x2="48" y2="29" stroke="url(#abggold)" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M7 29 Q12 27 17 29" stroke="url(#abggold)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <path d="M43 29 Q48 27 53 29" stroke="url(#abggold)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
         </svg>
         <div style="font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--tp);letter-spacing:2px;">SM MIRAS CALCULATOR</div>
         <div style="font-size:0.72rem;color:var(--tm);margin-top:3px;">Islamic Inheritance · Faraid Distribution System</div>
@@ -668,57 +713,92 @@ select{appearance:auto;}
 
 <script>
 // ═══════════════════════════════════════════════════════════
-// PWA MANIFEST — with proper installable icon via Canvas
+// PWA MANIFEST — Scale of Justice icon via Canvas
 // ═══════════════════════════════════════════════════════════
 (function(){
-  // Generate icon as PNG via canvas (works for home screen)
   function makeIcon(size){
     try{
       const c=document.createElement('canvas');
       c.width=c.height=size;
       const ctx=c.getContext('2d');
-      // Background gradient
-      const g=ctx.createLinearGradient(0,0,size,size);
-      g.addColorStop(0,'#071810');g.addColorStop(0.5,'#1B6B4A');g.addColorStop(1,'#0A2518');
-      ctx.fillStyle=g;
-      // Rounded rect
+      const s=size/60; // scale factor
+
+      // Background rounded rect
       const r=size*0.22;
+      const g=ctx.createLinearGradient(0,0,size,size);
+      g.addColorStop(0,'#071810');g.addColorStop(0.55,'#1B6B4A');g.addColorStop(1,'#0A2518');
+      ctx.fillStyle=g;
       ctx.beginPath();ctx.moveTo(r,0);ctx.lineTo(size-r,0);
       ctx.quadraticCurveTo(size,0,size,r);ctx.lineTo(size,size-r);
       ctx.quadraticCurveTo(size,size,size-r,size);ctx.lineTo(r,size);
       ctx.quadraticCurveTo(0,size,0,size-r);ctx.lineTo(0,r);
       ctx.quadraticCurveTo(0,0,r,0);ctx.closePath();ctx.fill();
-      // Gold ring
-      ctx.strokeStyle='rgba(201,168,76,0.6)';ctx.lineWidth=size*0.025;
-      ctx.beginPath();ctx.arc(size/2,size/2,size*0.4,0,2*Math.PI);ctx.stroke();
-      // Arabic م letter
-      ctx.fillStyle='#C9A84C';ctx.font=`bold ${size*0.45}px Amiri,serif`;
-      ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText('م',size/2,size*0.52);
+
+      // Gold gradient for elements
+      const gold=ctx.createLinearGradient(0,0,size,size);
+      gold.addColorStop(0,'#E8CC7A');gold.addColorStop(1,'#C9A84C');
+      ctx.strokeStyle=gold;ctx.fillStyle=gold;
+      ctx.lineCap='round';
+
+      // Central pole
+      ctx.lineWidth=2.2*s;
+      ctx.beginPath();ctx.moveTo(30*s,12*s);ctx.lineTo(30*s,48*s);ctx.stroke();
+
+      // Base
+      ctx.lineWidth=2.5*s;
+      ctx.beginPath();ctx.moveTo(22*s,48*s);ctx.lineTo(38*s,48*s);ctx.stroke();
+
+      // Pivot circle
+      ctx.beginPath();ctx.arc(30*s,13*s,2.2*s,0,2*Math.PI);ctx.fill();
+
+      // Horizontal beam
+      ctx.lineWidth=2*s;
+      ctx.beginPath();ctx.moveTo(14*s,20*s);ctx.lineTo(46*s,20*s);ctx.stroke();
+
+      // Left chain
+      ctx.lineWidth=1.4*s;
+      ctx.beginPath();ctx.moveTo(14*s,20*s);ctx.lineTo(12*s,29*s);ctx.stroke();
+      // Right chain
+      ctx.beginPath();ctx.moveTo(46*s,20*s);ctx.lineTo(48*s,29*s);ctx.stroke();
+
+      // Left pan
+      ctx.lineWidth=1.8*s;
+      ctx.beginPath();ctx.moveTo(7*s,29*s);ctx.quadraticCurveTo(12*s,27*s,17*s,29*s);ctx.stroke();
+      // Right pan
+      ctx.beginPath();ctx.moveTo(43*s,29*s);ctx.quadraticCurveTo(48*s,27*s,53*s,29*s);ctx.stroke();
+
       return c.toDataURL('image/png');
     }catch(e){return null;}
   }
+
   const icon192=makeIcon(192);
   const icon512=makeIcon(512);
   const icons=[];
   if(icon192) icons.push({src:icon192,sizes:'192x192',type:'image/png',purpose:'any'});
   if(icon512) icons.push({src:icon512,sizes:'512x512',type:'image/png',purpose:'any maskable'});
-  // Fallback SVG if canvas fails
   if(!icons.length){
-    icons.push({src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%230F3D25'/%3E%3Ctext x='96' y='130' text-anchor='middle' font-family='serif' font-size='96' fill='%23C9A84C'%3Eم%3C/text%3E%3C/svg%3E",sizes:'192x192',type:'image/svg+xml'});
+    // SVG fallback with scale of justice
+    icons.push({src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='14' fill='%230F3D25'/%3E%3Cline x1='30' y1='12' x2='30' y2='48' stroke='%23C9A84C' stroke-width='2.2' stroke-linecap='round'/%3E%3Cline x1='22' y1='48' x2='38' y2='48' stroke='%23C9A84C' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='30' cy='13' r='2.2' fill='%23C9A84C'/%3E%3Cline x1='14' y1='20' x2='46' y2='20' stroke='%23C9A84C' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='14' y1='20' x2='12' y2='29' stroke='%23C9A84C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cline x1='46' y1='20' x2='48' y2='29' stroke='%23C9A84C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M7 29 Q12 27 17 29' stroke='%23C9A84C' stroke-width='1.8' stroke-linecap='round' fill='none'/%3E%3Cpath d='M43 29 Q48 27 53 29' stroke='%23C9A84C' stroke-width='1.8' stroke-linecap='round' fill='none'/%3E%3C/svg%3E",
+      sizes:'192x192',type:'image/svg+xml'});
   }
+
   const m={
-    name:'SM Miras Calculator',short_name:'SM Miras',
+    name:'SM Miras Calculator',
+    short_name:'SM Miras',
     description:"Islamic Inheritance (Faraid) Calculator — Hanafi & Shafi'i",
-    start_url:'./',scope:'./',display:'standalone',
-    background_color:'#0F3D25',theme_color:'#0F3D25',
+    start_url:'./',
+    scope:'./',
+    display:'standalone',
+    background_color:'#0F3D25',
+    theme_color:'#0F3D25',
     orientation:'portrait-primary',
+    categories:['education','utilities'],
     icons
   };
   try{
     const b=new Blob([JSON.stringify(m)],{type:'application/manifest+json'});
     document.getElementById('pwa-manifest').href=URL.createObjectURL(b);
-    // Also set apple touch icon dynamically
+    // Apple touch icon
     if(icon192){
       let atl=document.querySelector('link[rel="apple-touch-icon"]');
       if(!atl){atl=document.createElement('link');atl.rel='apple-touch-icon';document.head.appendChild(atl);}
@@ -984,6 +1064,11 @@ function setLang(lang){
   document.querySelectorAll(
     '.main,.pg,.card,.fgrid,.hgrid,.sti,.ib,.rsum,.fgr,.pgt,.ptt,.brow,.sb-nav,.dcard,.hcard,.hero,.fcard,.mopt,.modal-body,.modal-hdr,.fg,.hint,.ssub,.sl2,.ch,.nr,.sw,.dev-item'
   ).forEach(el=>{el.style.direction=dir;el.style.textAlign=align;});
+
+  // ── Header & footer: ALWAYS LTR regardless of language ──
+  document.querySelectorAll('.hdr,.hdr-inner,.hdr-brand,.hdr-ctrl,.mob-nav,.ftr').forEach(el=>{
+    el.style.direction='ltr';el.style.textAlign='left';
+  });
 
   // ── Sidebar ──
   document.querySelectorAll('.nvi,.sb-sec').forEach(el=>{
@@ -1453,8 +1538,18 @@ function computeFaraid(h, net, madhhab, gender){
 
   // ═══════════════════════════════════════════════
   // STEP 5: AWL / RADD / NORMAL
+  // Radd rules (فقہی اصول):
+  // - If SOLE HEIR is spouse only → full radd to spouse (متاخرین)
+  // - If other heirs exist alongside spouse → NO radd to spouse (جمہور)
+  //   surplus goes to other furud heirs only
   // ═══════════════════════════════════════════════
   let rule='normal';
+
+  // Determine if spouse is the ONLY heir
+  const spouseKeys=['husband','wife'];
+  const isSpouseOnly = furudList.length===1 && spouseKeys.includes(furudList[0].key) && asabaList.length===0;
+  const hasSpouseInFurud = furudList.some(x=>spouseKeys.includes(x.key));
+  const hasOtherFurud = furudList.some(x=>!spouseKeys.includes(x.key));
 
   if(fixedPts > asl && !hasAsaba){
     rule='awl';
@@ -1466,16 +1561,33 @@ function computeFaraid(h, net, madhhab, gender){
   } else if(fixedPts < asl && !hasAsaba){
     rule='radd';
     const surp=asl-fixedPts;
-    const raddTotal=fixedPts;
-    if(raddTotal>0){
-      furudList.filter(x=>!x.umar).forEach(x=>{
+
+    if(isSpouseOnly){
+      // SOLE SPOUSE: full radd — entire estate to spouse
+      furudList.forEach(x=>{
         x.fardPts=x.pts||0;
-        x.raddPts=((x.pts||0)/raddTotal)*surp;
-        x.pts=(x.pts||0)+x.raddPts;
+        x.raddPts=surp;
+        x.pts=(x.pts||0)+surp;
       });
+      log('Step 5 — Radd (الرد) — Sole Spouse','الرد للزوج/الزوجة المنفرد',
+        `Sole spouse rule (متاخرین): entire estate transferred. Fard share first, then full Radd applied.`);
+    } else {
+      // OTHER HEIRS PRESENT: radd only to non-spouse furud heirs (جمہور)
+      const nonSpouseFurud = furudList.filter(x=>!spouseKeys.includes(x.key)&&!x.umar);
+      const nonSpousePts = nonSpouseFurud.reduce((s,x)=>s+(x.pts||0),0);
+      if(nonSpousePts>0){
+        nonSpouseFurud.forEach(x=>{
+          x.fardPts=x.pts||0;
+          x.raddPts=((x.pts||0)/nonSpousePts)*surp;
+          x.pts=(x.pts||0)+x.raddPts;
+        });
+        log('Step 5 — Radd (الرد) — Excluding Spouse','الرد بدون الزوجين',
+          `Surplus ${surp}pts returned to non-spouse Furud heirs only. Spouse excluded from Radd (جمہور فقہاء).`);
+      } else {
+        // Only spouses in furud list but surplus — shouldn't normally happen
+        log('Step 5 — Distribution','توزيع','No Radd applicable.');
+      }
     }
-    log('Step 5 — Radd (الرد)','الرد',
-      `Fixed ${fixedPts}/${asl}. No Asaba. Surplus ${surp}pts returned proportionally to all Furud heirs.`);
 
   } else {
     log('Step 5 — Distribution','توزيع',
@@ -1728,88 +1840,81 @@ function printReport(){
 }
 
 // ═══════════════════════════════════════════════════════════
-// PWA — WhatsApp compatible install + full offline support
+// PWA — Install prompt + full offline Service Worker
 // ═══════════════════════════════════════════════════════════
 let deferredPrompt=null;
 
-// Show install banner when browser triggers install prompt
+// beforeinstallprompt: browser signals app is installable
 window.addEventListener('beforeinstallprompt',e=>{
   e.preventDefault();
   deferredPrompt=e;
-  const banner=document.getElementById('install-banner');
-  if(banner) banner.style.display='flex';
+  // Only show banner if not already installed
+  if(!window.matchMedia('(display-mode: standalone)').matches){
+    const banner=document.getElementById('install-banner');
+    if(banner) banner.style.display='flex';
+  }
 });
 
+// Install button clicked
 document.getElementById('install-btn').addEventListener('click',async()=>{
   const banner=document.getElementById('install-banner');
   if(deferredPrompt){
     deferredPrompt.prompt();
     const{outcome}=await deferredPrompt.userChoice;
     deferredPrompt=null;
+    if(outcome==='accepted'){
+      if(banner) banner.style.display='none';
+    }
   }
-  if(banner) banner.style.display='none';
 });
 
+// After successful install — hide banner permanently
 window.addEventListener('appinstalled',()=>{
   const banner=document.getElementById('install-banner');
   if(banner) banner.style.display='none';
   deferredPrompt=null;
 });
 
-// Service Worker — full offline with complete page caching
-if('serviceWorker' in navigator){
-  // Inline SW with comprehensive caching — caches entire page HTML for offline use
-  const sw=`
-const CACHE='sm-miras-v3';
-const FONTS=[
-  'https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap'
-];
-// On install: cache the app page itself
-self.addEventListener('install',e=>{
-  e.waitUntil(
-    caches.open(CACHE).then(async c=>{
-      try{ await c.addAll([self.registration.scope]); }catch(err){}
-      // Try to cache fonts too
-      for(const url of FONTS){try{await c.add(url);}catch(err){}}
-    })
-  );
-  self.skipWaiting();
-});
-// On activate: clean old caches
-self.addEventListener('activate',e=>{
-  e.waitUntil(
-    caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))
-  );
-  self.clients.claim();
-});
-// Fetch: cache-first for same-origin, network-first for fonts/external
-self.addEventListener('fetch',e=>{
-  const url=new URL(e.request.url);
-  if(url.origin===self.location.origin||url.hostname==='fonts.googleapis.com'||url.hostname==='fonts.gstatic.com'){
-    e.respondWith(
-      caches.match(e.request).then(cached=>{
-        if(cached) return cached;
-        return fetch(e.request).then(res=>{
-          if(res&&res.status===200){
-            const clone=res.clone();
-            caches.open(CACHE).then(c=>c.put(e.request,clone));
+// If already running as standalone (installed) — hide banner
+if(window.matchMedia('(display-mode: standalone)').matches){
+  window.addEventListener('load',()=>{
+    const banner=document.getElementById('install-banner');
+    if(banner) banner.style.display='none';
+  });
+}
+
+// ── Service Worker Registration ──
+// SW کو same-origin سے register کرنا ضروری ہے۔
+// HTML کے ساتھ sw.js فائل رکھیں (نیچے الگ فائل دی گئی ہے)۔
+if('serviceWorker' in navigator &&
+   (location.protocol==='https:' || location.protocol==='http:')){
+
+  // sw.js کو register کریں — یہ فائل HTML کے ساتھ ہونی چاہیے
+  const swPath = location.pathname.replace(/[^/]*$/, '') + 'sw.js';
+
+  navigator.serviceWorker.register(swPath)
+    .then(reg=>{
+      console.log('SM Miras SW registered:', reg.scope);
+      // Update check
+      reg.addEventListener('updatefound',()=>{
+        const nw=reg.installing;
+        nw.addEventListener('statechange',()=>{
+          if(nw.state==='installed'&&navigator.serviceWorker.controller){
+            console.log('SM Miras: New version available');
           }
-          return res;
-        }).catch(()=>caches.match(self.registration.scope)||new Response('<h1>Offline</h1>',{headers:{'Content-Type':'text/html'}}));
-      })
-    );
+        });
+      });
+    })
+    .catch(err=>{
+      // sw.js نہیں ملی — ایپ بغیر offline support کے چلے گی
+      console.info('SM Miras: sw.js not found — running without offline support. Place sw.js in same folder.');
+    });
+
+  // Already running as installed PWA
+  if(window.matchMedia('(display-mode: standalone)').matches){
+    const banner=document.getElementById('install-banner');
+    if(banner) banner.style.display='none';
   }
-});`;
-  try{
-    const blob=new Blob([sw],{type:'application/javascript'});
-    const swUrl=URL.createObjectURL(blob);
-    navigator.serviceWorker.register(swUrl,{scope:'./'})
-      .then(reg=>{
-        // On SW registration success, cache current page
-        reg.addEventListener('updatefound',()=>{});
-      })
-      .catch(()=>{});
-  }catch(e){}
 }
 
 // ═══════════════════════════════════════════════════════════
