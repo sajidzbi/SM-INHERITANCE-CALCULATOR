@@ -1,27 +1,27 @@
-// SM Miras Calculator — Service Worker v11
+// SM Miras Calculator — Service Worker v12
 // ⚠️ اس فائل کو index.html کے ساتھ ایک ہی folder میں رکھیں
+// Password config (notepad میں تبدیل کریں):
+// PASS_A=sm1234 | PASS_B=sm1234 | PASS_C=sm1234
 
-const CACHE = 'sm-miras-v11';
+const CACHE = 'sm-miras-v12';
+const URLS = ['./', './index.html', './sw.js'];
 
-// ── Install: سب کچھ cache کریں ──
+// ── Install: cache everything ──
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE).then(async cache => {
-      const urls = ['./', './index.html', './sw.js'];
-      for (const url of urls) {
+      for (const url of URLS) {
         try {
           const res = await fetch(url, { cache: 'reload' });
           if (res.ok) await cache.put(url, res);
-        } catch(e) {
-          // offline during install — skip
-        }
+        } catch(e) { /* offline during install */ }
       }
       await self.skipWaiting();
     })
   );
 });
 
-// ── Activate: پرانے cache ہٹائیں ──
+// ── Activate: remove old caches ──
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
@@ -30,43 +30,45 @@ self.addEventListener('activate', event => {
   );
 });
 
-// ── Message: app سے update trigger ──
+// ── Message ──
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
 
-// ── Fetch: Cache-First (100% آف لائن) ──
+// ── Fetch: Cache-First + silent background update ──
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
   if (url.protocol !== 'https:' && url.protocol !== 'http:') return;
-  // Cross-origin skip
   if (url.origin !== self.location.origin) return;
 
   event.respondWith(
     (async () => {
-      // 1. Try cache first
       const cached = await caches.match(event.request)
                   || await caches.match('./')
                   || await caches.match('./index.html');
 
       if (cached) {
-        // Update cache silently in background if online
+        // Silent background refresh — NO repeated update banners
         event.waitUntil(
           fetch(event.request, { cache: 'no-cache' })
             .then(async res => {
               if (res && res.status === 200 && res.type !== 'opaque') {
                 const c = await caches.open(CACHE);
                 await c.put(event.request, res);
+                // Silently notify clients of update — no forced reload banner
+                const clients = await self.clients.matchAll();
+                clients.forEach(client => {
+                  client.postMessage({ type: 'CACHE_UPDATED', url: event.request.url });
+                });
               }
             }).catch(() => {})
         );
-        return cached; // Serve from cache immediately ✅
+        return cached;
       }
 
-      // 2. Not in cache — try network
       try {
         const res = await fetch(event.request, { cache: 'no-cache' });
         if (res && res.status === 200 && res.type !== 'opaque') {
@@ -75,7 +77,6 @@ self.addEventListener('fetch', event => {
         }
         return res;
       } catch (e) {
-        // 3. Completely offline — show fallback page
         return new Response(`<!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
