@@ -1826,87 +1826,108 @@ function computeFaraid(h, net, madhhab, gender){
       :`Furud heirs: ${furudList.length}. Asaba groups: ${asabaList.length}. Dhaw al-Arham: ${dhawList.length}. Quran 4:11-12 & 4:176.`);
 
   // ═══ STEP 3: TASHIH — تصحيح المسألة ═══
-  // Classical algorithm (Sirajiyyah — الجامعة بين الشرحين):
-  // 1) asl = LCM of all furud denominators (أصل المسألة)
-  // 2) For each shared heir group: asl × (count / gcd(pts, count))
-  // 3) For asaba 2:1: ensure residue divisible by asaba units
-  // 4) GCD-reduce at end to get minimum correct base
+  // Proven algorithm (SM Faraid v2 + Sirajiyyah):
+  // Phase 1 : asl = LCM of all furud denominators
+  // Phase 2 : sum fracs → detect AWL (sum > 1)
+  // Phase 3 : build integer parts map hd{}
+  // Phase 4 : asaba residue expansion (rem % asabaUnits = 0)
+  // Phase 5 : tashih loop — find smallest m so parts divisible by count
+  // Phase 5b: re-check asaba after tashih expansion
+  // NO GCD reduction — preserves correctness for asl 6–96–120+
 
-  const realFurud=furudList.filter(x=>!x.umar);
-  const denoms=realFurud.map(x=>x.den).filter(d=>d>0);
-  let asl=denoms.length>0?lcmArr(denoms):1;
+  const realFurud = furudList.filter(x => !x.umar);
 
-  function recomputePts(a){
-    realFurud.forEach(x=>{x.pts=Math.round((x.num/x.den)*a);});
-  }
-  recomputePts(asl);
+  // Phase 1: asl = LCM of denominators
+  let asl = 1;
+  for(const x of realFurud){ if(x.den > 0) asl = lcm(asl, x.den); }
+  if(!asl || isNaN(asl)) asl = 1;
 
-  // ── Tashih A: shared furud groups ──
-  let tashihFactor=1;
-  for(const x of realFurud){
-    if(x.shared&&x.cnt>1&&x.pts>0){
-      const g=gcd(x.pts,x.cnt);
-      const f=x.cnt/g;
-      if(f>1) tashihFactor=lcm(tashihFactor,f);
-    }
-  }
-  if(tashihFactor>1){asl*=tashihFactor;recomputePts(asl);}
+  // Phase 2: sum of fractions → AWL detection
+  let sumFv = 0;
+  for(const x of realFurud) sumFv += x.num / x.den;
+  const isAwlCase = sumFv > 1 + 1e-9;
 
-  // ── Tashih B: asaba units (2:1 ratio) ──
-  let asabaUnits=0;
-  const mainAsabaForTashih=asabaList.filter(a=>a.type==='asaba_2_1'||a.type==='asaba_mghayr');
-  if(mainAsabaForTashih.length>0){
-    const a=mainAsabaForTashih[0];
-    if(a.type==='asaba_2_1') asabaUnits=(a.sCount||0)*2+(a.dCount||0);
-    else if(a.type==='asaba_mghayr') asabaUnits=a.cnt||1; // females only
+  // Phase 3: initial integer parts
+  const hd = {};
+  for(const x of realFurud) hd[x.key] = { pts: x.num * (asl / x.den), cnt: x.cnt || 1 };
+
+  // Asaba units
+  let asabaUnits = 0;
+  const mainAsabaForTashih = asabaList.filter(a => a.type==='asaba_2_1' || a.type==='asaba_mghayr');
+  if(mainAsabaForTashih.length > 0){
+    const a = mainAsabaForTashih[0];
+    if(a.type==='asaba_2_1') asabaUnits = (a.sCount||0)*2 + (a.dCount||0);
+    else asabaUnits = a.cnt || 1;
   } else {
-    const pureA=asabaList.filter(a=>a.type==='asaba_pure');
-    if(pureA.length>0) asabaUnits=pureA[0].cnt||1;
+    const pureA = asabaList.filter(a => a.type==='asaba_pure');
+    if(pureA.length > 0) asabaUnits = pureA.reduce((s,a) => s + (a.cnt||1), 0);
   }
 
-  if(asabaUnits>0){
-    const fixedNow=realFurud.reduce((s,x)=>s+(x.pts||0),0);
-    const residueNow=asl-fixedNow;
-    if(residueNow>0&&residueNow%asabaUnits!==0){
-      const factor=asabaUnits/gcd(residueNow,asabaUnits);
-      if(factor>1){asl*=factor;recomputePts(asl);}
-    }
-  }
-
-  // ── Tashih C: ذوی الارحام tashih (if applicable) ──
-  if(dhawList.length>0&&furudList.length===0&&!hasAsaba){
-    const dhawTotal=dhawList.reduce((s,d)=>s+d.cnt,0);
-    if(dhawTotal>1&&asl%dhawTotal!==0){
-      asl=lcm(asl,dhawTotal);recomputePts(asl);
-    }
-  }
-
-  // ── Minimize: GCD reduction for cleaner numbers ──
-  {
-    const allPtsArr=realFurud.map(x=>x.pts||0).filter(p=>p>0);
-    if(asabaUnits>0){
-      const fixedNowCheck=realFurud.reduce((s,x)=>s+(x.pts||0),0);
-      const residueCheck=asl-fixedNowCheck;
-      if(residueCheck>0) allPtsArr.push(residueCheck);
-    }
-    if(allPtsArr.length>0){
-      const commonGcd=allPtsArr.reduce((a,b)=>gcd(a,b));
-      if(commonGcd>1&&asl%commonGcd===0){
-        const reduction=asl/commonGcd;
-        const stillValid=realFurud.every(x=>{
-          const newPts=Math.round((x.num/x.den)*reduction);
-          return Math.abs(newPts-(x.pts/commonGcd))<0.001;
-        });
-        if(stillValid){asl=reduction;recomputePts(asl);}
+  if(isAwlCase){
+    // AWL: asl = sum of numerator parts
+    asl = Object.values(hd).reduce((s,h) => s + h.pts, 0);
+  } else {
+    // Phase 4: expand so asaba residue is divisible by asaba units
+    if(asabaUnits > 0){
+      const fs = Object.values(hd).reduce((s,h) => s + h.pts, 0);
+      const rem = asl - fs;
+      if(rem > 0 && rem % asabaUnits !== 0){
+        const factor = asabaUnits / gcd(rem, asabaUnits);
+        if(factor > 1){ asl *= factor; for(const k of Object.keys(hd)) hd[k].pts *= factor; }
       }
     }
   }
 
-  let fixedPts=realFurud.reduce((s,x)=>s+(x.pts||0),0);
+  // Phase 5: tashih — for each shared group, expand so pts divisible by count
+  let tashihMult = 1;
+  for(const h of Object.values(hd)){
+    if(h.cnt < 2) continue;
+    const p = Math.round(h.pts * 1e6) / 1e6;
+    if(Math.abs(p % h.cnt) > 1e-4){
+      for(let m = 2; m <= h.cnt * 1000; m++){
+        if(Math.abs((p * m) % h.cnt) < 1e-4){ tashihMult = lcm(tashihMult, m); break; }
+      }
+    }
+  }
+  if(tashihMult > 1 && tashihMult < 1000000){
+    asl = Math.round(asl * tashihMult);
+    for(const k of Object.keys(hd)) hd[k].pts = Math.round(hd[k].pts * tashihMult);
+  }
+
+  // Phase 5b: re-check asaba residue after tashih
+  if(!isAwlCase && asabaUnits > 0){
+    const fs2 = Object.values(hd).reduce((s,h) => s + Math.round(h.pts), 0);
+    const rem2 = Math.round(asl) - fs2;
+    if(rem2 > 0 && rem2 % asabaUnits !== 0){
+      const factor2 = asabaUnits / gcd(rem2, asabaUnits);
+      if(factor2 > 1 && factor2 < 100000){
+        asl = Math.round(asl * factor2);
+        for(const k of Object.keys(hd)) hd[k].pts = Math.round(hd[k].pts * factor2);
+      }
+    }
+  }
+
+  // Phase 6: write integer pts back to realFurud
+  asl = Math.round(asl);
+  for(const x of realFurud){
+    x.pts = Math.round(hd[x.key] ? hd[x.key].pts : x.num * (asl / x.den));
+  }
+
+  // ذوی الارحام tashih (when no furud/asaba)
+  if(dhawList.length > 0 && furudList.length === 0 && !hasAsaba){
+    const dhawTotal = dhawList.reduce((s,d) => s + d.cnt, 0);
+    if(dhawTotal > 1 && asl % dhawTotal !== 0){
+      const dhawFactor = dhawTotal / gcd(asl, dhawTotal);
+      asl = asl * dhawFactor;
+      for(const x of realFurud) x.pts = Math.round(x.num * (asl / x.den));
+    }
+  }
+
+  let fixedPts = realFurud.reduce((s,x) => s + (x.pts||0), 0);
 
   log('Step 3 — Tashih (التصحيح)','تصحيح المسألة',
     S.lang==='ur'
-      ?`أصل المسألة = ${asl} | فروض = ${fixedPts}/${asl} | بقیہ = ${asl-fixedPts} | عصبہ وحدات = ${asabaUnits||0}`
+      ?`اصل مسئلہ = ${asl} | فروض = ${fixedPts}/${asl} | بقیہ = ${asl-fixedPts} | عصبہ وحدات = ${asabaUnits||0}`
       :S.lang==='ar'
       ?`أصل المسألة = ${asl} | المحدد = ${fixedPts}/${asl} | الباقي = ${asl-fixedPts} | وحدات العصبة = ${asabaUnits||0}`
       :`Asl al-Masala = ${asl}. Fixed = ${fixedPts}/${asl}. Residue = ${asl-fixedPts}. Asaba units = ${asabaUnits||0}.`);
