@@ -178,6 +178,20 @@ input:focus,select:focus{border-color:var(--em);box-shadow:0 0 0 3px rgba(27,107
 .hch{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;}
 .hlbl{font-weight:700;font-size:0.82rem;color:var(--tp);line-height:1.3;}
 .har{font-family:'UthmanTahaNaskh',serif;font-size:0.88rem;color:var(--tm);margin-top:2px;direction:rtl;text-align:right;display:none;}
+/* Arabic sub-text: show only in EN as reference, hide in UR/AR */
+/* ── Language-based Arabic visibility rules ── */
+/* EN mode: .har shows as Arabic reference; .ar page-spans hidden */
+html[lang="en"] .har{display:block;}
+html[lang="ur"] .har,html[lang="ar"] .har{display:none!important;}
+/* Hide Arabic annotation spans in EN mode (page titles, section headers) */
+html[lang="en"] .ar,html[lang="en"] .arn{display:none!important;}
+/* In UR mode: show Arabic annotations as reference */
+html[lang="ur"] .ar{display:inline;}
+html[lang="ur"] .arn{display:inline;}
+/* In AR mode: .ar shows, .har hides (no duplicate) */
+html[lang="ar"] .ar{display:inline;}
+html[lang="ar"] .arn{display:inline;}
+html[lang="ar"] .har{display:none!important;}
 .hsbadge{font-size:0.65rem;color:var(--em);font-weight:700;background:var(--sl);padding:2px 6px;border-radius:8px;white-space:nowrap;flex-shrink:0;margin-left:4px;}
 .sw{display:flex;align-items:center;gap:7px;}
 .switch{position:relative;width:38px;height:21px;flex-shrink:0;}
@@ -452,7 +466,6 @@ select{appearance:auto;}
   <button class="mnv active" id="mn-welcome" onclick="showPg('welcome')"><span class="mi">🏠</span><span id="mn-lbl-welcome">Home</span></button>
   <button class="mnv" id="mn-deceased" onclick="showPg('deceased')"><span class="mi">👤</span><span id="mn-lbl-deceased">Profile</span></button>
   <button class="mnv" id="mn-heirs" onclick="showPg('heirs')"><span class="mi">👨‍👩‍👧</span><span id="mn-lbl-heirs">Heirs</span></button>
-  <button class="mnv" id="mn-munasakha" onclick="showPg('munasakha')"><span class="mi">🔄</span><span>Mun.</span></button>
   <button class="mnv" id="mn-results" onclick="calcAndShow()"><span class="mi">⚡</span><span id="mn-lbl-calc">Calc</span></button>
   <button class="mnv" id="mn-about-mob" onclick="openAbout()"><span class="mi">ℹ️</span><span>Info</span></button>
 </nav>
@@ -527,7 +540,6 @@ select{appearance:auto;}
     <button class="nvi" onclick="showPg('deceased')" id="nav-deceased"><span class="nbadge">1</span><span class="t" data-k="navDeceased">Deceased Profile</span></button>
     <button class="nvi" onclick="showPg('madhhab')" id="nav-madhhab"><span class="nbadge">2</span><span class="t" data-k="navMadhhab">Fiqh School</span></button>
     <button class="nvi" onclick="showPg('heirs')" id="nav-heirs"><span class="nbadge">3</span><span class="t" data-k="navHeirs">Select Heirs</span></button>
-    <button class="nvi" onclick="showPg('munasakha')" id="nav-munasakha"><span class="nbadge">4</span><span class="t" data-k="navMunasakha">Munasakha</span></button>
     <button class="nvi" onclick="calcAndShow()" id="nav-results"><span class="nbadge">5</span><span class="t" data-k="navResults">Results</span></button>
     <div class="divr"></div>
     <div class="sb-sec">REFERENCE</div>
@@ -727,24 +739,12 @@ select{appearance:auto;}
 
   <div class="brow">
     <button class="bs" onclick="showPg('madhhab')">← <span class="t" data-k="btnBack">Back</span></button>
-    <button class="bp" onclick="showPg('munasakha')"><span class="t" data-k="btnNextMun">Next: Munasakha</span> →</button>
+    <button class="bp" onclick="calcAndShow()">⚖️ <span class="t" data-k="btnCalc">Calculate</span></button>
   </div>
 </section>
 
 <!-- ▸ MUNASAKHA -->
-<section class="pg" id="pg-munasakha">
-  <div class="pgt"><div class="ptic">🔄</div><div class="ptt"><h2 class="t" data-k="munPageTitle">Munasakha</h2><p class="t" data-k="munPageSub">Sequential inheritance</p><span class="ar">المناسخة في الميراث</span></div></div>
-  <div class="ib gl"><strong>📖 <span class="t" data-k="munInfoTitle">MUNASAKHA</span></strong><p class="t" data-k="munInfoText">Applies when an heir dies before distribution. Optional.</p></div>
-  <div class="card">
-    <div class="ch"><div class="ci">🔄</div><div><h2 class="t" data-k="munCardTitle">Add Deceased Heir</h2></div></div>
-    <div class="sw" style="margin-bottom:12px"><label class="switch"><input type="checkbox" id="en-mun" onchange="togMun(this.checked)"><span class="sldr"></span></label><span style="font-size:0.82rem;font-weight:700;color:var(--tp)" class="t" data-k="enableMun">Enable Munasakha</span></div>
-    <div id="mun-sec" style="display:none"><div id="mun-list"></div><button class="bs" onclick="addMun()">+ <span class="t" data-k="addMunBtn">Add Another</span></button></div>
-  </div>
-  <div class="brow">
-    <button class="bs" onclick="showPg('heirs')">← <span class="t" data-k="btnBack">Back</span></button>
-    <button class="bg" onclick="calcAndShow()">⚡ <span class="t" data-k="btnCalc">Calculate Inheritance</span></button>
-  </div>
-</section>
+
 
 <!-- ▸ RESULTS -->
 <section class="pg" id="pg-results">
@@ -753,7 +753,7 @@ select{appearance:auto;}
     <p style="color:#444;font-size:0.68rem">Dr. Sajid Mahmood | Hazara University Mansehra | sajidzbi@gmail.com | 03009080730</p>
     <hr style="border-color:#D4B86A;margin:7px 0">
   </div>
-  <div class="pgt"><div class="ptic">📊</div><div class="ptt"><h2 class="t" data-k="resPageTitle">Results</h2><p class="t" data-k="resPageSub">Complete Faraid calculation</p><span class="ar">نتائج حساب الفرائض</span></div></div>
+  <div class="pgt"><div class="ptic">📊</div><div class="ptt"><h2 class="t" data-k="resPageTitle">${t("resPageTitle")}</h2><p class="t" data-k="resPageSub">Complete Faraid calculation</p><span class="ar t" data-k="resPageAr">نتائج حساب الفرائض</span></div></div>
   <div id="res-content"></div>
   <div class="brow">
     <button class="bs" onclick="showPg('heirs')"><span class="t" data-k="editHeirs">← Edit Heirs</span></button>
@@ -764,11 +764,11 @@ select{appearance:auto;}
 
 <!-- ▸ FARAID GUIDE -->
 <section class="pg" id="pg-about">
-  <div class="pgt"><div class="ptic">📖</div><div class="ptt"><h2 class="t" data-k="guidePageTitle">Faraid Guide</h2><p class="t" data-k="guidePageSub">Reference for Islamic Inheritance rules</p><span class="ar">دليل علم الفرائض</span></div></div>
+  <div class="pgt"><div class="ptic">📖</div><div class="ptt"><h2 class="t" data-k="guidePageTitle">Faraid Guide</h2><p class="t" data-k="guidePageSub">Reference for Islamic Inheritance rules</p><span class="ar t" data-k="guidePageAr">دليل علم الفرائض</span></div></div>
   <div class="card">
-    <div class="ch"><div class="ci">⚖️</div><div><h2>Fixed Shares — أصحاب الفروض</h2></div></div>
+    <div class="ch"><div class="ci">⚖️</div><div><h2 class="t" data-k="secFixed">Fixed Shares</h2></div></div>
     <div class="rtw"><table class="rt">
-      <thead><tr><th>Heir</th><th>Share</th><th>Condition</th></tr></thead>
+      <thead><tr><th class="t" data-k="col_heir">Heir</th><th class="t" data-k="col_fix">Share</th><th class="t" data-k="col_cond">Condition</th></tr></thead>
       <tbody>
         <tr><td class="hn">Husband (الزوج)</td><td><span class="frc"><span class="ft">1</span><span>2</span></span></td><td>No child</td></tr>
         <tr><td class="hn">Husband (الزوج)</td><td><span class="frc"><span class="ft">1</span><span>4</span></span></td><td>With child</td></tr>
@@ -787,11 +787,11 @@ select{appearance:auto;}
     </table></div>
   </div>
   <div class="card">
-    <div class="ch"><div class="ci">📏</div><div><h2>Key Rules — القواعد الأساسية</h2></div></div>
+    <div class="ch"><div class="ci">📏</div><div><h2 class="t" data-k="secRules">Key Rules</h2></div></div>
     <div class="sti"><div class="stn">1</div><div class="stc"><h4>Awl (عول) — Proportional Reduction</h4><p>When fixed shares exceed 100%, all are reduced proportionally. Base (Asl al-Masala) is raised to accommodate.</p></div></div>
     <div class="sti"><div class="stn">2</div><div class="stc"><h4>Radd (رد) — Return of Surplus</h4><p>When fixed shares total less than 100% and no Asaba exists, surplus returns proportionally to Furud heirs (including spouses — contemporary ruling).</p></div></div>
     <div class="sti"><div class="stn">3</div><div class="stc"><h4>Hajb (حجب) — Exclusion</h4><p>Hirman: Complete exclusion by closer relative. Nuqsan: Share reduced (e.g., mother 1/3 → 1/6 when child present).</p></div></div>
-    <div class="sti"><div class="stn">4</div><div class="stc"><h4>Asaba — Residual Heirs</h4><p>Sons, fathers, brothers inherit what remains after Furud fixed shares. Males get double females in same category.</p></div></div>
+    <div class="sti"><div class="stn">4</div><div class="stc"><h4>${t('secAsaba')}</h4><p>Sons, fathers, brothers inherit what remains after Furud fixed shares. Males get double females in same category.</p></div></div>
     <div class="sti"><div class="stn">5</div><div class="stc"><h4>Umariyyatain (الغراوَين)</h4><p>When spouse + both parents present (no children): Mother gets 1/3 of REMAINDER after spouse's share, not 1/3 of whole estate.</p></div></div>
   </div>
 </section>
@@ -977,10 +977,10 @@ function getLbl(key, lang){
 const T={
   en:{
     navWelcome:'Welcome',navDeceased:'Deceased Profile',navMadhhab:'Fiqh School',
-    navHeirs:'Select Heirs',navMunasakha:'Munasakha',navResults:'Results',navGuide:'Faraid Guide',navAbout:'About Developer',
+    navHeirs:'Select Heirs',navResults:'Results',navGuide:'Faraid Guide',navAbout:'About Developer',
     welcomeDesc:"Complete Islamic Inheritance calculator — Hanafi & Shafi'i with Awl, Radd, Hajb",
     beginCalc:'Begin Calculation',
-    f1t:'Complete Faraid',f1d:'Awl · Radd · Hajb · Tashih · Munasakha',
+    f1t:'Complete Faraid',f1d:'Awl · Radd · Hajb · Tashih · Dhul-Arham',
     f2t:'Two Madhhabs',f2d:"Hanafi and Shafi'i",
     f3t:'3 Languages',f3d:'Urdu · English · Arabic',
     f4t:'Detailed Results',f4d:'Fractions · Percentages · Amounts',
@@ -1022,15 +1022,15 @@ const T={
     bhanjaLabel:"Sister's Son",bhanjiLabel:"Sister's Daughter",
     phuphiLabel:'Paternal Aunt',khalaLabel:'Maternal Aunt',
     mamuLabel:'Maternal Uncle',nanaLabel:'Maternal Grandfather',
-    btnNextMun:'Next: Munasakha',
-    munPageTitle:'Munasakha',munPageSub:'Sequential inheritance',
-    munInfoTitle:'MUNASAKHA',munInfoText:"Applies when an heir dies before distribution. Optional — skip if not applicable.",
-    munCardTitle:'Add Deceased Heir',enableMun:'Enable Munasakha',addMunBtn:'Add Another',
+    btnCalc:'Calculate',munInfoText:"Applies when an heir dies before distribution. Optional — skip if not applicable.",
     btnCalc:'Calculate Inheritance',
+    resPageAr:'',
     resPageTitle:'Inheritance Results',resPageSub:'Complete Faraid calculation',
     editHeirs:'← Edit Heirs',newCalc:'🔄 New',printBtn:'Print',
     guidePageTitle:'Faraid Guide',guidePageSub:'Reference for Islamic Inheritance rules',
     notSelected:'Not selected',selected:'Selected ✓',
+    secRules:'Key Rules',col_cond:'Condition',
+    secFixed:'Fixed Shares',secAsaba:'Residuary Heirs',secDhaw:'Dhul-Arham',secExcl:'Excluded (Hajb)',secSteps:'Calculation Steps',secTashih:'Tashih al-Masala',
     col_heir:'Heir',col_cnt:'Count',col_fix:'Fixed Share',col_pct:'% Share',col_total:'Total (PKR)',col_per:'Per Person (PKR)',
     stepsTitle:'Calculation Steps',estDedTitle:'Estate Summary',
     item_total:'Total Estate',item_fun:'Funeral Expenses',item_debt:'Debts',item_was:'Wasiyyah',item_net:'Net Distributable',
@@ -1066,14 +1066,21 @@ const T={
     hnt_gm_pat:'⅙ (if no mother or father)',
     hnt_gm_mat:'⅙ (if no mother)',
     hnt_dhaw:'Only when no Furud/Asaba heirs exist',
+    secDistChart:'Distribution Chart',
+    secHeirDetails:'Heir Details',
+    secFardRadd:'Fard & Radd Breakdown',
+    colFard:'Fard (PKR)',
+    colRadd:'Radd (PKR)',
+    lbl_complete:'Complete',
+    col_item:'Item',col_priority:'Priority',
     abt:'About',
   },
   ur:{
     navWelcome:'خوش آمدید',navDeceased:'متوفی کی معلومات',navMadhhab:'فقہی مذہب',
-    navHeirs:'وارثین کا انتخاب',navMunasakha:'مناسخہ',navResults:'نتائج',navGuide:'فرائض رہنما',navAbout:'ڈویلپر کے بارے میں',
+    navHeirs:'وارثین کا انتخاب',navResults:'نتائج',navGuide:'فرائض رہنما',navAbout:'ڈویلپر کے بارے میں',
     welcomeDesc:'جامع اسلامی میراث کیلکولیٹر — حنفی اور شافعی مذاہب کے ساتھ عول، رد، حجب',
     beginCalc:'حساب شروع کریں',
-    f1t:'مکمل فرائض',f1d:'عول · رد · حجب · تصحیح · مناسخہ',
+    f1t:'مکمل فرائض',f1d:'عول · رد · حجب · تصحیح · ',
     f2t:'دو مذاہب',f2d:'حنفی اور شافعی',
     f3t:'تین زبانیں',f3d:'اردو · انگریزی · عربی',
     f4t:'تفصیلی نتائج',f4d:'کسور · فیصد · رقم',
@@ -1111,15 +1118,15 @@ const T={
     puncPatLabel:'چچا (علاتی)',pbnSonsLabel:'چچازاد (حقیقی)',puncCouLabel:'چچازاد (علاتی)',
     nawasaLabel:'نواسہ',nawasiLabel:'نواسی',bhanjaLabel:'بھانجا',bhanjiLabel:'بھانجی',
     phuphiLabel:'پھوپھی',khalaLabel:'خالہ',mamuLabel:'ماموں',nanaLabel:'نانا',
-    btnNextMun:'آگے: مناسخہ',
-    munPageTitle:'مناسخہ',munPageSub:'ترتیبی وراثت',
-    munInfoTitle:'مناسخہ',munInfoText:'تقسیم سے پہلے وارث کی وفات ہو تو اس کا حصہ اس کے وارثین میں جاتا ہے۔ اختیاری۔',
-    munCardTitle:'متوفی وارث شامل کریں',enableMun:'مناسخہ فعال کریں',addMunBtn:'مزید شامل کریں',
+    btnCalc:'حساب کریں',
     btnCalc:'میراث کا حساب لگائیں',
+    resPageAr:'نتائج حساب الفرائض',
     resPageTitle:'تقسیم میراث کے نتائج',resPageSub:'مکمل فرائض حساب',
     editHeirs:'← وارثین تبدیل کریں',newCalc:'🔄 نئی تقسیم',printBtn:'پرنٹ',
     guidePageTitle:'فرائض رہنما',guidePageSub:'اسلامی میراث کے قواعد',
     notSelected:'منتخب نہیں',selected:'منتخب ✓',
+    secRules:'اہم قواعد',col_cond:'شرط',
+    secFixed:'اصحابِ فروض',secAsaba:'عصبات',secDhaw:'ذوی الارحام',secExcl:'محجوب وارثین',secSteps:'حساب کے مراحل',secTashih:'تصحیح المسألة',
     col_heir:'وارث',col_cnt:'تعداد',col_fix:'مقررہ حصہ',col_pct:'فیصد',col_total:'کل رقم',col_per:'فی کس',
     stepsTitle:'حسابی مراحل',estDedTitle:'ترکہ کا خلاصہ',
     item_total:'کل ترکہ',item_fun:'تجہیز و تکفین',item_debt:'قرض',item_was:'وصیت',item_net:'قابل تقسیم',
@@ -1155,14 +1162,21 @@ const T={
     hnt_gm_pat:'سدس (والدہ اور والد نہ ہوں)',
     hnt_gm_mat:'سدس (والدہ نہ ہو)',
     hnt_dhaw:'صرف جب کوئی صاحبِ فرض یا عصبہ نہ ہو',
+    secDistChart:'تقسیم کا خاکہ',
+    secHeirDetails:'وارثین کی تفصیل',
+    secFardRadd:'فرض اور رد کی تفصیل',
+    colFard:'فرض (روپے)',
+    colRadd:'رد (روپے)',
+    lbl_complete:'مکمل',
+    col_item:'مد',col_priority:'ترتیب',
     abt:'تعارف',
   },
   ar:{
     navWelcome:'الرئيسية',navDeceased:'بيانات المتوفى',navMadhhab:'المذهب الفقهي',
-    navHeirs:'الورثة',navMunasakha:'المناسخة',navResults:'النتائج',navGuide:'دليل الفرائض',navAbout:'عن المطور',
+    navHeirs:'الورثة',navResults:'النتائج',navGuide:'دليل الفرائض',navAbout:'عن المطور',
     welcomeDesc:'حاسبة مواريث إسلامية شاملة — الحنفي والشافعي مع العول والرد والحجب',
     beginCalc:'ابدأ الحساب',
-    f1t:'الفرائض الكاملة',f1d:'العول · الرد · الحجب · التصحيح · المناسخة',
+    f1t:'الفرائض الكاملة',f1d:'العول · الرد · الحجب · التصحيح · ',
     f2t:'مذهبان',f2d:'الحنفي والشافعي',
     f3t:'ثلاث لغات',f3d:'أردو · إنجليزي · عربي',
     f4t:'نتائج تفصيلية',f4d:'كسور · نسب · مبالغ',
@@ -1201,15 +1215,14 @@ const T={
     nawasaLabel:'ابن البنت',nawasiLabel:'بنت البنت',
     bhanjaLabel:'ابن الأخت',bhanjiLabel:'بنت الأخت',
     phuphiLabel:'العمة',khalaLabel:'الخالة',mamuLabel:'الخال',nanaLabel:'أبو الأم',
-    btnNextMun:'التالي: المناسخة',
-    munPageTitle:'المناسخة',munPageSub:'التوارث المتتالي',
-    munInfoTitle:'المناسخة',munInfoText:'تُطبَّق عندما يموت أحد الورثة قبل القسمة. اختياري.',
-    munCardTitle:'إضافة وارث متوفى',enableMun:'تفعيل المناسخة',addMunBtn:'إضافة آخر',
+    btnCalc:'احسب',
     btnCalc:'احسب الميراث',
     resPageTitle:'نتائج توزيع الإرث',resPageSub:'حساب الفرائض الكامل',
     editHeirs:'← تعديل الورثة',newCalc:'🔄 حساب جديد',printBtn:'طباعة',
     guidePageTitle:'دليل الفرائض',guidePageSub:'مرجع أحكام الميراث الإسلامي',
     notSelected:'غير محدد',selected:'محدد ✓',
+    secRules:'القواعد الأساسية',col_cond:'الشرط',
+    secFixed:'أصحاب الفروض',secAsaba:'العصبات',secDhaw:'ذوو الأرحام',secExcl:'المحجوبون',secSteps:'خطوات الحساب',secTashih:'تصحيح المسألة',
     col_heir:'الوارث',col_cnt:'العدد',col_fix:'الفريضة',col_pct:'النسبة',col_total:'الإجمالي',col_per:'للفرد',
     stepsTitle:'خطوات الحساب',estDedTitle:'ملخص التركة',
     item_total:'إجمالي التركة',item_fun:'مصاريف التجهيز',item_debt:'الديون',item_was:'الوصية',item_net:'صافي القابل للتوزيع',
@@ -1245,6 +1258,13 @@ const T={
     hnt_gm_pat:'السدس (عند عدم الأم والأب)',
     hnt_gm_mat:'السدس (عند عدم الأم)',
     hnt_dhaw:'يرثون عند غياب أصحاب الفروض والعصبات',
+    secDistChart:'مخطط التوزيع',
+    secHeirDetails:'تفاصيل الورثة',
+    secFardRadd:'تفصيل الفرض والرد',
+    colFard:'الفرض',
+    colRadd:'الرد',
+    lbl_complete:'مكتمل',
+    col_item:'البند',col_priority:'الأولوية',
     abt:'عن التطبيق',
   }
 };
@@ -2147,7 +2167,7 @@ function renderResults(r){
       <div class="sc"><div class="sl2">${t('summNet')}</div><div class="sv">${fmtPKR(r.net)}</div><div class="ssub">PKR</div></div>
       <div class="sc"><div class="sl2">${t('heirCnt')}</div><div class="sv">${r.final.length}</div><div class="ssub">${t('heirCnt')}</div></div>
       <div class="sc dng"><div class="sl2">${t('exclCnt')}</div><div class="sv">${r.excl.length}</div><div class="ssub">${t('exclCnt')}</div></div>
-      <div class="sc gld"><div class="sl2">${t('baseLbl')}</div><div class="sv">${r.tashihAsl}</div><div class="ssub">${t('tashihLbl')||t('tashihLbl')||'تصحیح'}</div></div>
+      <div class="sc gld"><div class="sl2">${t('baseLbl')}</div><div class="sv">${r.tashihAsl}</div><div class="ssub">${t('tashihLbl')||t('secTashih')||'تصحیح المسألة'}</div></div>
     </div>
     ${r.rule==='awl'?`<div class="ind awl">${t('awlMsg')}</div>`:''}
     ${r.rule==='radd'?`<div class="ind rdd">${t('raddMsg')}</div>`:''}
@@ -2155,7 +2175,7 @@ function renderResults(r){
   </div>
 
   <div class="card" style="direction:${isRTL?'rtl':'ltr'}">
-    <div class="ch"><div class="ci">🥧</div><div><h2>${t('chartTitle')||'Distribution Chart'}</h2></div></div>
+    <div class="ch"><div class="ci">🥧</div><div><h2>${t('chartTitle')||t('secDistChart')}</h2></div></div>
     <div class="piebox">
       <div class="piew"><canvas id="pc" width="175" height="175"></canvas></div>
       <div class="piel">${pie.map(d=>`<div class="li"><div class="ldot" style="background:${d.col}"></div><div><strong>${d.lbl}</strong><br><span style="color:var(--tm)">${fmtPct(d.pct)}% — ${fmtPKR(d.pct/100*r.net)} PKR</span></div></div>`).join('')}</div>
@@ -2163,16 +2183,16 @@ function renderResults(r){
   </div>
 
   <div class="card" style="direction:${isRTL?'rtl':'ltr'}">
-    <div class="ch"><div class="ci">⚖️</div><div><h2>${t('detTitle')||'Heir Details'}</h2></div></div>
-    ${r.rule==='radd'?`<div class="ib gl" style="font-size:0.78rem;margin-bottom:10px"><strong>📋 ${isRTL?(S.lang==='ar'?'تفصيل الفريضة والرد':'فرض اور رد کی تفصیل'):'Fard & Radd Breakdown'}</strong><p>${isRTL?(S.lang==='ar'?'كل وارث يحصل على حصته الشرعية المقررة (فرض) ثم يُضاف إليها نصيبه من الفائض (رد)':'ہر وارث کو پہلے اس کا مقررہ فقہی حصہ (فرض) ملتا ہے، پھر باقی ترکہ "رد" کے اصول کے تحت واپس دیا جاتا ہے'):'Each heir first receives their prescribed Islamic share (Fard), then the remaining estate is returned to them via Radd.'}</p></div>`:''}
+    <div class="ch"><div class="ci">⚖️</div><div><h2>${t('detTitle')||t('secHeirDetails')}</h2></div></div>
+    ${r.rule==='radd'?`<div class="ib gl" style="font-size:0.78rem;margin-bottom:10px"><strong>📋 ${isRTL?(S.lang==='ar'?'تفصيل الفريضة والرد':'فرض اور رد کی تفصیل'):t('secFardRadd')}</strong><p>${isRTL?(S.lang==='ar'?'كل وارث يحصل على حصته الشرعية المقررة (فرض) ثم يُضاف إليها نصيبه من الفائض (رد)':'ہر وارث کو پہلے اس کا مقررہ فقہی حصہ (فرض) ملتا ہے، پھر باقی ترکہ "رد" کے اصول کے تحت واپس دیا جاتا ہے'):'Each heir first receives their prescribed Islamic share (Fard), then the remaining estate is returned to them via Radd.'}</p></div>`:''}
     <div class="ib em" style="font-size:0.75rem;margin-bottom:10px">
-      <strong>⚖️ ${t('tashihLbl')||'Tashih al-Masala'}</strong>
+      <strong>⚖️ ${t('tashihLbl')||t('secTashih')}</strong>
       <p>${isRTL?(S.lang==='ar'?`أصل المسألة = ${r.tashihAsl} — كل الأسهم محسوبة من هذا العدد`:`اصل المسألة = ${r.tashihAsl} — تمام حصے اسی عدد سے`):`Asl al-Masala = ${r.tashihAsl} — all shares are parts of this base number`}</p>
     </div>
     <div class="rtw"><table class="rt">
       <thead><tr><th>${t('col_heir')}</th><th>${t('col_cnt')}</th><th>${t('col_fix')}</th>
-      <th style="font-size:0.65rem">${t('ptsLbl')||'Shares'} ${r.tashihAsl}</th>
-      ${r.rule==='radd'?`<th>${isRTL?(S.lang==='ar'?'الفرض (PKR)':'فرض (PKR)'):'Fard (PKR)'}</th><th>${isRTL?(S.lang==='ar'?'الرد (PKR)':'رد (PKR)'):'Radd (PKR)'}</th>`:''}
+      <th style="font-size:0.65rem">${t('ptsLbl')||t('col_fix')} ${r.tashihAsl}</th>
+      ${r.rule==='radd'?`<th>${isRTL?(S.lang==='ar'?'الفرض (PKR)':'فرض (PKR)'):t('colFard')}</th><th>${isRTL?(S.lang==='ar'?'الرد (PKR)':'رد (PKR)'):t('colRadd')}</th>`:''}
       <th>${t('col_pct')}</th><th>${t('col_total')}</th><th>${t('col_per')}</th></tr></thead>
       <tbody>
       ${r.final.map(x=>{
@@ -2207,20 +2227,20 @@ function renderResults(r){
     <div class="ch"><div class="ci">🚫</div><div><h2>${t('excTitle')}</h2></div></div>
     <div class="rtw"><table class="rt">
       <thead><tr><th>${t('col_heir')}</th><th>Reason / سبب</th></tr></thead>
-      <tbody>${r.excl.map(e=>`<tr><td class="hn">${e.heir}</td><td>${e.reason} <span class="rtag thj">Hajb</span></td></tr>`).join('')}</tbody>
+      <tbody>${r.excl.map(e=>`<tr><td class="hn">${e.heir}</td><td>${e.reason} <span class="rtag thj">${t('secExcl')}</span></td></tr>`).join('')}</tbody>
     </table></div>
   </div>`:''}
 
   <div class="card" style="direction:${isRTL?'rtl':'ltr'}">
     <div class="ch"><div class="ci">📝</div><div><h2>${t('stepsTitle')}</h2></div></div>
     ${r.steps.map((s,i)=>`<div class="sti"><div class="stn">${i+1}</div><div class="stc"><h4>${s.title}</h4>${s.ar?`<span class="arn">${s.ar}</span>`:''}<p>${s.text}</p></div></div>`).join('')}
-    <div class="sti"><div class="stn">✓</div><div class="stc"><h4>${t('totalRow')||'Complete'}</h4><p>Net: PKR ${fmtPKR(r.net)} | Distributed: PKR ${fmtPKR(totD)} | ${mhLbl}</p></div></div>
+    <div class="sti"><div class="stn">✓</div><div class="stc"><h4>${t('totalRow')||t('lbl_complete')}</h4><p>Net: PKR ${fmtPKR(r.net)} | Distributed: PKR ${fmtPKR(totD)} | ${mhLbl}</p></div></div>
   </div>
 
   <div class="card" style="direction:${isRTL?'rtl':'ltr'}">
     <div class="ch"><div class="ci">💰</div><div><h2>${t('estDedTitle')}</h2></div></div>
     <div class="rtw"><table class="rt">
-      <thead><tr><th>Item</th><th>PKR</th><th>Priority</th></tr></thead>
+      <thead><tr><th class="t" data-k="col_item">${t('col_item')}</th><th>PKR</th><th class="t" data-k="col_priority">${t('col_priority')}</th></tr></thead>
       <tbody>
         <tr><td><strong>${t('item_total')}</strong></td><td><strong>${fmtPKR(S.est.total)}</strong></td><td>—</td></tr>
         <tr><td>${t('item_fun')}</td><td style="color:var(--dg)">− ${fmtPKR(S.est.funeral)}</td><td><span class="badge bdg">1st</span></td></tr>
