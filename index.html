@@ -1,0 +1,2833 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>SM Miras Calculator | Islamic Inheritance System</title>
+<meta name="theme-color" content="#0F3D25">
+<meta name="application-name" content="SM Miras Calculator">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SM Miras">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Islamic Inheritance Faraid Calculator - Hanafi & Shafi'i - Dr. Sajid Mahmood">
+<link rel="manifest" id="pwa-manifest">
+<style>
+/* ── Offline-safe font stack — no external requests ── */
+/* Cinzel → Georgia / Times for decorative headings */
+/* SM Miras Calculator v3.0 — Self-Hosted Fonts (PWA Offline)
+   اردو:    جمیل نوری نستعلیق  — JameelNooriNastaleeq.ttf
+   عربی:    عثمانی طہٰ نسخ     — UthmanTahaNaskh.ttf
+   English: System sans-serif
+*/
+
+/* ── اردو: جمیل نوری نستعلیق ── */
+@font-face{
+  font-family:'JameelNooriNastaleeq';
+  src:url('JameelNooriNastaleeq.ttf') format('truetype');
+  font-weight:normal;font-style:normal;font-display:swap;
+}
+
+/* ── عربی: عثمانی طہٰ نسخ (KFGQPC) ── */
+@font-face{
+  font-family:'UthmanTahaNaskh';
+  src:url('UthmanTahaNaskh.ttf') format('truetype');
+  font-weight:normal;font-style:normal;font-display:swap;
+}
+
+@font-face{font-family:'Cinzel';src:local('Cinzel'),local('Palatino Linotype'),local('Palatino'),local('Georgia');font-weight:400 700;}
+</style>
+<style id="font-override">
+:root{
+  /* Per-language fonts — one font per language, no mixing */
+  --font-ur:'JameelNooriNastaleeq',serif;          /* اردو */
+  --font-ar:'UthmanTahaNaskh',serif;               /* عربی */
+  --font-en:'Segoe UI',system-ui,-apple-system,sans-serif; /* English */
+  /* Legacy aliases */
+  --fa:'UthmanTahaNaskh',serif;
+  --fu:'JameelNooriNastaleeq',serif;
+  --fd:'Cinzel','Georgia',serif;
+  --fb:'Segoe UI',system-ui,-apple-system,sans-serif;
+}
+</style>
+<style>
+:root{
+  --gold:#C9A84C;--gold-l:#E8CC7A;--gold-d:#8B6914;
+  --em:#1B6B4A;--em-l:#2E9B6E;--em-d:#0D3D28;
+  --cream:#FDF8F0;--cream2:#F5EDD8;
+  --tp:#1A1208;--ts:#4A3B1E;--tm:#7A6847;
+  --bo:#D4B86A;--bl:#EAD898;
+  --cbg:#FFFEF9;--sb:#0F3D25;--st:#E8D49A;
+  --dg:#8B1A1A;--dgl:#FFF0F0;
+  --sl:#F0FFF8;--wl:#FFF8E1;--wc:#7A4E00;
+  --sh:0 4px 24px rgba(139,105,20,0.12);
+  --r:12px;--rl:18px;
+  --fa:'UthmanTahaNaskh',serif; --fu:'JameelNooriNastaleeq',serif;
+  --fd:'Cinzel',serif;--fb:'Lato',sans-serif;
+  --tr:all 0.3s ease;
+}
+[data-theme="dark"]{
+  --gold:#E8CC7A;--gold-l:#F5E0A0;--gold-d:#C9A84C;
+  --em:#2E9B6E;--em-l:#40BF8A;--em-d:#1B6B4A;
+  --cream:#1A1208;--cream2:#221A0A;
+  --tp:#F5EDD8;--ts:#D4B86A;--tm:#9A8050;
+  --bo:#4A3B1E;--bl:#3A2E14;
+  --cbg:#221A0A;--sb:#0A2518;--st:#C9A84C;
+  --dg:#FF6B6B;--dgl:#2A1010;
+  --sl:#0A2018;--wl:#2A1E08;--wc:#FFB74D;
+  --sh:0 4px 24px rgba(0,0,0,0.4);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;}
+input,textarea,select{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--cream);color:var(--tp);min-height:100vh;transition:var(--tr);line-height:1.6;}
+
+/* ══ HEADER — Always English, Always LTR ══ */
+.hdr{background:linear-gradient(135deg,#071810 0%,#0F3D25 40%,#1B6B4A 70%,#0A2518 100%);position:fixed;top:0;left:0;right:0;z-index:300;box-shadow:0 4px 24px rgba(0,0,0,0.38);border-bottom:1px solid rgba(201,168,76,0.22);direction:ltr!important;}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:8px;max-width:1200px;margin:0 auto;direction:ltr!important;}
+.hdr-brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.logo-wrap{flex-shrink:0;}
+.hdr-titles{min-width:0;}
+.hdr-main{font-family:var(--fd);font-size:1.4rem;font-weight:700;color:var(--gold-l);letter-spacing:4px;line-height:1;white-space:nowrap;}
+.hdr-sub{font-size:0.62rem;color:rgba(255,255,255,0.5);letter-spacing:0.5px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* ══ Controls: Lang buttons SEPARATE from theme/print ══ */
+.hdr-ctrl{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.hdr-ctrl-sep{width:1px;height:22px;background:rgba(201,168,76,0.3);margin:0 3px;}
+.lbtn{padding:5px 9px;border:1.5px solid rgba(201,168,76,0.4);border-radius:14px;background:rgba(201,168,76,0.08);color:rgba(232,204,122,0.75);font-size:0.68rem;cursor:pointer;font-family:var(--fb);font-weight:700;transition:var(--tr);letter-spacing:.5px;}
+.lbtn:hover,.lbtn.active{background:rgba(201,168,76,0.25);border-color:var(--gold);color:var(--gold-l);}
+.lbtn.active{background:rgba(201,168,76,0.22);color:var(--gold);}
+.ico-btn{display:flex;align-items:center;gap:4px;padding:6px 10px;border:1.5px solid rgba(201,168,76,0.35);border-radius:16px;background:rgba(201,168,76,0.08);color:var(--gold-l);font-size:0.7rem;cursor:pointer;font-family:var(--fb);transition:var(--tr);font-weight:700;white-space:nowrap;}
+.ico-btn:hover{background:rgba(201,168,76,0.22);border-color:var(--gold);}
+
+/* ══ MOBILE NAV ══ */
+.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--sb);border-top:1px solid rgba(201,168,76,0.2);padding:4px 2px;justify-content:space-around;box-shadow:0 -4px 16px rgba(0,0,0,0.3);direction:ltr!important;}
+.mnv{display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 6px;border:none;background:transparent;color:rgba(232,212,154,0.6);font-size:0.5rem;cursor:pointer;border-radius:8px;transition:var(--tr);font-family:var(--fb);min-width:40px;}
+.mnv .mi{font-size:19px;line-height:1;}
+.mnv.active{color:var(--gold);}
+
+/* ══ LAYOUT ══ */
+.page-wrap{padding-top:65px;}
+.layout{display:flex;min-height:calc(100vh - 65px);}
+.sidebar{width:240px;background:var(--sb);flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:65px;height:calc(100vh - 65px);overflow-y:auto;z-index:100;}
+.sb-nav{padding:10px 8px;flex:1;}
+.sb-sec{font-size:0.55rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(201,168,76,0.5);padding:8px 10px 3px;font-family:var(--fd);}
+.nvi{display:flex;align-items:center;gap:8px;padding:8px 11px;border-radius:var(--r);cursor:pointer;transition:var(--tr);margin:1px 0;color:var(--st);font-size:0.8rem;font-weight:400;border:none;background:transparent;width:100%;text-align:left;}
+.nvi:hover{background:rgba(201,168,76,0.1);color:var(--gold-l);}
+.nvi.active{background:rgba(201,168,76,0.18);color:var(--gold);font-weight:700;border-left:3px solid var(--gold);}
+.nbadge{width:20px;height:20px;border-radius:50%;background:rgba(201,168,76,0.15);display:flex;align-items:center;justify-content:center;font-size:0.62rem;font-weight:700;color:var(--gold);flex-shrink:0;}
+.nvi.active .nbadge{background:var(--gold);color:#0A2518;}
+.sb-bot{padding:10px;border-top:1px solid rgba(201,168,76,0.15);}
+.dcard{background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.15);border-radius:var(--r);padding:9px;}
+.dcard h4{color:var(--gold);font-family:var(--fd);font-size:0.6rem;letter-spacing:1px;margin-bottom:4px;font-weight:600;}
+.dcard p{color:var(--st);font-size:0.65rem;line-height:1.6;opacity:0.8;}
+.divr{height:1px;background:var(--bl);margin:10px 0;}
+
+/* ══ MAIN ══ */
+.main{flex:1;padding:20px;overflow-x:hidden;min-width:0;}
+.pg{display:none;}
+.pg.active{display:block;animation:fi 0.3s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══ HERO SECTION (smaller, no bismillah) ══ */
+.hero{text-align:center;padding:24px 18px 20px;background:linear-gradient(135deg,var(--em-d) 0%,var(--em) 100%);border-radius:var(--rl);margin-bottom:18px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(201,168,76,0.03) 12px,rgba(201,168,76,0.03) 24px);pointer-events:none;}
+.hero-title{font-family:var(--fd);font-size:1.6rem;font-weight:700;color:var(--gold);letter-spacing:3px;margin-bottom:4px;}
+.hero-sub{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:14px;line-height:1.6;}
+.hero-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:linear-gradient(135deg,var(--gold-d),var(--gold));color:#0A2518;border:none;border-radius:10px;font-size:0.88rem;font-weight:700;font-family:var(--fb);cursor:pointer;transition:var(--tr);}
+.hero-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,0.4);}
+
+/* ══ FEATURE GRID ══ */
+.fgr{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:11px;margin-bottom:18px;}
+.fcard{background:var(--cbg);border:1px solid var(--bl);border-radius:var(--r);padding:12px;display:flex;gap:9px;align-items:flex-start;}
+.fic{font-size:18px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--cream2);flex-shrink:0;}
+.fcard h4{font-size:0.82rem;font-weight:700;color:var(--tp);margin-bottom:2px;}
+.fcard p{font-size:0.72rem;color:var(--tm);line-height:1.5;}
+
+/* ══ CARDS ══ */
+.card{background:var(--cbg);border:1px solid var(--bl);border-radius:var(--rl);padding:18px;margin-bottom:14px;box-shadow:var(--sh);transition:var(--tr);}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--bl);}
+.ci{width:35px;height:35px;border-radius:9px;background:linear-gradient(135deg,var(--em),var(--em-l));display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.ch h2{font-family:var(--fd);font-size:0.95rem;color:var(--tp);font-weight:600;}
+.ch p{font-size:0.72rem;color:var(--tm);margin-top:2px;}
+
+/* ══ PAGE TITLE ══ */
+.pgt{display:flex;align-items:center;gap:11px;margin-bottom:18px;}
+.ptic{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--gold-d),var(--gold));display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(201,168,76,0.25);}
+.ptt h2{font-family:var(--fd);font-size:1.25rem;color:var(--tp);font-weight:700;line-height:1;}
+.ptt p{color:var(--tm);font-size:0.78rem;margin-top:2px;}
+.ptt .ar{font-family:var(--fa);font-size:0.9rem;color:var(--gold-d);direction:rtl;}
+
+/* ══ FORMS ══ */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fg{display:flex;flex-direction:column;gap:4px;}
+.fg.full{grid-column:1/-1;}
+label{font-size:0.78rem;font-weight:700;color:var(--ts);letter-spacing:0.3px;}
+.lar{font-family:var(--fa);font-size:0.82rem;color:var(--tm);display:block;margin-top:1px;}
+input[type="text"],input[type="number"],select,textarea{padding:8px 11px;border:1.5px solid var(--bl);border-radius:9px;background:var(--cream);color:var(--tp);font-size:0.84rem;font-family:var(--fb);transition:var(--tr);outline:none;width:100%;}
+input:focus,select:focus{border-color:var(--em);box-shadow:0 0 0 3px rgba(27,107,74,0.1);}
+[data-theme="dark"] input,[data-theme="dark"] select{background:var(--cream2);}
+.hint{font-size:0.68rem;color:var(--tm);font-style:italic;}
+.pw{position:relative;}
+.pw .pfx{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--tm);font-weight:700;font-size:0.78rem;pointer-events:none;}
+.pw input{padding-left:42px;}
+
+/* ══ HEIR CARDS ══ */
+.hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;}
+.hcard{background:var(--cream);border:1.5px solid var(--bl);border-radius:var(--r);padding:11px 13px;transition:var(--tr);}
+.hcard.sel{border-color:var(--em);background:var(--sl);box-shadow:0 2px 10px rgba(27,107,74,0.12);}
+.hch{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;}
+.hlbl{font-weight:700;font-size:0.82rem;color:var(--tp);line-height:1.3;}
+.har{font-family:'UthmanTahaNaskh',serif;font-size:0.88rem;color:var(--tm);margin-top:2px;direction:rtl;text-align:right;display:none;}
+/* Arabic sub-text: show only in EN as reference, hide in UR/AR */
+/* ── Language-based Arabic visibility rules ── */
+/* EN mode: .har shows as Arabic reference; .ar page-spans hidden */
+html[lang="en"] .har{display:block;}
+html[lang="ur"] .har,html[lang="ar"] .har{display:none!important;}
+/* Hide Arabic annotation spans in EN mode (page titles, section headers) */
+html[lang="en"] .ar,html[lang="en"] .arn{display:none!important;}
+/* In UR mode: show Arabic annotations as reference */
+html[lang="ur"] .ar{display:inline;}
+html[lang="ur"] .arn{display:inline;}
+/* In AR mode: .ar shows, .har hides (no duplicate) */
+html[lang="ar"] .ar{display:inline;}
+html[lang="ar"] .arn{display:inline;}
+html[lang="ar"] .har{display:none!important;}
+.hsbadge{font-size:0.65rem;color:var(--em);font-weight:700;background:var(--sl);padding:2px 6px;border-radius:8px;white-space:nowrap;flex-shrink:0;margin-left:4px;}
+.sw{display:flex;align-items:center;gap:7px;}
+.switch{position:relative;width:38px;height:21px;flex-shrink:0;}
+.switch input{opacity:0;width:0;height:0;}
+.sldr{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--bl);border-radius:21px;transition:.3s;}
+.sldr:before{position:absolute;content:"";height:15px;width:15px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;box-shadow:0 1px 4px rgba(0,0,0,0.2);}
+input:checked+.sldr{background:var(--em);}
+input:checked+.sldr:before{transform:translateX(17px);}
+.nr{display:flex;align-items:center;gap:6px;margin-top:7px;}
+.nb{width:27px;height:27px;border:1.5px solid var(--bo);border-radius:7px;background:var(--cream);cursor:pointer;font-size:14px;font-weight:700;color:var(--ts);display:flex;align-items:center;justify-content:center;transition:var(--tr);flex-shrink:0;}
+.nb:hover{background:var(--em);color:white;border-color:var(--em);}
+.nd{min-width:30px;text-align:center;font-weight:700;font-size:0.92rem;color:var(--tp);}
+
+/* ══ MADHHAB ══ */
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:13px;}
+.mopt{padding:13px;border:2px solid var(--bl);border-radius:var(--r);cursor:pointer;transition:var(--tr);text-align:center;background:var(--cream);}
+.mopt:hover{border-color:var(--em-l);}
+.mopt.sel{border-color:var(--gold);background:var(--wl);box-shadow:0 2px 10px rgba(201,168,76,0.15);}
+.mopt h3{font-family:var(--fd);font-size:0.9rem;color:var(--tp);margin-bottom:2px;font-weight:600;}
+.mopt .aar{font-family:var(--fa);font-size:0.95rem;color:var(--gold-d);}
+.mopt p{font-size:0.68rem;color:var(--tm);}
+
+/* ══ BUTTONS ══ */
+.bp{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;background:linear-gradient(135deg,var(--em-d),var(--em));color:white;border:none;border-radius:10px;font-size:0.86rem;font-weight:700;font-family:var(--fb);cursor:pointer;transition:var(--tr);}
+.bp:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(27,107,74,0.3);}
+.bs{display:inline-flex;align-items:center;gap:6px;padding:9px 17px;background:transparent;color:var(--ts);border:1.5px solid var(--bo);border-radius:10px;font-size:0.82rem;font-weight:600;font-family:var(--fb);cursor:pointer;transition:var(--tr);}
+.bs:hover{background:var(--cream2);}
+.bg{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;background:linear-gradient(135deg,var(--gold-d),var(--gold));color:#0A2518;border:none;border-radius:10px;font-size:0.86rem;font-weight:700;font-family:var(--fb);cursor:pointer;transition:var(--tr);}
+.bg:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(201,168,76,0.35);}
+.brow{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:14px;flex-wrap:wrap;}
+
+/* ══ RESULT CARDS ══ */
+.rsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px;}
+.sc{background:var(--cream);border:1px solid var(--bl);border-radius:var(--r);padding:12px;text-align:center;}
+.sl2{font-size:0.62rem;color:var(--tm);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:3px;}
+.sv{font-size:1.15rem;font-weight:700;color:var(--em);font-family:var(--fd);}
+.ssub{font-size:0.62rem;color:var(--tm);margin-top:2px;}
+.sc.gld .sv{color:var(--gold-d);}
+.sc.dng .sv{color:var(--dg);}
+
+/* ══ TABLE ══ */
+.rtw{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.rt{width:100%;border-collapse:collapse;font-size:0.8rem;}
+.rt th{background:var(--sb);color:var(--gold);padding:9px 11px;text-align:left;font-family:var(--fd);font-size:0.67rem;letter-spacing:0.5px;font-weight:600;}
+.rt td{padding:9px 11px;border-bottom:1px solid var(--bl);color:var(--tp);vertical-align:middle;}
+.rt tr:hover td{background:var(--cream);}
+.rt tfoot td{background:var(--cream2)!important;}
+.hn{font-weight:700;}
+.frc{display:inline-flex;flex-direction:column;align-items:center;font-size:0.74rem;font-weight:700;background:var(--sl);color:var(--em);padding:2px 7px;border-radius:6px;line-height:1.2;}
+.frc .ft{border-bottom:1.5px solid var(--em);padding-bottom:1px;}
+.pb{background:var(--wl);color:var(--wc);padding:2px 7px;border-radius:6px;font-weight:700;font-size:0.75rem;}
+.mn{font-weight:700;color:var(--em-d);font-family:var(--fd);}
+.rtag{display:inline-block;font-size:0.62rem;padding:2px 6px;border-radius:7px;font-weight:700;margin-right:2px;}
+.tf{background:#E8F4FD;color:#1565C0;}
+.ta{background:#E8F5E9;color:#1B5E20;}
+.tawl{background:#FFF3E0;color:#E65100;}
+.trdd{background:#F3E5F5;color:#4A148C;}
+.thj{background:#FCE4EC;color:#880E4F;}
+
+/* ══ INFO BOXES ══ */
+.ib{padding:11px 13px;border-radius:var(--r);margin-bottom:12px;border-left:4px solid;font-size:0.79rem;}
+.ib.em{background:var(--sl);border-color:var(--em);color:var(--em-d);}
+.ib.gl{background:var(--wl);border-color:var(--gold);color:var(--gold-d);}
+.ib.dg{background:var(--dgl);border-color:var(--dg);color:var(--dg);}
+.ib p{margin-top:3px;line-height:1.6;}
+.ib strong{display:block;font-family:var(--fd);font-size:0.7rem;letter-spacing:0.5px;margin-bottom:2px;}
+
+/* ══ INDICATOR ══ */
+.ind{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9px;font-size:0.78rem;font-weight:700;margin-bottom:11px;}
+.awl{background:#FFF3E0;color:#E65100;border:1px solid #FFCC02;}
+.rdd{background:#F3E5F5;color:#4A148C;border:1px solid #CE93D8;}
+.nrm{background:var(--sl);color:var(--em);border:1px solid rgba(27,107,74,0.25);}
+
+/* ══ PIE ══ */
+.piebox{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:14px;}
+.piew{width:175px;height:175px;flex-shrink:0;}
+.piel{flex:1;min-width:150px;}
+.li{display:flex;align-items:center;gap:7px;margin-bottom:5px;font-size:0.76rem;color:var(--ts);}
+.ldot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.li strong{color:var(--tp);font-size:0.8rem;}
+
+/* ══ STEPS ══ */
+.sti{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;}
+.stn{width:24px;height:24px;border-radius:50%;background:var(--gold);color:#0A2518;font-weight:700;font-size:0.72rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--fd);}
+.stc{flex:1;}
+.stc h4{font-size:0.82rem;font-weight:700;color:var(--tp);margin-bottom:2px;}
+.stc p{font-size:0.76rem;color:var(--ts);line-height:1.6;}
+.arn{font-family:'UthmanTahaNaskh',serif;font-size:0.84rem;color:var(--gold-d);direction:rtl;display:block;margin-top:2px;font-style:italic;}
+
+/* ══ BADGE ══ */
+.badge{display:inline-block;padding:2px 7px;border-radius:7px;font-size:0.64rem;font-weight:700;}
+.bem{background:var(--sl);color:var(--em);}
+.bgl{background:var(--wl);color:var(--gold-d);}
+.bdg{background:var(--dgl);color:var(--dg);}
+
+/* ══ MUNASAKHA ══ */
+.mf{background:var(--cream2);border:1px solid var(--bl);border-radius:var(--r);padding:12px;margin-bottom:9px;position:relative;}
+.rmb{position:absolute;top:9px;right:9px;width:22px;height:22px;border-radius:50%;background:var(--dgl);color:var(--dg);border:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:700;}
+
+/* ══ ABOUT MODAL ══ */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:500;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--cbg);border-radius:var(--rl);max-width:520px;width:100%;max-height:85vh;overflow-y:auto;border:1px solid var(--bl);box-shadow:0 20px 60px rgba(0,0,0,0.3);scrollbar-width:none;-ms-overflow-style:none;}
+.modal::-webkit-scrollbar{display:none;width:0;height:0;}
+.modal-hdr{background:linear-gradient(135deg,#071810,#0F3D25);padding:18px 20px;border-radius:var(--rl) var(--rl) 0 0;display:flex;align-items:center;justify-content:space-between;}
+.modal-hdr h3{font-family:var(--fd);color:var(--gold);font-size:1rem;letter-spacing:1px;}
+.modal-close{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:50%;width:28px;height:28px;color:var(--gold-l);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.modal-body{padding:20px;}
+.dev-avatar{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--em-d),var(--em));display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px;border:3px solid var(--gold);}
+.dev-name{font-family:var(--fd);font-size:1.1rem;color:var(--tp);font-weight:700;text-align:center;}
+.dev-title{font-size:0.78rem;color:var(--tm);text-align:center;margin-bottom:14px;}
+.dev-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;}
+.dev-item{background:var(--cream2);border-radius:var(--r);padding:9px;border:1px solid var(--bl);}
+.dev-item .di-lbl{font-size:0.6rem;font-weight:700;letter-spacing:0.5px;color:var(--tm);margin-bottom:2px;font-family:var(--fd);}
+.dev-item .di-val{font-size:0.78rem;color:var(--tp);font-weight:600;}
+.dev-bio{font-size:0.8rem;color:var(--ts);line-height:1.75;background:var(--cream2);border-radius:var(--r);padding:12px;border-left:3px solid var(--gold);}
+
+/* ══ INSTALL BANNER ══ */
+#install-banner{display:none;position:fixed;bottom:65px;left:10px;right:10px;z-index:290;background:linear-gradient(135deg,#0F3D25,#1B6B4A);border:1px solid rgba(201,168,76,0.4);border-radius:14px;padding:12px 15px;box-shadow:0 8px 28px rgba(0,0,0,0.3);align-items:center;gap:11px;}
+#install-banner .ib-txt{flex:1;color:var(--gold-l);font-size:0.8rem;font-weight:600;}
+#install-banner .ib-txt span{display:block;font-size:0.67rem;color:rgba(232,204,122,0.6);font-weight:400;margin-top:1px;}
+#install-banner .ib-btn{padding:7px 14px;background:var(--gold);color:#0A2518;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;cursor:pointer;}
+#install-banner .ib-x{background:transparent;border:none;color:rgba(232,204,122,0.6);font-size:18px;cursor:pointer;padding:2px 5px;line-height:1;}
+
+/* ══ FOOTER — Always English ══ */
+.ftr{background:var(--sb);padding:14px 20px;text-align:center;border-top:1px solid rgba(201,168,76,0.15);}
+.ftr p{color:rgba(201,168,76,0.6);font-size:0.68rem;line-height:1.8;}
+.ftr a{color:var(--gold);text-decoration:none;}
+.ftr strong{color:rgba(201,168,76,0.85);}
+
+/* ══ PRINT ══ */
+@media print{
+  @page{margin:10mm 8mm;size:A4;}
+  .sidebar,.hdr-ctrl,.brow,.ftr,.mob-nav,#install-banner,.modal-overlay,
+  .no-print,.ch .ci,.ptic{display:none!important;}
+  .hdr{position:relative!important;box-shadow:none!important;padding:4px 10px!important;}
+  .hdr-inner{padding:4px 8px!important;gap:4px!important;}
+  .hdr-main{font-size:1rem!important;letter-spacing:2px!important;}
+  .hdr-sub{display:none!important;}
+  .page-wrap{padding-top:0!important;}
+  .layout{display:block!important;}
+  .main{padding:0!important;}
+  .pg{display:none!important;}
+  #pg-results{display:block!important;}
+  .pgt{display:none!important;}
+  .card{
+    box-shadow:none!important;border:1px solid #ccc!important;
+    break-inside:avoid!important;margin-bottom:4px!important;
+    padding:8px 10px!important;border-radius:4px!important;
+  }
+  .ch{margin-bottom:6px!important;padding-bottom:4px!important;}
+  .ch h2{font-size:0.82rem!important;}
+  body{background:white!important;color:#000!important;font-size:0.78rem!important;}
+  .phdr{display:block!important;}
+  .rt{font-size:0.72rem!important;}
+  .rt th{
+    background:#0F3D25!important;color:#C9A84C!important;
+    padding:5px 7px!important;font-size:0.65rem!important;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  .rt td{padding:5px 7px!important;}
+  .rsum{gap:5px!important;margin-bottom:6px!important;}
+  .sc{padding:6px 8px!important;}
+  .sv{font-size:0.95rem!important;}
+  .sl2{font-size:0.55rem!important;}
+  .ssub{font-size:0.55rem!important;}
+  .ind,.ib{
+    border:1px solid #ccc!important;background:#f9f9f9!important;
+    color:#333!important;padding:5px 8px!important;margin-bottom:4px!important;
+    font-size:0.7rem!important;
+  }
+  .sti{margin-bottom:5px!important;}
+  .stn{width:18px!important;height:18px!important;font-size:0.65rem!important;}
+  .stc h4{font-size:0.75rem!important;}
+  .stc p{font-size:0.68rem!important;line-height:1.4!important;}
+  .frc{font-size:0.65rem!important;padding:1px 5px!important;}
+  .pb,.rtag{font-size:0.58rem!important;padding:1px 4px!important;}
+  .mn{font-size:0.78rem!important;}
+  .hn{font-size:0.75rem!important;}
+  .har,.ar,.arn{font-size:0.72rem!important;}
+  .rtw{overflow:visible!important;}
+  .rt{width:100%!important;table-layout:auto!important;}
+  img,svg,canvas{max-width:100%!important;}
+  .card{page-break-inside:avoid;}
+}
+.phdr{display:none;}
+
+/* ══ PDF-MODE (used by generatePDF() via html2canvas, which only reads normal
+   screen CSS, not @media print — so the same compact/hide rules above are
+   duplicated here under a plain class so they apply during capture) ══ */
+.pdf-mode .sidebar,.pdf-mode .hdr-ctrl,.pdf-mode .brow,.pdf-mode .ftr,
+.pdf-mode .mob-nav,.pdf-mode #install-banner,.pdf-mode .modal-overlay,
+.pdf-mode .no-print,.pdf-mode .ch .ci,.pdf-mode .ptic{display:none!important;}
+.pdf-mode .hdr{position:relative!important;box-shadow:none!important;padding:4px 10px!important;}
+.pdf-mode .hdr-inner{padding:4px 8px!important;gap:4px!important;}
+.pdf-mode .hdr-main{font-size:1rem!important;letter-spacing:2px!important;}
+.pdf-mode .hdr-sub{display:none!important;}
+.pdf-mode .page-wrap{padding-top:0!important;}
+.pdf-mode .layout{display:block!important;}
+.pdf-mode .main{padding:0!important;}
+.pdf-mode .pg{display:none!important;}
+.pdf-mode #pg-results{display:block!important;}
+.pdf-mode .pgt{display:none!important;}
+.pdf-mode .card{
+  box-shadow:none!important;border:1px solid #ccc!important;
+  margin-bottom:4px!important;padding:8px 10px!important;border-radius:4px!important;
+}
+.pdf-mode .ch{margin-bottom:6px!important;padding-bottom:4px!important;}
+.pdf-mode .ch h2{font-size:0.82rem!important;}
+.pdf-mode body{background:white!important;}
+.pdf-mode .phdr{display:block!important;}
+.pdf-mode .rt{font-size:0.72rem!important;width:100%!important;table-layout:auto!important;}
+.pdf-mode .rt th{
+  background:#0F3D25!important;color:#C9A84C!important;
+  padding:5px 7px!important;font-size:0.65rem!important;
+}
+.pdf-mode .rt td{padding:5px 7px!important;}
+.pdf-mode .rsum{gap:5px!important;margin-bottom:6px!important;}
+.pdf-mode .sc{padding:6px 8px!important;}
+.pdf-mode .sv{font-size:0.95rem!important;}
+.pdf-mode .sl2{font-size:0.55rem!important;}
+.pdf-mode .ssub{font-size:0.55rem!important;}
+.pdf-mode .ind,.pdf-mode .ib{
+  border:1px solid #ccc!important;background:#f9f9f9!important;
+  padding:5px 8px!important;margin-bottom:4px!important;font-size:0.7rem!important;
+}
+.pdf-mode .frc{font-size:0.65rem!important;padding:1px 5px!important;}
+.pdf-mode .pb,.pdf-mode .rtag{font-size:0.58rem!important;padding:1px 4px!important;}
+.pdf-mode .mn{font-size:0.78rem!important;}
+.pdf-mode .hn{font-size:0.75rem!important;}
+.pdf-mode .har,.pdf-mode .ar,.pdf-mode .arn{font-size:0.72rem!important;}
+.pdf-mode .rtw{overflow:visible!important;}
+.pdf-mode img,.pdf-mode svg,.pdf-mode canvas{max-width:100%!important;}
+
+/* ══ MOBILE ══ */
+@media(max-width:768px){
+  .sidebar{display:none!important;}
+  .mob-nav{display:flex;}
+  .fgrid{grid-template-columns:1fr;}
+  .mgrid{grid-template-columns:1fr;}
+  .main{padding:12px;padding-bottom:88px;}
+  .hero-title{font-size:1.3rem;}
+  .dev-grid{grid-template-columns:1fr;}
+  /* Header: stack vertically, no overlap */
+  .hdr-inner{flex-direction:column;align-items:stretch;padding:8px 12px;gap:5px;}
+  .hdr-brand{gap:8px;}
+  .hdr-main{font-size:1rem;letter-spacing:2px;white-space:normal;}
+  .hdr-sub{display:block;font-size:0.54rem;white-space:normal;opacity:0.7;}
+  .hdr-ctrl{flex-wrap:wrap;gap:4px;justify-content:flex-start;}
+  .hdr-ctrl-sep{display:none;}
+  .lbtn{font-size:0.62rem;padding:4px 8px;}
+  .ico-btn{font-size:0.62rem;padding:5px 8px;}
+  .page-wrap{padding-top:115px;}
+  .layout{min-height:calc(100vh - 115px);}
+}
+select{appearance:auto;}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER — Always English ═══ -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-brand">
+      <div class="logo-wrap">
+        <!-- Scale of Justice Logo — ترازوِ عدل -->
+        <svg width="44" height="44" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lgbg" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#071810"/>
+              <stop offset="55%" stop-color="#1B6B4A"/>
+              <stop offset="100%" stop-color="#0A2518"/>
+            </linearGradient>
+            <linearGradient id="lggold" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#E8CC7A"/>
+              <stop offset="100%" stop-color="#C9A84C"/>
+            </linearGradient>
+          </defs>
+          <!-- Background rounded rect -->
+          <rect width="60" height="60" rx="14" fill="url(#lgbg)"/>
+          <!-- Subtle ring -->
+          <rect width="60" height="60" rx="14" fill="none" stroke="url(#lggold)" stroke-width="1" opacity="0.35"/>
+          <!-- Central pole -->
+          <line x1="30" y1="12" x2="30" y2="48" stroke="url(#lggold)" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- Base -->
+          <line x1="22" y1="48" x2="38" y2="48" stroke="url(#lggold)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Top pivot circle -->
+          <circle cx="30" cy="13" r="2.2" fill="url(#lggold)"/>
+          <!-- Horizontal beam -->
+          <line x1="14" y1="20" x2="46" y2="20" stroke="url(#lggold)" stroke-width="2" stroke-linecap="round"/>
+          <!-- Left pan chain -->
+          <line x1="14" y1="20" x2="12" y2="29" stroke="url(#lggold)" stroke-width="1.4" stroke-linecap="round"/>
+          <!-- Right pan chain -->
+          <line x1="46" y1="20" x2="48" y2="29" stroke="url(#lggold)" stroke-width="1.4" stroke-linecap="round"/>
+          <!-- Left pan (slightly up = balanced) -->
+          <path d="M7 29 Q12 27 17 29" stroke="url(#lggold)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <!-- Right pan -->
+          <path d="M43 29 Q48 27 53 29" stroke="url(#lggold)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <!-- Left pan bowl fill subtle -->
+          <path d="M7.5 29.5 Q12 32 16.5 29.5" stroke="url(#lggold)" stroke-width="1" opacity="0.5" fill="none"/>
+          <!-- Right pan bowl fill subtle -->
+          <path d="M43.5 29.5 Q48 32 52.5 29.5" stroke="url(#lggold)" stroke-width="1" opacity="0.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="hdr-titles">
+        <div class="hdr-main">SM MIRAS CALCULATOR</div>
+        <div class="hdr-sub">Islamic Inheritance · Faraid Distribution System · نظامِ تقسیمِ میراث</div>
+      </div>
+    </div>
+    <div class="hdr-ctrl">
+      <!-- Language buttons SEPARATE group -->
+      <button class="lbtn active" id="lbtn-en" onclick="setLang('en')">EN</button>
+      <button class="lbtn" id="lbtn-ur" onclick="setLang('ur')">اردو</button>
+      <button class="lbtn" id="lbtn-ar" onclick="setLang('ar')">عربي</button>
+      <div class="hdr-ctrl-sep"></div>
+      <!-- Theme / Print / About -->
+      <button class="ico-btn" onclick="toggleTheme()"><span id="tic">🌙</span><span id="tlbl">Dark</span></button>
+      <button class="ico-btn" onclick="openAbout()">ℹ️ <span id="abt-lbl">About</span></button>
+      <button class="ico-btn" onclick="printReport()" title="Generate PDF">📄</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ MOBILE BOTTOM NAV ═══ -->
+<nav class="mob-nav">
+  <button class="mnv active" id="mn-welcome" onclick="showPg('welcome')"><span class="mi">🏠</span><span id="mn-lbl-welcome">Home</span></button>
+  <button class="mnv" id="mn-deceased" onclick="showPg('deceased')"><span class="mi">👤</span><span id="mn-lbl-deceased">Profile</span></button>
+  <button class="mnv" id="mn-heirs" onclick="showPg('heirs')"><span class="mi">👨‍👩‍👧</span><span id="mn-lbl-heirs">Heirs</span></button>
+  <button class="mnv" id="mn-results" onclick="calcAndShow()"><span class="mi">⚡</span><span id="mn-lbl-calc">Calc</span></button>
+  <button class="mnv" id="mn-about-mob" onclick="openAbout()"><span class="mi">ℹ️</span><span>Info</span></button>
+</nav>
+
+<!-- ═══ INSTALL BANNER ═══ -->
+<div id="install-banner">
+  <div class="ib-txt">📲 Install SM Miras App<span>Add to Home Screen for offline use</span></div>
+  <button class="ib-btn" id="install-btn">Install</button>
+  <button class="ib-x" onclick="document.getElementById('install-banner').style.display='none'">×</button>
+</div>
+
+<!-- ═══ ABOUT MODAL ═══ -->
+<div class="modal-overlay" id="about-modal" onclick="if(event.target===this)closeAbout()">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3>About SM Miras Calculator</h3>
+      <button class="modal-close" onclick="closeAbout()">×</button>
+    </div>
+    <div class="modal-body">
+      <div style="text-align:center;margin-bottom:12px;">
+        <svg width="46" height="46" viewBox="0 0 60 60" style="margin:0 auto 6px;display:block;">
+          <defs>
+            <linearGradient id="abgbg" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#071810"/><stop offset="55%" stop-color="#1B6B4A"/><stop offset="100%" stop-color="#0A2518"/>
+            </linearGradient>
+            <linearGradient id="abggold" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#E8CC7A"/><stop offset="100%" stop-color="#C9A84C"/>
+            </linearGradient>
+          </defs>
+          <rect width="60" height="60" rx="14" fill="url(#abgbg)"/>
+          <rect width="60" height="60" rx="14" fill="none" stroke="url(#abggold)" stroke-width="1" opacity="0.35"/>
+          <line x1="30" y1="12" x2="30" y2="48" stroke="url(#abggold)" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="22" y1="48" x2="38" y2="48" stroke="url(#abggold)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="30" cy="13" r="2.2" fill="url(#abggold)"/>
+          <line x1="14" y1="20" x2="46" y2="20" stroke="url(#abggold)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="14" y1="20" x2="12" y2="29" stroke="url(#abggold)" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="46" y1="20" x2="48" y2="29" stroke="url(#abggold)" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M7 29 Q12 27 17 29" stroke="url(#abggold)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <path d="M43 29 Q48 27 53 29" stroke="url(#abggold)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        </svg>
+        <div style="font-family:'Cinzel',serif;font-size:0.95rem;font-weight:700;color:var(--tp);letter-spacing:2px;">SM Miras Calculator</div>
+        <div style="font-size:0.7rem;color:var(--tm);margin-top:2px;">Islamic Inheritance · Faraid Distribution System</div>
+      </div>
+      <p style="font-size:0.76rem;color:var(--tp);line-height:1.65;margin-bottom:12px;text-align:justify;direction:ltr;">
+        SM Miras Calculator is a comprehensive Islamic Inheritance (ʿIlm al-Farāʾiḍ) program, built to help
+        users work through real inheritance cases — determining the Asl al-Masala, each heir's fixed and
+        residuary share, and the final distribution of the estate. It covers the essential and practical
+        principles of Islamic inheritance law, including the Quranic fixed shares (Furūḍ), residuary
+        inheritance (ʿAṣabah), exclusion rules (Ḥajb), and the corrective mechanisms of ʿAwl and Radd,
+        guiding the user step by step through the reasoning behind each result. The program continues to
+        be refined, and further improvements and features will be added over time, in sha' Allah.
+      </p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+        <div class="dev-item"><div class="di-lbl">⚖️ Faraid Rules</div><div class="di-val" style="font-size:0.72rem">Awl · Radd · Hajb · Tashih</div></div>
+        <div class="dev-item"><div class="di-lbl">🕌 Madhhabs</div><div class="di-val" style="font-size:0.72rem">Hanafi · Shafi'i</div></div>
+        <div class="dev-item"><div class="di-lbl">🌐 Languages</div><div class="di-val" style="font-size:0.72rem">English · اردو · عربي</div></div>
+        <div class="dev-item"><div class="di-lbl">📲 APK & PWA</div><div class="di-val" style="font-size:0.72rem">Offline Installation</div></div>
+      </div>
+      <div style="background:var(--cream2);border-radius:var(--r);padding:11px;border-left:3px solid var(--gold);margin-bottom:12px;">
+        <div style="font-size:0.7rem;font-weight:700;color:var(--tm);letter-spacing:1px;margin-bottom:6px;font-family:'Cinzel',serif;">Researcher &amp; Developer</div>
+        <div style="font-size:0.82rem;color:var(--tp);font-weight:700;">Dr. Sajid Mahmood</div>
+        <div style="font-size:0.72rem;color:var(--tm);margin-top:2px;">Department of Islamic &amp; Religious Studies</div>
+        <div style="font-size:0.72rem;color:var(--tm);">Hazara University, Mansehra</div>
+        <div style="margin-top:7px;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="tel:03009080730" style="color:var(--em);font-size:0.72rem;text-decoration:none;">📱 03009080730</a>
+          <a href="mailto:sajidzbi@gmail.com" style="color:var(--em);font-size:0.72rem;text-decoration:none;">✉️ sajidzbi@gmail.com</a>
+        </div>
+      </div>
+      <div style="background:var(--cream2);border-radius:var(--r);padding:11px;border-left:3px solid var(--em);margin-bottom:10px;">
+        <p style="font-size:0.7rem;color:var(--tp);line-height:1.5;text-align:justify;direction:ltr;margin:0;">
+          <strong>Note:</strong> If you notice any error, issue, or problem while using this program, please
+          contact us via WhatsApp or Email and share the details with us. Your feedback will help us improve
+          the program further.
+        </p>
+      </div>
+      <div style="font-size:0.7rem;color:var(--tm);text-align:center;font-style:italic;">For educational reference only. Consult a qualified Mufti for legal matters.</div>
+    </div>
+  </div>
+</div>
+
+<div class="page-wrap">
+<div class="layout">
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar">
+  <div class="sb-nav">
+    <div class="sb-sec">NAVIGATION</div>
+    <button class="nvi active" onclick="showPg('welcome')" id="nav-welcome"><span class="nbadge">🏠</span><span class="t" data-k="navWelcome">Welcome</span></button>
+    <button class="nvi" onclick="showPg('deceased')" id="nav-deceased"><span class="nbadge">1</span><span class="t" data-k="navDeceased">Deceased Profile</span></button>
+    <button class="nvi" onclick="showPg('madhhab')" id="nav-madhhab"><span class="nbadge">2</span><span class="t" data-k="navMadhhab">Fiqh School</span></button>
+    <button class="nvi" onclick="showPg('heirs')" id="nav-heirs"><span class="nbadge">3</span><span class="t" data-k="navHeirs">Select Heirs</span></button>
+    <button class="nvi" onclick="calcAndShow()" id="nav-results"><span class="nbadge">5</span><span class="t" data-k="navResults">Results</span></button>
+    <div class="divr"></div>
+    <div class="sb-sec">REFERENCE</div>
+    <button class="nvi" onclick="showPg('about')"><span class="nbadge">📖</span><span class="t" data-k="navGuide">Faraid Guide</span></button>
+    <button class="nvi" onclick="openAbout()"><span class="nbadge">ℹ</span><span class="t" data-k="navAbout">About Developer</span></button>
+  </div>
+  <div class="sb-bot">
+    <div class="dcard">
+      <h4>DEVELOPER</h4>
+      <p>Dr. Sajid Mahmood<br>Dept. of Islamic &amp; Religious Studies<br>Hazara University, Mansehra<br>📱 03009080730</p>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main">
+
+<!-- ▸ WELCOME -->
+<section class="pg active" id="pg-welcome">
+  <div class="hero">
+    <div class="hero-title">SM MIRAS CALCULATOR</div>
+    <div class="hero-sub t" data-k="welcomeDesc">A comprehensive Islamic Inheritance (Faraid) calculator — Hanafi & Shafi'i</div>
+    <button class="hero-btn" onclick="showPg('deceased')">▶ <span class="t" data-k="beginCalc">Begin Calculation</span></button>
+  </div>
+  <div class="fgr">
+    <div class="fcard"><div class="fic">⚖️</div><div><h4 class="t" data-k="f1t">Complete Faraid</h4><p class="t" data-k="f1d">Awl, Radd, Hajb, Tashih, Munasakha</p></div></div>
+    <div class="fcard"><div class="fic">🕌</div><div><h4 class="t" data-k="f2t">Two Madhhabs</h4><p class="t" data-k="f2d">Hanafi and Shafi'i</p></div></div>
+    <div class="fcard"><div class="fic">🌐</div><div><h4 class="t" data-k="f3t">3 Languages</h4><p class="t" data-k="f3d">Urdu · English · Arabic</p></div></div>
+    <div class="fcard"><div class="fic">📊</div><div><h4 class="t" data-k="f4t">Detailed Results</h4><p class="t" data-k="f4d">Fractions, percentages, PKR amounts</p></div></div>
+    <div class="fcard"><div class="fic">📄</div><div><h4 class="t" data-k="f5t">Generate PDF</h4><p class="t" data-k="f5d">Professional PDF reports</p></div></div>
+    <div class="fcard"><div class="fic">📋</div><div><h4 class="t" data-k="f6t">Step-by-Step</h4><p class="t" data-k="f6d">Juristic reasoning explained</p></div></div>
+  </div>
+  <div class="ib em"><strong>ℹ️ <span class="t" data-k="noticeTitle">IMPORTANT NOTICE</span></strong><p class="t" data-k="noticeText">For educational reference only. Consult a qualified Islamic scholar (Mufti) for legal matters.</p></div>
+</section>
+
+<!-- ▸ DECEASED -->
+<section class="pg" id="pg-deceased">
+  <div class="pgt"><div class="ptic">👤</div><div class="ptt"><h2 class="t" data-k="decPageTitle">Deceased Profile</h2><p class="t" data-k="decPageSub">Enter details of the deceased and estate</p><span class="ar">تَرِكَةُ الْمُتَوَفَّى</span></div></div>
+  <div class="card">
+    <div class="ch"><div class="ci">📝</div><div><h2 class="t" data-k="basicInfoTitle">Basic Information</h2></div></div>
+    <div class="fgrid">
+      <div class="fg full"><label class="t" data-k="nameLabel">Name of Deceased</label><input type="text" id="dec-name" placeholder="e.g. Muhammad Abdullah"></div>
+      <div class="fg"><label class="t" data-k="genderLabel">Gender</label>
+        <select id="dec-gender" onchange="updateSpouseByGender(this.value)">
+          <option value="male" class="t" data-k="genderMale">Male (ذکر)</option>
+          <option value="female" class="t" data-k="genderFemale">Female (أنثى)</option>
+        </select>
+      </div>
+      <div class="fg"><label class="t" data-k="dateLabel">Date of Death</label><input type="text" id="dec-date" placeholder="DD/MM/YYYY"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci">💰</div><div><h2 class="t" data-k="estateTitle">Estate Calculation</h2><p class="t" data-k="estateSub">Assets and deductions (الديون والوصية)</p></div></div>
+    <div class="fgrid">
+      <div class="fg"><label class="t" data-k="totalLabel">Total Estate (PKR)</label><div class="pw"><span class="pfx">₨</span><input type="number" id="total-estate" placeholder="0" min="0" step="1" value="0" oninput="updateEstate()"></div></div>
+      <div class="fg"><label class="t" data-k="funeralLabel">Funeral Expenses</label><div class="pw"><span class="pfx">₨</span><input type="number" id="funeral-exp" placeholder="0" min="0" step="1" value="0" oninput="updateEstate()"></div><span class="hint t" data-k="funeralHint">Priority 1</span></div>
+      <div class="fg"><label class="t" data-k="debtsLabel">Debts (Dayn)</label><div class="pw"><span class="pfx">₨</span><input type="number" id="debts" placeholder="0" min="0" step="1" value="0" oninput="updateEstate()"></div><span class="hint t" data-k="debtsHint">Priority 2</span></div>
+      <div class="fg"><label class="t" data-k="wasiyyahLabel">Wasiyyah / Bequest</label><div class="pw"><span class="pfx">₨</span><input type="number" id="wasiyyah" placeholder="0" min="0" step="1" value="0" oninput="updateEstate()"></div><span class="hint t" data-k="wasiyyahHint">Max 1/3</span></div>
+    </div>
+    <div class="divr"></div>
+    <div class="rsum">
+      <div class="sc"><div class="sl2 t" data-k="summTotal">Total Estate</div><div class="sv" id="disp-total">0</div><div class="ssub">PKR</div></div>
+      <div class="sc dng"><div class="sl2 t" data-k="summDed">Deductions</div><div class="sv" id="disp-ded">0</div><div class="ssub">PKR</div></div>
+      <div class="sc gld"><div class="sl2 t" data-k="summNet">Net Distributable</div><div class="sv" id="disp-net">0</div><div class="ssub">PKR</div></div>
+    </div>
+    <div id="was-warn" class="ib dg" style="display:none"><strong class="t" data-k="wasWarnTitle">⚠️ WASIYYAH EXCEEDS 1/3</strong><p><span class="t" data-k="wasWarnText">Max allowed:</span> <span id="max-was">0</span> PKR</p></div>
+  </div>
+  <div class="brow">
+    <button class="bs" onclick="showPg('welcome')">← <span class="t" data-k="btnBack">Back</span></button>
+    <button class="bp" onclick="validateAndNext()"><span class="t" data-k="btnNextMadhhab">Next: Fiqh School</span> →</button>
+  </div>
+</section>
+
+<!-- ▸ MADHHAB -->
+<section class="pg" id="pg-madhhab">
+  <div class="pgt"><div class="ptic">🕌</div><div class="ptt"><h2 class="t" data-k="madhPageTitle">Fiqh School</h2><p class="t" data-k="madhPageSub">Select school of Islamic jurisprudence</p><span class="ar">اختيار المذهب الفقهي</span></div></div>
+  <div class="card">
+    <div class="ch"><div class="ci">📚</div><div><h2 class="t" data-k="madhCardTitle">Madhhab Selection</h2></div></div>
+    <div class="mgrid">
+      <div class="mopt sel" onclick="selMadh('hanafi')" id="opt-hanafi"><div class="aar" style="font-family:var(--fa);font-size:1rem;color:var(--gold-d)">الحنفية</div><h3>Hanafi</h3><p class="t" data-k="madhHanafiDesc">South Asia, Turkey, Central Asia</p></div>
+      <div class="mopt" onclick="selMadh('shafii')" id="opt-shafii"><div class="aar" style="font-family:var(--fa);font-size:1rem;color:var(--gold-d)">الشافعية</div><h3>Shafi'i</h3><p class="t" data-k="madhShafiDesc">SE Asia, East Africa</p></div>
+    </div>
+    <div id="madh-diff"></div>
+  </div>
+  <div class="brow">
+    <button class="bs" onclick="showPg('deceased')">← <span class="t" data-k="btnBack">Back</span></button>
+    <button class="bp" onclick="showPg('heirs')"><span class="t" data-k="btnNextHeirs">Next: Select Heirs</span> →</button>
+  </div>
+</section>
+
+<!-- ▸ HEIRS -->
+<section class="pg" id="pg-heirs">
+  <div class="pgt"><div class="ptic">👨‍👩‍👧‍👦</div><div class="ptt"><h2 class="t" data-k="heirPageTitle">Select Heirs</h2><p class="t" data-k="heirPageSub">All surviving heirs of the deceased</p><span class="ar">تحديد الوارثين الأحياء</span></div></div>
+  <div class="ib gl"><strong>⚡ <span class="t" data-k="smartHeirTitle">INTELLIGENT HEIR SYSTEM</span></strong><p class="t" data-k="smartHeirText">Hajb (exclusions) applied automatically.</p></div>
+
+  <!-- SPOUSES -->
+  <div class="card">
+    <div class="ch"><div class="ci">💍</div><div><h2 class="t" data-k="spouseTitle">Spouses</h2></div></div>
+    <div class="hgrid">
+      <!-- HUSBAND: صرف ایک — Yes/No toggle -->
+      <div class="hcard" id="hc-husband">
+        <div class="hch"><div><div class="hlbl t" data-k="husbandLabel">Husband</div><div class="har" id="har-husband">الزوج</div></div><span class="hsbadge t" data-k="bdg_husband">نصف یا ربع</span></div>
+        <div class="sw"><label class="switch"><input type="checkbox" id="h-husband" onchange="togH('husband',this.checked)"><span class="sldr"></span></label><span id="lh-husband" class="hint t" data-k="notSelected">Not selected</span></div>
+        <div class="hint" style="margin-top:4px"><span class="t" data-k="hnt_husband">½ no child · ¼ with child</span></div>
+        <div class="hint" style="margin-top:3px;font-size:0.65rem;color:var(--em)" id="husband-note">One husband only (Islamic law)</div>
+      </div>
+      <!-- WIVES: تعداد 1 سے 4 — counter -->
+      <div class="hcard" id="hc-wife">
+        <div class="hch"><div><div class="hlbl t" data-k="wifeLabel">Wife/Wives</div><div class="har" id="har-wife">الزوجة</div></div><span class="hsbadge t" data-k="bdg_wife">ربع یا ثمن</span></div>
+        <div class="sw" style="margin-bottom:6px"><label class="switch"><input type="checkbox" id="h-wife" onchange="togH('wife',this.checked)"><span class="sldr"></span></label><span id="lh-wife" class="hint t" data-k="notSelected">Not selected</span></div>
+        <div id="wife-cc" style="display:none">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:4px;">
+            <span class="hint t" data-k="wifeCountLabel" style="font-style:normal;font-weight:700;">Wives:</span>
+            <button class="nb" onclick="changeWives(-1)">−</button>
+            <span class="nd" id="wife-count-display">1</span>
+            <button class="nb" onclick="changeWives(1)">+</button>
+            <span class="hint">(max 4)</span>
+          </div>
+          <div id="wife-warn" style="display:none;font-size:0.65rem;color:var(--dg);margin-top:2px;" class="t" data-k="wivesMaxWarn">Maximum 4 wives (Islamic law)</div>
+        </div>
+        <div class="hint" style="margin-top:4px"><span class="t" data-k="hnt_wife">¼ no child · ⅛ with child (shared)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARENTS -->
+  <div class="card">
+    <div class="ch"><div class="ci">👴👵</div><div><h2 class="t" data-k="parentsTitle">Parents &amp; Grandparents</h2></div></div>
+    <div class="hgrid">
+      <div class="hcard" id="hc-father"><div class="hch"><div><div class="hlbl t" data-k="fatherLabel">Father</div><div class="har" id="har-father">الأب</div></div><span class="hsbadge t" data-k="bdg_father">سدس + عصبہ</span></div><div class="sw"><label class="switch"><input type="checkbox" id="h-father" onchange="togH('father',this.checked)"><span class="sldr"></span></label><span id="lh-father" class="hint t" data-k="notSelected">Not selected</span></div></div>
+      <div class="hcard" id="hc-mother"><div class="hch"><div><div class="hlbl t" data-k="motherLabel">Mother</div><div class="har" id="har-mother">الأم</div></div><span class="hsbadge t" data-k="bdg_mother">ثلث یا سدس</span></div><div class="sw"><label class="switch"><input type="checkbox" id="h-mother" onchange="togH('mother',this.checked)"><span class="sldr"></span></label><span id="lh-mother" class="hint t" data-k="notSelected">Not selected</span></div></div>
+      <div class="hcard" id="hc-grandfather"><div class="hch"><div><div class="hlbl t" data-k="gpLabel">Paternal Grandfather</div><div class="har" id="har-grandfather">الجد الصحيح</div></div><span class="hsbadge t" data-k="bdg_grandfather">باپ جیسا</span></div><div class="sw"><label class="switch"><input type="checkbox" id="h-grandfather" onchange="togH('grandfather',this.checked)"><span class="sldr"></span></label><span id="lh-grandfather" class="hint t" data-k="notSelected">Not selected</span></div></div>
+    </div>
+  </div>
+
+  <!-- CHILDREN -->
+  <div class="card">
+    <div class="ch"><div class="ci">👧👦</div><div><h2 class="t" data-k="childrenTitle">Children</h2></div></div>
+    <div class="hgrid">
+      <div class="hcard" id="hc-sons"><div class="hch"><div><div class="hlbl t" data-k="sonsLabel">Sons</div><div class="har" id="har-sons">الأبناء</div></div><span class="hsbadge t" data-k="bdg_sons">عصبہ</span></div><div class="nr"><button class="nb" onclick="chgNum('sons',-1)">−</button><span class="nd" id="n-sons">0</span><button class="nb" onclick="chgNum('sons',1)">+</button></div></div>
+      <div class="hcard" id="hc-daughters"><div class="hch"><div><div class="hlbl t" data-k="daugLabel">Daughters</div><div class="har" id="har-daughters">البنات</div></div><span class="hsbadge t" data-k="bdg_daughters">نصف یا ثلثان</span></div><div class="nr"><button class="nb" onclick="chgNum('daughters',-1)">−</button><span class="nd" id="n-daughters">0</span><button class="nb" onclick="chgNum('daughters',1)">+</button></div></div>
+      <div class="hcard" id="hc-grandsons"><div class="hch"><div><div class="hlbl t" data-k="gsonLabel">Grandsons</div><div class="har" id="har-grandsons">أبناء الابن</div></div><span class="hsbadge t" data-k="bdg_grandsons">بیٹوں جیسے</span></div><div class="nr"><button class="nb" onclick="chgNum('grandsons',-1)">−</button><span class="nd" id="n-grandsons">0</span><button class="nb" onclick="chgNum('grandsons',1)">+</button></div></div>
+      <div class="hcard" id="hc-granddaughters"><div class="hch"><div><div class="hlbl t" data-k="gdaugLabel">Granddaughters</div><div class="har" id="har-granddaughters">بنات الابن</div></div><span class="hsbadge t" data-k="bdg_granddaughters">سدس یا ثلثان</span></div><div class="nr"><button class="nb" onclick="chgNum('granddaughters',-1)">−</button><span class="nd" id="n-granddaughters">0</span><button class="nb" onclick="chgNum('granddaughters',1)">+</button></div></div>
+    </div>
+  </div>
+
+  <!-- SIBLINGS -->
+  <div class="card">
+    <div class="ch"><div class="ci">👥</div><div><h2 class="t" data-k="sibTitle">Siblings</h2></div></div>
+    <div class="hgrid">
+      <div class="hcard" id="hc-fb"><div class="hch"><div><div class="hlbl t" data-k="fbLabel">Full Brothers</div><div class="har" id="har-fb">الإخوة الأشقاء</div></div><span class="hsbadge t" data-k="bdg_fb">عصبہ</span></div><div class="nr"><button class="nb" onclick="chgNum('fb',-1)">−</button><span class="nd" id="n-fb">0</span><button class="nb" onclick="chgNum('fb',1)">+</button></div></div>
+      <div class="hcard" id="hc-fs"><div class="hch"><div><div class="hlbl t" data-k="fsLabel">Full Sisters</div><div class="har" id="har-fs">الأخوات الشقيقات</div></div><span class="hsbadge t" data-k="bdg_fs">نصف یا ثلثان</span></div><div class="nr"><button class="nb" onclick="chgNum('fs',-1)">−</button><span class="nd" id="n-fs">0</span><button class="nb" onclick="chgNum('fs',1)">+</button></div></div>
+      <div class="hcard" id="hc-pb"><div class="hch"><div><div class="hlbl t" data-k="pbLabel">Paternal Half Brothers</div><div class="har" id="har-pb">الإخوة لأب</div></div><span class="hsbadge t" data-k="bdg_pb">عصبہ</span></div><div class="nr"><button class="nb" onclick="chgNum('pb',-1)">−</button><span class="nd" id="n-pb">0</span><button class="nb" onclick="chgNum('pb',1)">+</button></div></div>
+      <div class="hcard" id="hc-ps"><div class="hch"><div><div class="hlbl t" data-k="psLabel">Paternal Half Sisters</div><div class="har" id="har-ps">الأخوات لأب</div></div><span class="hsbadge t" data-k="bdg_ps">نصف یا ثلثان</span></div><div class="nr"><button class="nb" onclick="chgNum('ps',-1)">−</button><span class="nd" id="n-ps">0</span><button class="nb" onclick="chgNum('ps',1)">+</button></div></div>
+      <div class="hcard" id="hc-mb"><div class="hch"><div><div class="hlbl t" data-k="mbLabel">Maternal Half Brothers</div><div class="har" id="har-mb">الإخوة لأم</div></div><span class="hsbadge t" data-k="bdg_mb">سدس — فرض</span></div><div class="nr"><button class="nb" onclick="chgNum('mb',-1)">−</button><span class="nd" id="n-mb">0</span><button class="nb" onclick="chgNum('mb',1)">+</button></div></div>
+      <div class="hcard" id="hc-ms"><div class="hch"><div><div class="hlbl t" data-k="msLabel">Maternal Half Sisters</div><div class="har" id="har-ms">الأخوات لأم</div></div><span class="hsbadge t" data-k="bdg_ms">سدس — فرض</span></div><div class="nr"><button class="nb" onclick="chgNum('ms',-1)">−</button><span class="nd" id="n-ms">0</span><button class="nb" onclick="chgNum('ms',1)">+</button></div></div>
+    </div>
+  </div>
+
+  <!-- UNCLES, NEPHEWS & COUSINS (دیگر عصبات) -->
+  <div class="card">
+    <div class="ch"><div class="ci">👨</div><div><h2 class="t" data-k="uncleTitle">دیگر عصبات</h2></div></div>
+    <div class="hgrid">
+      <div class="hcard" id="hc-fbn"><div class="hch"><div><div class="hlbl t" data-k="fbnLabel">Full Brother's Sons</div><div class="har" id="har-fbn">أبناء الأخ الشقيق</div></div><span class="hsbadge t" data-k="bdg_asaba">عصبہ</span></div><div class="nr"><button class="nb" onclick="chgNum('fbn',-1)">−</button><span class="nd" id="n-fbn">0</span><button class="nb" onclick="chgNum('fbn',1)">+</button></div></div>
+      <div class="hcard" id="hc-pbn"><div class="hch"><div><div class="hlbl t" data-k="pbnLabel">Pat. Brother's Sons</div><div class="har" id="har-pbn">أبناء الأخ لأب</div></div><span class="hsbadge t" data-k="bdg_asaba">عصبہ</span></div><div class="nr"><button class="nb" onclick="chgNum('pbn',-1)">−</button><span class="nd" id="n-pbn">0</span><button class="nb" onclick="chgNum('pbn',1)">+</button></div></div>
+      <div class="hcard" id="hc-punc"><div class="hch"><div><div class="hlbl t" data-k="puncLabel">Full Paternal Uncle</div><div class="har" id="har-punc">العم الشقيق</div></div><span class="hsbadge t" data-k="bdg_asaba">عصبہ</span></div><div class="nr"><button class="nb" onclick="chgNum('punc',-1)">−</button><span class="nd" id="n-punc">0</span><button class="nb" onclick="chgNum('punc',1)">+</button></div></div>
+      <div class="hcard" id="hc-punc_pat"><div class="hch"><div><div class="hlbl t" data-k="puncPatLabel">Pat. Half Uncle</div><div class="har" id="har-punc_pat">العم لأب</div></div><span class="hsbadge t" data-k="bdg_asaba">عصبہ</span></div><div class="nr"><button class="nb" onclick="chgNum('punc_pat',-1)">−</button><span class="nd" id="n-punc_pat">0</span><button class="nb" onclick="chgNum('punc_pat',1)">+</button></div></div>
+      <div class="hcard" id="hc-pbn_sons"><div class="hch"><div><div class="hlbl t" data-k="pbnSonsLabel">Full Uncle's Son</div><div class="har" id="har-pbn_sons">ابن العم الشقيق</div></div><span class="hsbadge t" data-k="bdg_asaba">عصبہ</span></div><div class="nr"><button class="nb" onclick="chgNum('pbn_sons',-1)">−</button><span class="nd" id="n-pbn_sons">0</span><button class="nb" onclick="chgNum('pbn_sons',1)">+</button></div></div>
+      <div class="hcard" id="hc-punc_cousin"><div class="hch"><div><div class="hlbl t" data-k="puncCouLabel">Pat. Uncle's Son</div><div class="har" id="har-punc_cousin">ابن العم لأب</div></div><span class="hsbadge t" data-k="bdg_asaba">عصبہ</span></div><div class="nr"><button class="nb" onclick="chgNum('punc_cousin',-1)">−</button><span class="nd" id="n-punc_cousin">0</span><button class="nb" onclick="chgNum('punc_cousin',1)">+</button></div></div>
+    </div>
+  </div>
+
+  <!-- GRANDMOTHERS (دادی / نانی) -->
+  <div class="card">
+    <div class="ch"><div class="ci">👵</div><div><h2 class="t" data-k="gmTitle">دادی / نانی</h2></div></div>
+    <div class="hgrid">
+      <div class="hcard" id="hc-gm_pat"><div class="hch"><div><div class="hlbl t" data-k="gmPatLabel">Paternal Grandmother</div><div class="har" id="har-gm_pat">الجدة الأبوية</div></div><span class="hsbadge t" data-k="bdg_gm">سدس — فرض</span></div><div class="sw"><label class="switch"><input type="checkbox" id="h-gm_pat" onchange="togH('gm_pat',this.checked)"><span class="sldr"></span></label><span id="lh-gm_pat" class="hint t" data-k="notSelected">Not selected</span></div><div class="hint t" data-k="hnt_gm_pat" style="margin-top:4px">⅙ (if no mother or father)</div></div>
+      <div class="hcard" id="hc-gm_mat"><div class="hch"><div><div class="hlbl t" data-k="gmMatLabel">Maternal Grandmother</div><div class="har" id="har-gm_mat">الجدة الأموية</div></div><span class="hsbadge t" data-k="bdg_gm">سدس — فرض</span></div><div class="sw"><label class="switch"><input type="checkbox" id="h-gm_mat" onchange="togH('gm_mat',this.checked)"><span class="sldr"></span></label><span id="lh-gm_mat" class="hint t" data-k="notSelected">Not selected</span></div><div class="hint t" data-k="hnt_gm_mat" style="margin-top:4px">⅙ (if no mother)</div></div>
+    </div>
+  </div>
+
+  <!-- DHAW AL-ARHAM (ذوی الارحام) -->
+  <div class="card">
+    <div class="ch"><div class="ci">🌸</div><div><h2 class="t" data-k="dhawTitle">Dhul-Arham</h2><p style="font-size:0.72rem;color:var(--tm)" class="t" data-k="dhawSub">Inherit only if no Fixed-Share or Residuary heirs exist</p></div></div>
+    <div class="ib gl" style="margin-bottom:10px;font-size:0.75rem"><strong>📌 </strong><span class="t" data-k="dhawNote">ذوی الارحام صرف اس وقت وارث ہوتے ہیں جب کوئی صاحبِ فرض یا عصبہ نہ ہو</span></div>
+    <div class="hgrid">
+      <div class="hcard" id="hc-nawasa"><div class="hch"><div><div class="hlbl t" data-k="nawasaLabel">Grandson (via Daughter)</div><div class="har" id="har-nawasa">ابن البنت</div></div><span class="hsbadge t" data-k="bdg_dhaw" style="background:var(--wl);color:var(--wc)">ذوی</span></div><div class="nr"><button class="nb" onclick="chgNum('nawasa',-1)">−</button><span class="nd" id="n-nawasa">0</span><button class="nb" onclick="chgNum('nawasa',1)">+</button></div></div>
+      <div class="hcard" id="hc-nawasi"><div class="hch"><div><div class="hlbl t" data-k="nawasiLabel">Granddaughter (via Daughter)</div><div class="har" id="har-nawasi">بنت البنت</div></div><span class="hsbadge t" data-k="bdg_dhaw" style="background:var(--wl);color:var(--wc)">ذوی</span></div><div class="nr"><button class="nb" onclick="chgNum('nawasi',-1)">−</button><span class="nd" id="n-nawasi">0</span><button class="nb" onclick="chgNum('nawasi',1)">+</button></div></div>
+      <div class="hcard" id="hc-bhanja"><div class="hch"><div><div class="hlbl t" data-k="bhanjaLabel">Sister's Son</div><div class="har" id="har-bhanja">ابن الأخت</div></div><span class="hsbadge t" data-k="bdg_dhaw" style="background:var(--wl);color:var(--wc)">ذوی</span></div><div class="nr"><button class="nb" onclick="chgNum('bhanja',-1)">−</button><span class="nd" id="n-bhanja">0</span><button class="nb" onclick="chgNum('bhanja',1)">+</button></div></div>
+      <div class="hcard" id="hc-bhanji"><div class="hch"><div><div class="hlbl t" data-k="bhanjiLabel">Sister's Daughter</div><div class="har" id="har-bhanji">بنت الأخت</div></div><span class="hsbadge t" data-k="bdg_dhaw" style="background:var(--wl);color:var(--wc)">ذوی</span></div><div class="nr"><button class="nb" onclick="chgNum('bhanji',-1)">−</button><span class="nd" id="n-bhanji">0</span><button class="nb" onclick="chgNum('bhanji',1)">+</button></div></div>
+      <div class="hcard" id="hc-phuphi"><div class="hch"><div><div class="hlbl t" data-k="phuphiLabel">Paternal Aunt</div><div class="har" id="har-phuphi">العمة</div></div><span class="hsbadge t" data-k="bdg_dhaw" style="background:var(--wl);color:var(--wc)">ذوی</span></div><div class="nr"><button class="nb" onclick="chgNum('phuphi',-1)">−</button><span class="nd" id="n-phuphi">0</span><button class="nb" onclick="chgNum('phuphi',1)">+</button></div></div>
+      <div class="hcard" id="hc-khala"><div class="hch"><div><div class="hlbl t" data-k="khalaLabel">Maternal Aunt</div><div class="har" id="har-khala">الخالة</div></div><span class="hsbadge t" data-k="bdg_dhaw" style="background:var(--wl);color:var(--wc)">ذوی</span></div><div class="nr"><button class="nb" onclick="chgNum('khala',-1)">−</button><span class="nd" id="n-khala">0</span><button class="nb" onclick="chgNum('khala',1)">+</button></div></div>
+      <div class="hcard" id="hc-mamu"><div class="hch"><div><div class="hlbl t" data-k="mamuLabel">Maternal Uncle</div><div class="har" id="har-mamu">الخال</div></div><span class="hsbadge t" data-k="bdg_dhaw" style="background:var(--wl);color:var(--wc)">ذوی</span></div><div class="nr"><button class="nb" onclick="chgNum('mamu',-1)">−</button><span class="nd" id="n-mamu">0</span><button class="nb" onclick="chgNum('mamu',1)">+</button></div></div>
+      <div class="hcard" id="hc-nana"><div class="hch"><div><div class="hlbl t" data-k="nanaLabel">Maternal Grandfather</div><div class="har" id="har-nana">أبو الأم</div></div><span class="hsbadge t" data-k="bdg_dhaw" style="background:var(--wl);color:var(--wc)">ذوی</span></div><div class="nr"><button class="nb" onclick="chgNum('nana',-1)">−</button><span class="nd" id="n-nana">0</span><button class="nb" onclick="chgNum('nana',1)">+</button></div></div>
+    </div>
+  </div>
+
+  <div class="brow">
+    <button class="bs" onclick="showPg('madhhab')">← <span class="t" data-k="btnBack">Back</span></button>
+    <button class="bp" onclick="calcAndShow()">⚖️ <span class="t" data-k="btnCalc">Calculate</span></button>
+  </div>
+</section>
+
+<!-- ▸ MUNASAKHA -->
+
+
+<!-- ▸ RESULTS -->
+<section class="pg" id="pg-results">
+  <div class="phdr">
+    <h1 style="font-family:'Cinzel',serif;font-size:1.3rem;color:#0F3D25;margin-bottom:2px">SM MIRAS CALCULATOR — Faraid Report</h1>
+    <p style="color:#444;font-size:0.68rem">Dr. Sajid Mahmood | Hazara University Mansehra | sajidzbi@gmail.com | 03009080730</p>
+    <hr style="border-color:#D4B86A;margin:7px 0">
+  </div>
+  <div class="pgt"><div class="ptic">📊</div><div class="ptt"><h2 class="t" data-k="resPageTitle">${t("resPageTitle")}</h2><p class="t" data-k="resPageSub">Complete Faraid calculation</p><span class="ar t" data-k="resPageAr">نتائج حساب الفرائض</span></div></div>
+  <div id="res-content"></div>
+  <div class="brow">
+    <button class="bs" onclick="showPg('heirs')"><span class="t" data-k="editHeirs">← Edit Heirs</span></button>
+    <button class="bs" onclick="showPg('deceased')"><span class="t" data-k="newCalc">🔄 New</span></button>
+    <button class="bg" onclick="printReport()">📄 <span class="t" data-k="printBtn">Generate PDF</span></button>
+  </div>
+</section>
+
+<!-- ▸ FARAID GUIDE -->
+<section class="pg" id="pg-about">
+  <div class="pgt"><div class="ptic">📖</div><div class="ptt"><h2 class="t" data-k="guidePageTitle">Faraid Guide</h2><p class="t" data-k="guidePageSub">Reference for Islamic Inheritance rules</p><span class="ar t" data-k="guidePageAr">دليل علم الفرائض</span></div></div>
+  <div class="card">
+    <div class="ch"><div class="ci">⚖️</div><div><h2 class="t" data-k="secFixed">Fixed Shares</h2></div></div>
+    <div class="rtw"><table class="rt">
+      <thead><tr><th class="t" data-k="col_heir">Heir</th><th class="t" data-k="col_fix">Share</th><th class="t" data-k="col_cond">Condition</th></tr></thead>
+      <tbody>
+        <tr><td class="hn">Husband (الزوج)</td><td><span class="frc"><span class="ft">1</span><span>2</span></span></td><td>No child</td></tr>
+        <tr><td class="hn">Husband (الزوج)</td><td><span class="frc"><span class="ft">1</span><span>4</span></span></td><td>With child</td></tr>
+        <tr><td class="hn">Wife/Wives (الزوجة)</td><td><span class="frc"><span class="ft">1</span><span>4</span></span></td><td>No child (shared)</td></tr>
+        <tr><td class="hn">Wife/Wives (الزوجة)</td><td><span class="frc"><span class="ft">1</span><span>8</span></span></td><td>With child (shared)</td></tr>
+        <tr><td class="hn">Father (الأب)</td><td><span class="frc"><span class="ft">1</span><span>6</span></span> + Asaba</td><td>With child present</td></tr>
+        <tr><td class="hn">Father (الأب)</td><td>Asaba (all residue)</td><td>No children</td></tr>
+        <tr><td class="hn">Mother (الأم)</td><td><span class="frc"><span class="ft">1</span><span>3</span></span></td><td>No child & &lt;2 siblings</td></tr>
+        <tr><td class="hn">Mother (الأم)</td><td><span class="frc"><span class="ft">1</span><span>6</span></span></td><td>With child or 2+ siblings</td></tr>
+        <tr><td class="hn">Daughter(s) (البنت)</td><td><span class="frc"><span class="ft">1</span><span>2</span></span></td><td>One daughter, no son</td></tr>
+        <tr><td class="hn">Daughters (البنات)</td><td><span class="frc"><span class="ft">2</span><span>3</span></span></td><td>2+ daughters, no son</td></tr>
+        <tr><td class="hn">Sons+Daughters</td><td>Asaba 2:1</td><td>Male = double female</td></tr>
+        <tr><td class="hn">Full Sisters (الأخت)</td><td><span class="frc"><span class="ft">1</span><span>2</span></span> or <span class="frc"><span class="ft">2</span><span>3</span></span></td><td>No father/sons</td></tr>
+        <tr><td class="hn">Maternal Siblings</td><td><span class="frc"><span class="ft">1</span><span>6</span></span> or <span class="frc"><span class="ft">1</span><span>3</span></span></td><td>No child/father</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci">📏</div><div><h2 class="t" data-k="secRules">Key Rules</h2></div></div>
+    <div class="sti"><div class="stn">1</div><div class="stc"><h4>Awl (عول) — Proportional Reduction</h4><p>When fixed shares exceed 100%, all are reduced proportionally. Base (Asl al-Masala) is raised to accommodate.</p></div></div>
+    <div class="sti"><div class="stn">2</div><div class="stc"><h4>Radd (رد) — Return of Surplus</h4><p>When fixed shares total less than 100% and no Asaba exists, surplus returns proportionally to Furud heirs (including spouses — contemporary ruling).</p></div></div>
+    <div class="sti"><div class="stn">3</div><div class="stc"><h4>Hajb (حجب) — Exclusion</h4><p>Hirman: Complete exclusion by closer relative. Nuqsan: Share reduced (e.g., mother 1/3 → 1/6 when child present).</p></div></div>
+    <div class="sti"><div class="stn">4</div><div class="stc"><h4>${t('secAsaba')}</h4><p>Sons, fathers, brothers inherit what remains after Furud fixed shares. Males get double females in same category.</p></div></div>
+    <div class="sti"><div class="stn">5</div><div class="stc"><h4>Umariyyatain (الغراوَين)</h4><p>When spouse + both parents present (no children): Mother gets 1/3 of REMAINDER after spouse's share, not 1/3 of whole estate.</p></div></div>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+
+<!-- ═══ FOOTER — Always English ═══ -->
+<footer class="ftr">
+  <p>
+    <strong>SM Miras Calculator</strong> — Islamic Inheritance (Faraid) Distribution System<br>
+    Developed by <strong>Dr. Sajid Mahmood</strong>, Assistant Professor, Department of Islamic &amp; Religious Studies |
+    <a href="tel:03009080730">📱 03009080730</a> | <a href="mailto:sajidzbi@gmail.com">✉️ sajidzbi@gmail.com</a><br>
+    Hazara University, Mansehra, Pakistan<br>
+    <span style="opacity:0.5;font-size:0.62rem">For educational reference only. Consult a qualified Mufti for legal matters. | v3.0</span>
+  </p>
+</footer>
+
+<!-- Self-hosted PDF generation libraries (no external/online service; cached
+     for full offline use by the Service Worker — see CACHE_URLS in sw.js) -->
+<script src="./jspdf.umd.min.js"></script>
+<script src="./html2canvas.min.js"></script>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// PWA MANIFEST — Scale of Justice icon via Canvas
+// ═══════════════════════════════════════════════════════════
+(function(){
+  function makeIcon(size){
+    try{
+      const c=document.createElement('canvas');
+      c.width=c.height=size;
+      const ctx=c.getContext('2d');
+      const s=size/60; // scale factor
+
+      // Background rounded rect
+      const r=size*0.22;
+      const g=ctx.createLinearGradient(0,0,size,size);
+      g.addColorStop(0,'#071810');g.addColorStop(0.55,'#1B6B4A');g.addColorStop(1,'#0A2518');
+      ctx.fillStyle=g;
+      ctx.beginPath();ctx.moveTo(r,0);ctx.lineTo(size-r,0);
+      ctx.quadraticCurveTo(size,0,size,r);ctx.lineTo(size,size-r);
+      ctx.quadraticCurveTo(size,size,size-r,size);ctx.lineTo(r,size);
+      ctx.quadraticCurveTo(0,size,0,size-r);ctx.lineTo(0,r);
+      ctx.quadraticCurveTo(0,0,r,0);ctx.closePath();ctx.fill();
+
+      // Gold gradient for elements
+      const gold=ctx.createLinearGradient(0,0,size,size);
+      gold.addColorStop(0,'#E8CC7A');gold.addColorStop(1,'#C9A84C');
+      ctx.strokeStyle=gold;ctx.fillStyle=gold;
+      ctx.lineCap='round';
+
+      // Central pole
+      ctx.lineWidth=2.2*s;
+      ctx.beginPath();ctx.moveTo(30*s,12*s);ctx.lineTo(30*s,48*s);ctx.stroke();
+
+      // Base
+      ctx.lineWidth=2.5*s;
+      ctx.beginPath();ctx.moveTo(22*s,48*s);ctx.lineTo(38*s,48*s);ctx.stroke();
+
+      // Pivot circle
+      ctx.beginPath();ctx.arc(30*s,13*s,2.2*s,0,2*Math.PI);ctx.fill();
+
+      // Horizontal beam
+      ctx.lineWidth=2*s;
+      ctx.beginPath();ctx.moveTo(14*s,20*s);ctx.lineTo(46*s,20*s);ctx.stroke();
+
+      // Left chain
+      ctx.lineWidth=1.4*s;
+      ctx.beginPath();ctx.moveTo(14*s,20*s);ctx.lineTo(12*s,29*s);ctx.stroke();
+      // Right chain
+      ctx.beginPath();ctx.moveTo(46*s,20*s);ctx.lineTo(48*s,29*s);ctx.stroke();
+
+      // Left pan
+      ctx.lineWidth=1.8*s;
+      ctx.beginPath();ctx.moveTo(7*s,29*s);ctx.quadraticCurveTo(12*s,27*s,17*s,29*s);ctx.stroke();
+      // Right pan
+      ctx.beginPath();ctx.moveTo(43*s,29*s);ctx.quadraticCurveTo(48*s,27*s,53*s,29*s);ctx.stroke();
+
+      return c.toDataURL('image/png');
+    }catch(e){return null;}
+  }
+
+  const icon192=makeIcon(192);
+  const icon512=makeIcon(512);
+  const icons=[];
+  if(icon192) icons.push({src:icon192,sizes:'192x192',type:'image/png',purpose:'any'});
+  if(icon512) icons.push({src:icon512,sizes:'512x512',type:'image/png',purpose:'any maskable'});
+  if(!icons.length){
+    // SVG fallback with scale of justice
+    icons.push({src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='14' fill='%230F3D25'/%3E%3Cline x1='30' y1='12' x2='30' y2='48' stroke='%23C9A84C' stroke-width='2.2' stroke-linecap='round'/%3E%3Cline x1='22' y1='48' x2='38' y2='48' stroke='%23C9A84C' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='30' cy='13' r='2.2' fill='%23C9A84C'/%3E%3Cline x1='14' y1='20' x2='46' y2='20' stroke='%23C9A84C' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='14' y1='20' x2='12' y2='29' stroke='%23C9A84C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cline x1='46' y1='20' x2='48' y2='29' stroke='%23C9A84C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M7 29 Q12 27 17 29' stroke='%23C9A84C' stroke-width='1.8' stroke-linecap='round' fill='none'/%3E%3Cpath d='M43 29 Q48 27 53 29' stroke='%23C9A84C' stroke-width='1.8' stroke-linecap='round' fill='none'/%3E%3C/svg%3E",
+      sizes:'192x192',type:'image/svg+xml'});
+  }
+
+  const m={
+    name:'SM Miras Calculator',
+    short_name:'SM Miras',
+    description:"Islamic Inheritance (Faraid) Calculator — Hanafi & Shafi'i",
+    start_url:'./',
+    scope:'./',
+    display:'standalone',
+    background_color:'#0F3D25',
+    theme_color:'#0F3D25',
+    orientation:'portrait-primary',
+    categories:['education','utilities'],
+    icons
+  };
+  try{
+    const b=new Blob([JSON.stringify(m)],{type:'application/manifest+json'});
+    document.getElementById('pwa-manifest').href=URL.createObjectURL(b);
+    // Apple touch icon
+    if(icon192){
+      let atl=document.querySelector('link[rel="apple-touch-icon"]');
+      if(!atl){atl=document.createElement('link');atl.rel='apple-touch-icon';document.head.appendChild(atl);}
+      atl.href=icon192;
+    }
+  }catch(e){}
+})();
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+const S={
+  lang:'en', theme:'light', madhhab:'hanafi',
+  dec:{name:'',gender:'male',date:''},
+  est:{total:0,funeral:0,debts:0,wasiyyah:0,net:0},
+  h:{husband:false,wife:false,wc:1,
+     father:false,mother:false,grandfather:false,
+     gm_pat:false,gm_mat:false,
+     sons:0,daughters:0,grandsons:0,granddaughters:0,
+     fb:0,fs:0,pb:0,ps:0,mb:0,ms:0,
+     fbn:0,pbn:0,punc:0,punc_pat:0,pbn_sons:0,punc_cousin:0,
+     nawasa:0,nawasi:0,bhanja:0,bhanji:0,
+     phuphi:0,khala:0,mamu:0,nana:0},
+  results:null
+};
+
+// ═══════════════════════════════════════════════════════════
+// TRANSLATIONS — 3 Languages with bracket format
+// ═══════════════════════════════════════════════════════════
+// Heir labels: {en, ur, ar} — brackets added by getLbl()
+const HEIR_NAMES={
+  husband:       {en:'Husband',                     ur:'شوہر',              ar:'الزوج'},
+  wife:          {en:'Wife / Wives',                ur:'بیوی / بیویاں',    ar:'الزوجة / الزوجات'},
+  father:        {en:'Father',                       ur:'والد',              ar:'الأب'},
+  mother:        {en:'Mother',                       ur:'والدہ',             ar:'الأم'},
+  grandfather:   {en:'Paternal Grandfather',         ur:'دادا',              ar:'الجد الصحيح'},
+  gm_pat:        {en:'Paternal Grandmother',         ur:'دادی',              ar:'الجدة الأبوية'},
+  gm_mat:        {en:'Maternal Grandmother',         ur:'نانی',              ar:'الجدة الأموية'},
+  sons:          {en:'Sons',                         ur:'بیٹے',              ar:'الأبناء'},
+  daughters:     {en:'Daughters',                    ur:'بیٹیاں',            ar:'البنات'},
+  grandsons:     {en:'Grandsons',                    ur:'پوتے',              ar:'أبناء الابن'},
+  granddaughters:{en:'Granddaughters',               ur:'پوتیاں',            ar:'بنات الابن'},
+  fb:            {en:'Full Brothers',                ur:'حقیقی بھائی',       ar:'الإخوة الأشقاء'},
+  fs:            {en:'Full Sisters',                 ur:'حقیقی بہنیں',       ar:'الأخوات الشقيقات'},
+  pb:            {en:'Paternal Half Brothers',       ur:'علاتی بھائی',       ar:'الإخوة لأب'},
+  ps:            {en:'Paternal Half Sisters',        ur:'علاتی بہنیں',       ar:'الأخوات لأب'},
+  mb:            {en:'Maternal Half Brothers',       ur:'اخیافی بھائی',      ar:'الإخوة لأم'},
+  ms:            {en:'Maternal Half Sisters',        ur:'اخیافی بہنیں',      ar:'الأخوات لأم'},
+  mb_ms:         {en:'Maternal Siblings',            ur:'اخیافی بہن بھائی',  ar:'الإخوة لأم'},
+  fbn:           {en:"Full Brother's Sons",          ur:'بھتیجے (حقیقی)',    ar:'أبناء الأخ الشقيق'},
+  pbn:           {en:"Paternal Brother's Sons",      ur:'بھتیجے (علاتی)',    ar:'أبناء الأخ لأب'},
+  punc:          {en:'Full Paternal Uncle',          ur:'چچا (حقیقی)',        ar:'العم الشقيق'},
+  punc_pat:      {en:'Paternal Half Uncle',          ur:'چچا (علاتی)',        ar:'العم لأب'},
+  pbn_sons:      {en:"Full Uncle's Son",             ur:'چچازاد (حقیقی)',    ar:'ابن العم الشقيق'},
+  punc_cousin:   {en:"Paternal Uncle's Son",         ur:'چچازاد (علاتی)',    ar:'ابن العم لأب'},
+  nawasa:        {en:'Grandson (via Daughter)',       ur:'نواسہ',              ar:'ابن البنت'},
+  nawasi:        {en:'Granddaughter (via Daughter)', ur:'نواسی',              ar:'بنت البنت'},
+  bhanja:        {en:"Sister's Son",                 ur:'بھانجا',             ar:'ابن الأخت'},
+  bhanji:        {en:"Sister's Daughter",            ur:'بھانجی',             ar:'بنت الأخت'},
+  phuphi:        {en:'Paternal Aunt',                ur:'پھوپھی',             ar:'العمة'},
+  khala:         {en:'Maternal Aunt',                ur:'خالہ',               ar:'الخالة'},
+  mamu:          {en:'Maternal Uncle',               ur:'ماموں',               ar:'الخال'},
+  nana:          {en:'Maternal Grandfather',         ur:'نانا',               ar:'أبو الأم'},
+};
+
+// Get label with bracket format based on language.
+// Arabic and Urdu portions are each wrapped in their own script-specific font
+// span (Uthmani Taha for Arabic, Jameel Noori Nastaleeq for Urdu) — critical
+// because a single label often mixes scripts (e.g. "Husband (الزوج)" or
+// "شوہر (Husband)"), and without per-script tagging the minority script
+// would inherit whichever font happens to apply to the surrounding text.
+function getLbl(key, lang){
+  const n=HEIR_NAMES[key];
+  if(!n) return key;
+  const arT=`<span style="font-family:'UthmanTahaNaskh',serif">${n.ar}</span>`;
+  const urT=`<span style="font-family:'JameelNooriNastaleeq',serif">${n.ur}</span>`;
+  if(lang==='en') return `${n.en} (${arT})`;
+  if(lang==='ur') return `${urT} (${n.en})`;
+  if(lang==='ar') return `${arT} (${n.en})`;
+  return n.en;
+}
+
+const T={
+  en:{
+    navWelcome:'Welcome',navDeceased:'Deceased Profile',navMadhhab:'Fiqh School',
+    navHeirs:'Select Heirs',navResults:'Results',navGuide:'Faraid Guide',navAbout:'About Developer',
+    welcomeDesc:"Complete Islamic Inheritance calculator — Hanafi & Shafi'i with Awl, Radd, Hajb",
+    beginCalc:'Begin Calculation',
+    f1t:'Complete Faraid',f1d:'Awl · Radd · Hajb · Tashih · Dhul-Arham',
+    f2t:'Two Madhhabs',f2d:"Hanafi and Shafi'i",
+    f3t:'3 Languages',f3d:'Urdu · English · Arabic',
+    f4t:'Detailed Results',f4d:'Fractions · Percentages · Amounts',
+    f5t:'Generate PDF',f5d:'Professional PDF reports',
+    f6t:'Step-by-Step',f6d:'Juristic reasoning explained',
+    noticeTitle:'IMPORTANT NOTICE',noticeText:'For educational reference only. Consult a qualified Islamic scholar for legal matters.',
+    decPageTitle:'Deceased Profile',decPageSub:'Enter details of the deceased and estate',
+    basicInfoTitle:'Basic Information',
+    nameLabel:'Name of Deceased',genderLabel:'Gender',genderMale:'Male (ذکر)',genderFemale:'Female (أنثى)',dateLabel:'Date of Death (optional)',
+    estateTitle:'Estate Calculation',estateSub:'Assets and deductions',
+    totalLabel:'Total Estate (PKR)',funeralLabel:'Funeral Expenses',funeralHint:'Priority 1',
+    debtsLabel:'Debts (Dayn)',debtsHint:'Priority 2',
+    wasiyyahLabel:'Wasiyyah / Bequest',wasiyyahHint:'Max 1/3',
+    summTotal:'Total Estate',summDed:'Deductions',summNet:'Net Distributable',
+    wasWarnTitle:'⚠️ WASIYYAH > 1/3',wasWarnText:'Max allowed:',
+    btnBack:'Back',btnNextMadhhab:'Next: Fiqh School',
+    madhPageTitle:'Fiqh School',madhPageSub:'Select school of Islamic jurisprudence',
+    madhCardTitle:'Madhhab Selection',
+    madhHanafiDesc:'South Asia, Turkey, Central Asia',madhShafiDesc:'SE Asia, East Africa',
+    btnNextHeirs:'Next: Select Heirs',
+    heirPageTitle:'Select Heirs',heirPageSub:'All surviving heirs of the deceased',
+    smartHeirTitle:'INTELLIGENT HEIR SYSTEM',smartHeirText:'Hajb (exclusions) applied automatically.',
+    spouseTitle:'Spouses',parentsTitle:'Parents & Grandparents',childrenTitle:'Children',
+    sibTitle:'Siblings',uncleTitle:'Uncles, Nephews & Cousins',
+    gmTitle:'Grandmothers',dhawTitle:'Dhul-Arham',dhawSub:'Inherit only if no Fixed-Share or Residuary heirs exist',
+    dhawSub:'Inherit only if no Fixed-Share or Residuary heirs exist',
+    dhawNote:'Dhul-Arham only inherit when no Fixed-Share or Residuary heirs exist',
+    husbandLabel:'Husband',hnt_husband:'½ no child · ¼ with child',
+    wifeLabel:'Wife/Wives',hnt_wife:'¼ no child · ⅛ with child',wifeCountLabel:'Number of wives:',
+    fatherLabel:'Father',motherLabel:'Mother',gpLabel:'Paternal Grandfather',
+    gmPatLabel:'Paternal Grandmother',gmMatLabel:'Maternal Grandmother',
+    sonsLabel:'Sons',daugLabel:'Daughters',gsonLabel:'Grandsons',gdaugLabel:'Granddaughters',
+    fbLabel:'Full Brothers',fsLabel:'Full Sisters',pbLabel:'Paternal Half Brothers',psLabel:'Paternal Half Sisters',
+    mbLabel:'Maternal Half Brothers',msLabel:'Maternal Half Sisters',
+    fbnLabel:"Full Brother's Sons",pbnLabel:"Paternal Brother's Sons",
+    puncLabel:'Full Paternal Uncle',puncPatLabel:'Paternal Half Uncle',
+    pbnSonsLabel:"Full Uncle's Son",puncCouLabel:"Paternal Uncle's Son",
+    nawasaLabel:'Grandson (via Daughter)',nawasiLabel:'Granddaughter (via Daughter)',
+    bhanjaLabel:"Sister's Son",bhanjiLabel:"Sister's Daughter",
+    phuphiLabel:'Paternal Aunt',khalaLabel:'Maternal Aunt',
+    mamuLabel:'Maternal Uncle',nanaLabel:'Maternal Grandfather',
+    btnCalc:'Calculate',munInfoText:"Applies when an heir dies before distribution. Optional — skip if not applicable.",
+    btnCalc:'Calculate Inheritance',
+    resPageAr:'',
+    resPageTitle:'Inheritance Results',resPageSub:'Complete Faraid calculation',
+    editHeirs:'← Edit Heirs',newCalc:'🔄 New',printBtn:'Generate PDF',
+    guidePageTitle:'Faraid Guide',guidePageSub:'Reference for Islamic Inheritance rules',
+    notSelected:'Not selected',selected:'Selected ✓',
+    secRules:'Key Rules',col_cond:'Condition',
+    secFixed:'Fixed Shares',secAsaba:'Residuary Heirs',secDhaw:'Dhul-Arham',secExcl:'Excluded (Hajb)',secSteps:'Calculation Steps',secTashih:'Tashih al-Masala',
+    col_heir:'Heir',col_cnt:'Count',col_fix:'Fixed Share',col_pct:'% Share',col_total:'Total (PKR)',col_per:'Per Person (PKR)',
+    stepsTitle:'Calculation Steps',estDedTitle:'Deduction Breakdown',
+    item_total:'Total Estate',item_fun:'Funeral Expenses',item_debt:'Debts',item_was:'Wasiyyah',item_net:'Net Distributable',
+    excTitle:'Excluded Heirs (Hajb)',totalRow:'TOTAL',balanced:'✅ Balanced',
+    awlMsg:'⚡ AWL applied — shares reduced proportionally',
+    raddMsg:'🔄 RADD applied — surplus returned to heirs',normMsg:'✅ Normal distribution',
+    mh_h:'Hanafi',mh_s:"Shafi'i",baseLbl:'Asl al-Masala',
+    tashihLbl:'Tashih al-Masala',ptsLbl:'shares out of',indivPtsLbl:'per person',
+    wivesMaxWarn:'Maximum 4 wives (Islamic law)',
+    noHeirs:'No heirs selected.',estateSumm:'Estate Summary',heirCnt:'heirs',exclCnt:'excluded',
+
+    bdg_furud:'Fixed Share',
+    bdg_husband:'½ or ¼',
+    bdg_wife:'¼ or ⅛',
+    bdg_father:'⅙ + Asaba',
+    bdg_mother:'⅓ or ⅙',
+    bdg_grandfather:'Like Father',
+    bdg_gm:'⅙ Fixed',
+    bdg_sons:'Asaba',
+    bdg_daughters:'½ or ⅔',
+    bdg_grandsons:'Like Sons',
+    bdg_granddaughters:'⅙ or ⅔',
+    bdg_fb:'Asaba',
+    bdg_fs:'½ or ⅔',
+    bdg_pb:'Asaba',
+    bdg_ps:'½ or ⅔',
+    bdg_mb:'⅙ Fixed',
+    bdg_ms:'⅙ Fixed',
+    bdg_asaba:'Asaba',
+    bdg_dhaw:'Dhul-Arham',
+    hnt_husband:'½ no child · ¼ with child',
+    hnt_wife:'¼ no child · ⅛ with child',
+    hnt_gm_pat:'⅙ (if no mother or father)',
+    hnt_gm_mat:'⅙ (if no mother)',
+    hnt_dhaw:'Only when no Furud/Asaba heirs exist',
+    secDistChart:'Distribution Chart',
+    secHeirDetails:'Heir Details',
+    secFardRadd:'Fard & Radd Breakdown',
+    colFard:'Fard (PKR)',
+    colRadd:'Radd (PKR)',
+    lbl_complete:'Complete',
+    col_item:'Item',col_priority:'Priority',
+    abt:'About',
+  },
+  ur:{
+    navWelcome:'خوش آمدید',navDeceased:'متوفی کی معلومات',navMadhhab:'فقہی مذہب',
+    navHeirs:'وارثین کا انتخاب',navResults:'نتائج',navGuide:'فرائض رہنما',navAbout:'ڈویلپر کے بارے میں',
+    welcomeDesc:'جامع اسلامی میراث کیلکولیٹر — حنفی اور شافعی مذاہب کے ساتھ عول، رد، حجب',
+    beginCalc:'حساب شروع کریں',
+    f1t:'مکمل فرائض',f1d:'عول · رد · حجب · تصحیح · ',
+    f2t:'دو مذاہب',f2d:'حنفی اور شافعی',
+    f3t:'تین زبانیں',f3d:'اردو · انگریزی · عربی',
+    f4t:'تفصیلی نتائج',f4d:'کسور · فیصد · رقم',
+    f5t:'PDF بنائیں',f5d:'پیشہ ورانہ PDF رپورٹ',
+    f6t:'مرحلہ وار',f6d:'فقہی دلیل کے ساتھ',
+    noticeTitle:'اہم اطلاع',noticeText:'یہ تعلیمی مقاصد کے لیے ہے۔ قانونی معاملات کے لیے مستند مفتی سے رجوع کریں۔',
+    decPageTitle:'متوفی کی معلومات',decPageSub:'متوفی اور ترکہ کی تفصیلات',
+    basicInfoTitle:'بنیادی معلومات',
+    nameLabel:'متوفی کا نام',genderLabel:'جنس',genderMale:'مرد (ذکر)',genderFemale:'عورت (أنثى)',dateLabel:'تاریخ وفات (اختیاری)',
+    estateTitle:'ترکہ کا حساب',estateSub:'کل ترکہ اور کٹوتیاں',
+    totalLabel:'کل ترکہ (PKR)',funeralLabel:'تجہیز و تکفین',funeralHint:'ترجیح اول',
+    debtsLabel:'قرض (دین)',debtsHint:'ترجیح دوم',
+    wasiyyahLabel:'وصیت',wasiyyahHint:'زیادہ سے زیادہ ایک تہائی',
+    summTotal:'کل ترکہ',summDed:'کٹوتیاں',summNet:'قابل تقسیم',
+    wasWarnTitle:'⚠️ وصیت ایک تہائی سے زیادہ',wasWarnText:'زیادہ سے زیادہ:',
+    btnBack:'پیچھے',btnNextMadhhab:'آگے: فقہی مذہب',
+    madhPageTitle:'فقہی مذہب',madhPageSub:'اسلامی فقہ کا مذہب منتخب کریں',
+    madhCardTitle:'مذہب کا انتخاب',
+    madhHanafiDesc:'جنوبی ایشیا، ترکی، وسطی ایشیا',madhShafiDesc:'جنوب مشرقی ایشیا، مشرقی افریقہ',
+    btnNextHeirs:'آگے: وارثین',
+    heirPageTitle:'وارثین کا انتخاب',heirPageSub:'تمام زندہ وارثین منتخب کریں',
+    smartHeirTitle:'ذہین وارث نظام',smartHeirText:'حجب (محجوبیت) خودکار طور پر لاگو ہوتا ہے۔',
+    spouseTitle:'میاں بیوی',parentsTitle:'والدین و اجداد',childrenTitle:'اولاد',
+    sibTitle:'بھائی بہن',uncleTitle:'دیگر عصبات',
+    gmTitle:'دادی / نانی',dhawTitle:'ذوی الارحام',dhawSub:'صرف جب کوئی صاحبِ فرض یا عصبہ نہ ہو',
+    dhawNote:'ذوی الارحام صرف اس وقت وارث ہوتے ہیں جب کوئی صاحبِ فرض یا عصبہ نہ ہو',
+    husbandLabel:'شوہر',hnt_husband:'اولاد نہ ہو: نصف | ہو: ربع',
+    wifeLabel:'بیوی/بیویاں',hnt_wife:'اولاد نہ ہو: ربع | ہو: ثمن',wifeCountLabel:'بیویوں کی تعداد:',
+    fatherLabel:'والد',motherLabel:'والدہ',gpLabel:'دادا',
+    gmPatLabel:'دادی',gmMatLabel:'نانی',
+    sonsLabel:'بیٹے',daugLabel:'بیٹیاں',gsonLabel:'پوتے',gdaugLabel:'پوتیاں',
+    fbLabel:'حقیقی بھائی',fsLabel:'حقیقی بہنیں',pbLabel:'علاتی بھائی',psLabel:'علاتی بہنیں',
+    mbLabel:'اخیافی بھائی',msLabel:'اخیافی بہنیں',
+    fbnLabel:'بھتیجے (حقیقی)',pbnLabel:'بھتیجے (علاتی)',puncLabel:'چچا (حقیقی)',
+    puncPatLabel:'چچا (علاتی)',pbnSonsLabel:'چچازاد (حقیقی)',puncCouLabel:'چچازاد (علاتی)',
+    nawasaLabel:'نواسہ',nawasiLabel:'نواسی',bhanjaLabel:'بھانجا',bhanjiLabel:'بھانجی',
+    phuphiLabel:'پھوپھی',khalaLabel:'خالہ',mamuLabel:'ماموں',nanaLabel:'نانا',
+    btnCalc:'حساب کریں',
+    btnCalc:'میراث کا حساب لگائیں',
+    resPageAr:'نتائج حساب الفرائض',
+    resPageTitle:'تقسیم میراث کے نتائج',resPageSub:'مکمل فرائض حساب',
+    editHeirs:'← وارثین تبدیل کریں',newCalc:'🔄 نئی تقسیم',printBtn:'PDF بنائیں',
+    guidePageTitle:'فرائض رہنما',guidePageSub:'اسلامی میراث کے قواعد',
+    notSelected:'منتخب نہیں',selected:'منتخب ✓',
+    secRules:'اہم قواعد',col_cond:'شرط',
+    secFixed:'اصحابِ فروض',secAsaba:'عصبات',secDhaw:'ذوی الارحام',secExcl:'محجوب وارثین',secSteps:'حساب کے مراحل',secTashih:'تصحیح المسألة',
+    col_heir:'وارث',col_cnt:'تعداد',col_fix:'مقررہ حصہ',col_pct:'فیصد',col_total:'کل رقم',col_per:'فی کس',
+    stepsTitle:'حسابی مراحل',estDedTitle:'کٹوتیوں کی تفصیل',
+    item_total:'کل ترکہ',item_fun:'تجہیز و تکفین',item_debt:'قرض',item_was:'وصیت',item_net:'قابل تقسیم',
+    excTitle:'محجوب وارثین',totalRow:'مجموعہ',balanced:'✅ متوازن',
+    awlMsg:'⚡ عول — حصص تناسب سے کم کیے گئے',
+    raddMsg:'🔄 رد — فاضل ترکہ وارثین کو واپس',normMsg:'✅ معمول کی تقسیم',
+    mh_h:'حنفی',mh_s:'شافعی',baseLbl:'اصل المسألة',
+    tashihLbl:'تصحیح المسألة',ptsLbl:'حصے از',indivPtsLbl:'فی کس حصے',
+    wivesMaxWarn:'شرعی اصول کے مطابق زیادہ سے زیادہ چار بیویاں',
+    noHeirs:'کوئی وارث منتخب نہیں۔',estateSumm:'ترکہ کا خلاصہ',heirCnt:'وارثین',exclCnt:'محجوب',
+
+    bdg_furud:'فریضہ',
+    bdg_husband:'نصف یا ربع',
+    bdg_wife:'ربع یا ثمن',
+    bdg_father:'سدس + عصبہ',
+    bdg_mother:'ثلث یا سدس',
+    bdg_grandfather:'باپ جیسا',
+    bdg_gm:'سدس — فرض',
+    bdg_sons:'عصبہ',
+    bdg_daughters:'نصف یا ثلثان',
+    bdg_grandsons:'بیٹوں جیسے',
+    bdg_granddaughters:'سدس یا ثلثان',
+    bdg_fb:'عصبہ',
+    bdg_fs:'نصف یا ثلثان',
+    bdg_pb:'عصبہ',
+    bdg_ps:'نصف یا ثلثان',
+    bdg_mb:'سدس — فرض',
+    bdg_ms:'سدس — فرض',
+    bdg_asaba:'عصبہ',
+    bdg_dhaw:'ذوی الارحام',
+    hnt_husband:'اولاد نہ ہو: نصف | ہو: ربع',
+    hnt_wife:'اولاد نہ ہو: ربع | ہو: ثمن',
+    hnt_gm_pat:'سدس (والدہ اور والد نہ ہوں)',
+    hnt_gm_mat:'سدس (والدہ نہ ہو)',
+    hnt_dhaw:'صرف جب کوئی صاحبِ فرض یا عصبہ نہ ہو',
+    secDistChart:'تقسیم کا خاکہ',
+    secHeirDetails:'وارثین کی تفصیل',
+    secFardRadd:'فرض اور رد کی تفصیل',
+    colFard:'فرض (روپے)',
+    colRadd:'رد (روپے)',
+    lbl_complete:'مکمل',
+    col_item:'مد',col_priority:'ترتیب',
+    abt:'تعارف',
+  },
+  ar:{
+    navWelcome:'الرئيسية',navDeceased:'بيانات المتوفى',navMadhhab:'المذهب الفقهي',
+    navHeirs:'الورثة',navResults:'النتائج',navGuide:'دليل الفرائض',navAbout:'عن المطور',
+    welcomeDesc:'حاسبة مواريث إسلامية شاملة — الحنفي والشافعي مع العول والرد والحجب',
+    beginCalc:'ابدأ الحساب',
+    f1t:'الفرائض الكاملة',f1d:'العول · الرد · الحجب · التصحيح · ',
+    f2t:'مذهبان',f2d:'الحنفي والشافعي',
+    f3t:'ثلاث لغات',f3d:'أردو · إنجليزي · عربي',
+    f4t:'نتائج تفصيلية',f4d:'كسور · نسب · مبالغ',
+    f5t:'إنشاء PDF',f5d:'تقارير PDF احترافية',
+    f6t:'خطوة بخطوة',f6d:'مع التعليل الفقهي',
+    noticeTitle:'تنبيه مهم',noticeText:'للأغراض التعليمية فقط. استشر مفتياً مؤهلاً للمسائل القانونية.',
+    decPageTitle:'بيانات المتوفى',decPageSub:'أدخل تفاصيل المتوفى والتركة',
+    basicInfoTitle:'المعلومات الأساسية',
+    nameLabel:'اسم المتوفى',genderLabel:'الجنس',genderMale:'ذكر',genderFemale:'أنثى',dateLabel:'تاريخ الوفاة (اختياري)',
+    estateTitle:'حساب التركة',estateSub:'إجمالي الأصول والخصومات',
+    totalLabel:'إجمالي التركة (PKR)',funeralLabel:'مصاريف التجهيز',funeralHint:'الأولوية الأولى',
+    debtsLabel:'الديون',debtsHint:'الأولوية الثانية',
+    wasiyyahLabel:'الوصية',wasiyyahHint:'الحد الأقصى الثلث',
+    summTotal:'إجمالي التركة',summDed:'المخصومات',summNet:'صافي القابل للتوزيع',
+    wasWarnTitle:'⚠️ الوصية تتجاوز الثلث',wasWarnText:'الحد الأقصى المسموح:',
+    btnBack:'رجوع',btnNextMadhhab:'التالي: المذهب الفقهي',
+    madhPageTitle:'المذهب الفقهي',madhPageSub:'اختر المذهب الفقهي الإسلامي',
+    madhCardTitle:'اختيار المذهب',
+    madhHanafiDesc:'جنوب آسيا، تركيا، آسيا الوسطى',madhShafiDesc:'جنوب شرق آسيا، شرق أفريقيا',
+    btnNextHeirs:'التالي: الورثة',
+    heirPageTitle:'اختيار الورثة',heirPageSub:'جميع الورثة الأحياء للمتوفى',
+    smartHeirTitle:'نظام الورثة الذكي',smartHeirText:'يُطبَّق الحجب تلقائياً.',
+    spouseTitle:'الزوجان',parentsTitle:'الوالدان والأجداد',childrenTitle:'الأولاد',
+    sibTitle:'الإخوة والأخوات',uncleTitle:'الأعمام وأبناء الإخوة',
+    husbandLabel:'الزوج',hnt_husband:'النصف بدون ولد · الربع مع الولد',
+    wifeLabel:'الزوجة/الزوجات',hnt_wife:'الربع بدون ولد · الثمن مع الولد',wifeCountLabel:'عدد الزوجات:',
+    fatherLabel:'الأب',motherLabel:'الأم',gpLabel:'الجد الصحيح',gmPatLabel:'الجدة الأبوية',gmMatLabel:'الجدة الأموية',
+    sonsLabel:'الأبناء',daugLabel:'البنات',gsonLabel:'أبناء الابن',gdaugLabel:'بنات الابن',
+    fbLabel:'الإخوة الأشقاء',fsLabel:'الأخوات الشقيقات',pbLabel:'الإخوة لأب',psLabel:'الأخوات لأب',
+    mbLabel:'الإخوة لأم',msLabel:'الأخوات لأم',
+    gmTitle:'الجدات',dhawTitle:'ذوو الأرحام',dhawSub:'يرثون عند غياب أصحاب الفروض والعصبات',
+    dhawNote:'ذوو الأرحام يرثون فقط عند عدم وجود أصحاب الفروض والعصبات',
+    gmPatLabel:'الجدة الأبوية',gmMatLabel:'الجدة الأموية',
+    fbnLabel:'أبناء الأخ الشقيق',pbnLabel:'أبناء الأخ لأب',puncLabel:'العم الشقيق',
+    puncPatLabel:'العم لأب',pbnSonsLabel:'ابن العم الشقيق',puncCouLabel:'ابن العم لأب',
+    nawasaLabel:'ابن البنت',nawasiLabel:'بنت البنت',
+    bhanjaLabel:'ابن الأخت',bhanjiLabel:'بنت الأخت',
+    phuphiLabel:'العمة',khalaLabel:'الخالة',mamuLabel:'الخال',nanaLabel:'أبو الأم',
+    btnCalc:'احسب',
+    btnCalc:'احسب الميراث',
+    resPageTitle:'نتائج توزيع الإرث',resPageSub:'حساب الفرائض الكامل',
+    editHeirs:'← تعديل الورثة',newCalc:'🔄 حساب جديد',printBtn:'إنشاء PDF',
+    guidePageTitle:'دليل الفرائض',guidePageSub:'مرجع أحكام الميراث الإسلامي',
+    notSelected:'غير محدد',selected:'محدد ✓',
+    secRules:'القواعد الأساسية',col_cond:'الشرط',
+    secFixed:'أصحاب الفروض',secAsaba:'العصبات',secDhaw:'ذوو الأرحام',secExcl:'المحجوبون',secSteps:'خطوات الحساب',secTashih:'تصحيح المسألة',
+    col_heir:'الوارث',col_cnt:'العدد',col_fix:'الفريضة',col_pct:'النسبة',col_total:'الإجمالي',col_per:'للفرد',
+    stepsTitle:'خطوات الحساب',estDedTitle:'تفصيل الخصومات',
+    item_total:'إجمالي التركة',item_fun:'مصاريف التجهيز',item_debt:'الديون',item_was:'الوصية',item_net:'صافي القابل للتوزيع',
+    excTitle:'المحجوبون',totalRow:'المجموع',balanced:'✅ متوازن',
+    awlMsg:'⚡ العول — تم تخفيض الحصص بالتناسب',
+    raddMsg:'🔄 الرد — الفائض يعود للورثة',normMsg:'✅ توزيع عادي',
+    mh_h:'حنفي',mh_s:'شافعي',baseLbl:'أصل المسألة',
+    tashihLbl:'تصحيح المسألة',ptsLbl:'سهم من',indivPtsLbl:'للفرد',
+    wivesMaxWarn:'الحد الأقصى أربع زوجات شرعاً',
+    noHeirs:'لم يُحدَّد أي وارث.',estateSumm:'ملخص التركة',heirCnt:'وارث',exclCnt:'محجوب',
+
+    bdg_furud:'الفريضة',
+    bdg_husband:'النصف أو الربع',
+    bdg_wife:'الربع أو الثمن',
+    bdg_father:'السدس + عصبة',
+    bdg_mother:'الثلث أو السدس',
+    bdg_grandfather:'مثل الأب',
+    bdg_gm:'السدس — فريضة',
+    bdg_sons:'عصبة',
+    bdg_daughters:'النصف أو الثلثان',
+    bdg_grandsons:'مثل الأبناء',
+    bdg_granddaughters:'السدس أو الثلثان',
+    bdg_fb:'عصبة',
+    bdg_fs:'النصف أو الثلثان',
+    bdg_pb:'عصبة',
+    bdg_ps:'النصف أو الثلثان',
+    bdg_mb:'السدس — فريضة',
+    bdg_ms:'السدس — فريضة',
+    bdg_asaba:'عصبة',
+    bdg_dhaw:'ذوو الأرحام',
+    hnt_husband:'النصف بدون ولد · الربع مع الولد',
+    hnt_wife:'الربع بدون ولد · الثمن مع الولد',
+    hnt_gm_pat:'السدس (عند عدم الأم والأب)',
+    hnt_gm_mat:'السدس (عند عدم الأم)',
+    hnt_dhaw:'يرثون عند غياب أصحاب الفروض والعصبات',
+    secDistChart:'مخطط التوزيع',
+    secHeirDetails:'تفاصيل الورثة',
+    secFardRadd:'تفصيل الفرض والرد',
+    colFard:'الفرض',
+    colRadd:'الرد',
+    lbl_complete:'مكتمل',
+    col_item:'البند',col_priority:'الأولوية',
+    abt:'عن التطبيق',
+  }
+};
+function t(k){return T[S.lang][k]||T.en[k]||k;}
+
+// Wrap any Arabic-script run of text with its own explicit Uthmani Taha font
+// span. Used on Calculation Steps titles/messages (and similar generated
+// strings), which embed short Arabic technical terms — e.g. "Hajb (الحجب)"
+// — inline as plain text; without this, the Arabic portion silently inherits
+// whichever font the surrounding (English/Urdu) text happens to be using,
+// instead of Uthmani Taha. Pure display-layer post-processing — does not
+// touch computeFaraid or any calculation logic.
+function wrapArabicSpans(str){
+  if(!str) return str;
+  return str.replace(/[\u0600-\u06FF][\u0600-\u06FF\u064B-\u065F\s،؛٪]*[\u0600-\u06FF]|[\u0600-\u06FF]/g,
+    m=>`<span style="font-family:'UthmanTahaNaskh',serif">${m}</span>`);
+}
+
+// ═══════════════════════════════════════════════════════════
+// LANGUAGE SYSTEM
+// ═══════════════════════════════════════════════════════════
+function setLang(lang){
+  S.lang=lang;
+
+  // ── Language button highlight ──
+  ['en','ur','ar'].forEach(l=>{
+    const b=document.getElementById('lbtn-'+l);
+    if(b) b.classList.toggle('active',l===lang);
+  });
+
+  // ── Font per language (ONE font per language — no mixing) ──
+  const fontMap={
+    ur:"'JameelNooriNastaleeq',serif",
+    ar:"'UthmanTahaNaskh',serif",
+    en:"'Segoe UI',system-ui,-apple-system,sans-serif"
+  };
+  const langFont=fontMap[lang]||fontMap.en;
+
+  // ── Direction: RTL for Urdu/Arabic, LTR for English ──
+  const isRTL=(lang==='ur'||lang==='ar');
+  document.documentElement.lang=lang==='ar'?'ar':lang==='ur'?'ur':'en';
+
+  // ── Main content area: language direction + font ──
+  const mainContent=document.getElementById('app')||document.body;
+  mainContent.style.fontFamily=langFont;
+  mainContent.style.direction=isRTL?'rtl':'ltr';
+
+  // ── LOCK Header + Footer + About: always English, always LTR ──
+  const lockEls=[
+    document.querySelector('.topbar'),
+    document.querySelector('.header'),
+    document.querySelector('#hdr'),
+    document.querySelector('header'),
+    document.querySelector('footer'),
+    document.querySelector('.footer'),
+    document.querySelector('#about'),
+    document.querySelector('#pg-about'),
+    document.querySelector('.nav'),
+    document.querySelector('.sidenav'),
+    document.querySelector('.navbar'),
+  ];
+  lockEls.forEach(el=>{
+    if(!el) return;
+    el.style.direction='ltr';
+    el.style.fontFamily=fontMap.en;
+  });
+
+  // ── Translate all .t[data-k] elements ──
+  document.querySelectorAll('.t[data-k]').forEach(el=>{
+    const key=el.getAttribute('data-k');
+    const val=T[lang]&&T[lang][key]?T[lang][key]:(T.en[key]||'');
+    if(val) el.textContent=val;
+    // Apply font to each element
+    el.style.fontFamily=langFont;
+  });
+
+  // ── Heir labels: pure language, no mixing ──
+  Object.keys(HEIR_NAMES).forEach(key=>{
+    const card=document.getElementById('hc-'+key);
+    if(!card) return;
+    const n=HEIR_NAMES[key];
+    const hlbl=card.querySelector('.hlbl');
+    if(hlbl){
+      hlbl.textContent=lang==='ur'?n.ur:lang==='ar'?n.ar:n.en;
+      hlbl.style.fontFamily=langFont;
+    }
+    // Arabic sub-label: always Uthman Taha, hide in Arabic mode (already in label)
+    const har=card.querySelector('.har');
+    if(har){
+      har.textContent=n.ar;
+      har.style.fontFamily="'UthmanTahaNaskh',serif";
+      // .har shows Arabic sub-label ONLY in English mode as a reference
+      // In Urdu mode: Urdu only — no Arabic
+      // In Arabic mode: Arabic already in label — no duplicate
+      har.style.display=(lang==='en')?'block':'none';
+    }
+  });
+
+  // ── Sidebar nav text ──
+  document.querySelectorAll('.nvi .t[data-k]').forEach(el=>{
+    el.textContent=T[lang]&&T[lang][el.getAttribute('data-k')]?T[lang][el.getAttribute('data-k')]:(T.en[el.getAttribute('data-k')]||'');
+  });
+
+  // ── About / theme buttons — always English ──
+  const abl=document.getElementById('abt-lbl');
+  if(abl){abl.textContent=T.en['abt']||'About';}
+
+  // ── Input placeholders ──
+  const phMap={
+    decName:{ur:'مثال: محمد علی',ar:'مثال: محمد علي',en:'e.g. Muhammad Ali'},
+  };
+  Object.entries(phMap).forEach(([id,map])=>{
+    const el=document.getElementById(id);
+    if(el) el.placeholder=map[lang]||map.en;
+  });
+
+  // ── Input/select direction ──
+  document.querySelectorAll('input,select,textarea').forEach(el=>{
+    el.style.direction=isRTL?'rtl':'ltr';
+    el.style.textAlign=isRTL?'right':'left';
+  });
+
+  // ── Re-render results if present ──
+  selMadh(S.madhhab);
+  if(S.results) renderResults(S.results);
+}
+
+
+// ═══════════════════════════════════════════════════════════
+// THEME
+// ═══════════════════════════════════════════════════════════
+function toggleTheme(){
+  S.theme=S.theme==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme',S.theme);
+  document.getElementById('tic').textContent=S.theme==='light'?'🌙':'☀️';
+  document.getElementById('tlbl').textContent=S.theme==='light'?'Dark':'Light';
+}
+
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════
+function showPg(pg){
+  document.querySelectorAll('.pg').forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  const el=document.getElementById('pg-'+pg);
+  if(el){el.style.display='block';setTimeout(()=>el.classList.add('active'),10);}
+  document.querySelectorAll('.nvi').forEach(n=>n.classList.remove('active'));
+  const nav=document.getElementById('nav-'+pg);
+  if(nav) nav.classList.add('active');
+  document.querySelectorAll('.mnv').forEach(n=>n.classList.remove('active'));
+  const mn=document.getElementById('mn-'+pg);
+  if(mn) mn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openAbout(){document.getElementById('about-modal').classList.add('open');}
+function closeAbout(){document.getElementById('about-modal').classList.remove('open');}
+
+// ═══════════════════════════════════════════════════════════
+// ESTATE
+// ═══════════════════════════════════════════════════════════
+function updateEstate(){
+  const total=parseFloat(document.getElementById('total-estate').value)||0;
+  const fun=parseFloat(document.getElementById('funeral-exp').value)||0;
+  const debt=parseFloat(document.getElementById('debts').value)||0;
+  const was=parseFloat(document.getElementById('wasiyyah').value)||0;
+  const afd=Math.max(0,total-fun-debt);
+  const maxW=afd/3;
+  const aW=Math.min(was,maxW);
+  const net=Math.max(0,afd-aW);
+  S.est={total,funeral:fun,debts:debt,wasiyyah:was,net};
+  const fm=v=>v.toLocaleString('en-PK',{minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('disp-total').textContent=fm(total);
+  document.getElementById('disp-ded').textContent=fm(fun+debt+aW);
+  document.getElementById('disp-net').textContent=fm(net);
+  document.getElementById('max-was').textContent=fm(maxW);
+  document.getElementById('was-warn').style.display=was>maxW+0.01?'block':'none';
+}
+
+// ═══════════════════════════════════════════════════════════
+// HEIRS UI
+// ═══════════════════════════════════════════════════════════
+function updateSpouseByGender(gender){
+  S.dec.gender=gender;
+  const husbCard=document.getElementById('hc-husband');
+  const wifeCard=document.getElementById('hc-wife');
+  const husbChk=document.getElementById('h-husband');
+  const wifeChk=document.getElementById('h-wife');
+
+  if(gender==='male'){
+    // مرد متوفی — شوہر والا کارڈ بند، بیوی والا کھلا
+    husbCard.style.opacity='0.35';
+    husbCard.style.pointerEvents='none';
+    if(husbChk){husbChk.checked=false; S.h.husband=false;}
+    wifeCard.style.opacity='1';
+    wifeCard.style.pointerEvents='auto';
+  } else {
+    // عورت متوفی — بیوی والا کارڈ بند، شوہر والا کھلا
+    wifeCard.style.opacity='0.35';
+    wifeCard.style.pointerEvents='none';
+    if(wifeChk){wifeChk.checked=false; S.h.wife=false;}
+    const wcc=document.getElementById('wife-cc');
+    if(wcc) wcc.style.display='none';
+    husbCard.style.opacity='1';
+    husbCard.style.pointerEvents='auto';
+  }
+}
+
+function togH(type,v){
+  const c=document.getElementById('hc-'+type);
+  if(c) c.classList.toggle('sel',v);
+  const lb=document.getElementById('lh-'+type);
+  if(lb){lb.setAttribute('data-k',v?'selected':'notSelected');lb.textContent=t(v?'selected':'notSelected');}
+  S.h[type]=v;
+  if(type==='wife'){
+    document.getElementById('wife-cc').style.display=v?'block':'none';
+    if(!v){S.h.wc=1;document.getElementById('wife-count-display').textContent='1';}
+  }
+}
+// Wives counter — max 4
+function changeWives(d){
+  let cur=S.h.wc||1;
+  cur=Math.max(1,Math.min(4,cur+d));
+  S.h.wc=cur;
+  document.getElementById('wife-count-display').textContent=cur;
+  const warn=document.getElementById('wife-warn');
+  if(warn) warn.style.display=cur>=4?'block':'none';
+}
+function chgNum(k,d){
+  S.h[k]=Math.max(0,(S.h[k]||0)+d);
+  document.getElementById('n-'+k).textContent=S.h[k];
+  const c=document.getElementById('hc-'+k);
+  if(c) c.classList.toggle('sel',S.h[k]>0);
+}
+
+// ═══════════════════════════════════════════════════════════
+// MADHHAB
+// ═══════════════════════════════════════════════════════════
+function selMadh(m){
+  S.madhhab=m;
+  document.getElementById('opt-hanafi').classList.toggle('sel',m==='hanafi');
+  document.getElementById('opt-shafii').classList.toggle('sel',m==='shafii');
+  const diff=document.getElementById('madh-diff');
+  if(!diff) return;
+  const isRTL=S.lang==='ur'||S.lang==='ar';
+  if(m==='hanafi'){
+    const txt=S.lang==='ur'?'<b>رد:</b> زوجین سمیت تمام اصحاب الفروض کو رد لاگو۔ <b>ذوی الارحام:</b> عصبہ نہ ہو تو وارث ہوتے ہیں۔'
+      :S.lang==='ar'?'<b>الرد:</b> يشمل الزوجين عند غياب بيت المال. <b>ذوو الأرحام:</b> يرثون عند عدم وجود عصبة.'
+      :'<b>Radd:</b> Includes spouses when no Bayt al-Mal. <b>Dhul-Arham:</b> Inherit when no Asaba.';
+    diff.innerHTML=`<div class="ib gl" style="direction:${isRTL?'rtl':'ltr'}"><strong>🔶 ${S.lang==='ur'?'حنفی موقف':S.lang==='ar'?'الموقف الحنفي':'HANAFI POSITION'}</strong><p>${txt}</p></div>`;
+  } else {
+    const txt=S.lang==='ur'?'<b>رد (کلاسیکی):</b> زوجین کو رد نہیں — باقی بیت المال کو۔ معاصر موقف: بیت المال نہ ہو تو زوجین بھی شامل۔'
+      :S.lang==='ar'?'<b>الرد (الكلاسيكي):</b> لا يشمل الزوجين — الباقي لبيت المال. الرأي المعاصر: يشمل الزوجين عند غيابه.'
+      :"<b>Radd (Classical):</b> Spouses excluded — remainder to Bayt al-Mal. Contemporary: includes spouses when no Bayt al-Mal.";
+    diff.innerHTML=`<div class="ib em" style="direction:${isRTL?'rtl':'ltr'}"><strong>🟢 ${S.lang==='ur'?'شافعی موقف':S.lang==='ar'?'الموقف الشافعي':"SHAFI'I POSITION"}</strong><p>${txt}</p></div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// MUNASAKHA
+// ═══════════════════════════════════════════════════════════
+let mc=0;
+function togMun(v){
+  document.getElementById('mun-sec').style.display=v?'block':'none';
+  if(v&&document.getElementById('mun-list').children.length===0) addMun();
+}
+function addMun(){
+  mc++;const i=mc;
+  const ur=S.lang==='ur',ar=S.lang==='ar';
+  const d=document.createElement('div');
+  d.className='mf';d.id='mf-'+i;
+  const lName=ur?'نام':ar?'الاسم':'Name';
+  const lRel=ur?'رشتہ':ar?'الصلة':'Relation';
+  d.innerHTML=`<div style="font-weight:700;font-size:0.8rem;margin-bottom:9px">${ur?'متوفی وارث':ar?'الوارث المتوفى':'Deceased Heir'} #${i}</div>
+  <button class="rmb" onclick="document.getElementById('mf-${i}').remove()">×</button>
+  <div class="fgrid">
+    <div class="fg"><label>${lName}</label><input type="text"></div>
+    <div class="fg"><label>${lRel}</label>
+    <select><option>--</option>
+    <option>${ur?'بیٹا':ar?'ابن':'Son'}</option><option>${ur?'بیٹی':ar?'بنت':'Daughter'}</option>
+    <option>${ur?'بیوی':ar?'زوجة':'Wife'}</option><option>${ur?'شوہر':ar?'زوج':'Husband'}</option>
+    <option>${ur?'باپ':ar?'أب':'Father'}</option><option>${ur?'ماں':ar?'أم':'Mother'}</option>
+    <option>${ur?'بھائی':ar?'أخ':'Brother'}</option><option>${ur?'بہن':ar?'أخت':'Sister'}</option>
+    </select></div>
+  </div>`;
+  document.getElementById('mun-list').appendChild(d);
+}
+
+// ═══════════════════════════════════════════════════════════
+// VALIDATION
+// ═══════════════════════════════════════════════════════════
+function validateAndNext(){
+  const name=document.getElementById('dec-name').value.trim();
+  if(!name){
+    const msg=S.lang==='ur'?'براہ کرم متوفی کا نام درج کریں۔':S.lang==='ar'?'يرجى إدخال اسم المتوفى.':'Please enter the name of the deceased.';
+    alert(msg);return;
+  }
+  S.dec.name=name;S.dec.gender=document.getElementById('dec-gender').value;
+  S.dec.date=document.getElementById('dec-date').value;
+  updateEstate();showPg('madhhab');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ═══ FARAID CALCULATION ENGINE v3.0 ═══════════════════════
+// Based on classical Fiqh — Hanafi & Shafi'i
+// References: Sirajiyyah, Rahabiyyah, Hidaya, Al-Mughni — v3.0
+// ═══════════════════════════════════════════════════════════
+
+function calcAndShow(){
+  // Sync UI state — boolean toggles
+  S.h.wc=S.h.wife?(S.h.wc||1):1;
+  ['husband','wife','father','mother','grandfather','gm_pat','gm_mat'].forEach(k=>{
+    const el=document.getElementById('h-'+k);
+    if(el) S.h[k]=el.checked;
+  });
+  updateEstate();
+  const r=computeFaraid(S.h,S.est.net,S.madhhab,S.dec.gender);
+  S.results=r;
+  renderResults(r);
+  showPg('results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// FARAID CALCULATION ENGINE v3.0 — UPGRADED
+// فقہ میراث: سراجیہ، رحبیہ، ہدایہ، المغنی
+// Hanafi & Shafi'i — Complete Tashih, Awl, Radd, Hajb
+// ═══════════════════════════════════════════════════════════
+
+// ── Rational Fraction Class ──
+function Frac(n,d){
+  if(d===undefined){this.n=n;this.d=1;}
+  else{
+    if(d===0){this.n=0;this.d=1;return;}
+    const g=gcd2(Math.abs(n),Math.abs(d));
+    const s=d<0?-1:1;
+    this.n=s*n/g; this.d=s*d/g;
+  }
+}
+function gcd2(a,b){return b===0?a:gcd2(b,a%b);}
+Frac.prototype.add=function(b){return new Frac(this.n*b.d+b.n*this.d,this.d*b.d);};
+Frac.prototype.sub=function(b){return new Frac(this.n*b.d-b.n*this.d,this.d*b.d);};
+Frac.prototype.mul=function(b){return new Frac(this.n*b.n,this.d*b.d);};
+Frac.prototype.div=function(b){return new Frac(this.n*b.d,this.d*b.n);};
+Frac.prototype.v=function(){return this.d===0?0:this.n/this.d;};
+Frac.prototype.str=function(){if(this.d===1)return String(this.n);return this.n+'/'+this.d;};
+Frac.ONE=new Frac(1,1);
+Frac.ZERO=new Frac(0,1);
+
+function gcd(a,b){return b===0?Math.abs(a):gcd(b,a%b);}
+function lcm(a,b){if(!a||!b)return a||b;return Math.abs(a*b)/gcd(a,b);}
+function lcmArr(arr){return arr.reduce((a,b)=>lcm(a,b),1);}
+
+// ═══════════════════════════════════════════════════════════
+// MAIN ENGINE — computeFaraid v3.0
+// ═══════════════════════════════════════════════════════════
+function computeFaraid(h, net, madhhab, gender){
+  const steps=[], excl=[];
+  const hi={...h};
+  const isM=(gender==='male');
+  const log=(title,ar,text)=>steps.push({title,ar,text});
+
+  // ═══ STEP 1: HAJB — حجب (Blocking Rules) ═══
+  // Father blocks Grandfather (حجب حرمان)
+  if(hi.father && hi.grandfather){
+    excl.push({heir:getLbl('grandfather',S.lang),reason:S.lang==='ur'?'والد کی موجودگی میں دادا محروم':S.lang==='ar'?'الجد محجوب بالأب':'Blocked by Father'});
+    hi.grandfather=false;
+  }
+  // Mother blocks both Grandmothers (حجب حرمان)
+  if(hi.mother){
+    if(hi.gm_pat){excl.push({heir:getLbl('gm_pat',S.lang),reason:S.lang==='ur'?'والدہ کی موجودگی میں دادی محروم':S.lang==='ar'?'الجدة الأبوية محجوبة بالأم':'Blocked by Mother'});hi.gm_pat=false;}
+    if(hi.gm_mat){excl.push({heir:getLbl('gm_mat',S.lang),reason:S.lang==='ur'?'والدہ کی موجودگی میں نانی محروم':S.lang==='ar'?'الجدة الأموية محجوبة بالأم':'Blocked by Mother'});hi.gm_mat=false;}
+  }
+  // Father blocks Paternal Grandmother (حنفی)
+  if(hi.father && hi.gm_pat && madhhab==='hanafi'){
+    excl.push({heir:getLbl('gm_pat',S.lang),reason:S.lang==='ur'?'والد کی موجودگی میں دادی محروم (حنفی)':'Blocked by Father (Hanafi)'});hi.gm_pat=false;
+  }
+  // Son blocks Grandsons & Granddaughters
+  if(hi.sons>0){
+    if(hi.grandsons>0){excl.push({heir:getLbl('grandsons',S.lang)+' ×'+hi.grandsons,reason:S.lang==='ur'?'بیٹے کی موجودگی میں پوتا محروم':S.lang==='ar'?'الأحفاد محجوبون بالابن':'Blocked by Son'});hi.grandsons=0;}
+    if(hi.granddaughters>0){excl.push({heir:getLbl('granddaughters',S.lang)+' ×'+hi.granddaughters,reason:S.lang==='ur'?'بیٹے کی موجودگی میں پوتی محروم':'Blocked by Son'});hi.granddaughters=0;}
+  }
+  // 2+ daughters (no grandson) block granddaughters from inheriting
+  if(hi.daughters>=2 && hi.granddaughters>0 && hi.grandsons===0){
+    excl.push({heir:getLbl('granddaughters',S.lang)+' ×'+hi.granddaughters,reason:S.lang==='ur'?'دو یا زیادہ بیٹیاں (ثلثان) — پوتی محروم':'2+ Daughters take max 2/3; Granddaughters excluded'});
+    hi.granddaughters=0;
+  }
+
+  const hasChild=(hi.sons>0||hi.daughters>0||hi.grandsons>0||hi.granddaughters>0);
+  const hasSon=(hi.sons>0||hi.grandsons>0);
+  const hasDaughter=(hi.daughters>0||hi.granddaughters>0);
+
+  // Son/Father block full & paternal siblings
+  const blockSibMale=hasSon||hi.father;
+  // Grandfather blocking full/paternal siblings — this is a genuine madhhab
+  // difference, not a stylistic choice:
+  //  • Hanafi: grandfather steps fully into the father's role and COMPLETELY
+  //    blocks all siblings (full, paternal, uterine) — no sharing at all.
+  //  • Maliki/Shafi'i/Hanbali: grandfather applies Muqasama (he shares the
+  //    residue with full/paternal siblings as if he were one of them, but is
+  //    always guaranteed at least 1/3 of what remains, or 1/6 of the whole
+  //    estate if that is better for him) — siblings are NOT blocked outright.
+  //    (Muqasama itself, and its own exceptional case Al-Akdariyyah, is not
+  //    implemented in this engine; see Step 6a's note when this situation
+  //    is detected in a non-Hanafi madhhab.)
+  const blockSibGF=hi.grandfather&&madhhab==='hanafi';
+  if(blockSibMale||blockSibGF){
+    const who=hasSon?(hi.sons>0?getLbl('sons',S.lang):getLbl('grandsons',S.lang)):hi.father?getLbl('father',S.lang):getLbl('grandfather',S.lang);
+    ['fb','fs','pb','ps'].forEach(k=>{
+      if(hi[k]>0){excl.push({heir:getLbl(k,S.lang)+' ×'+hi[k],
+        reason:blockSibGF&&!hasSon&&!hi.father
+          ?(S.lang==='ur'?'دادا کی موجودگی میں محروم (حنفی — دادا مکمل طور پر بھائی بہن کو محروم کرتا ہے، کوئی مقاسمہ نہیں)':S.lang==='ar'?'محجوب بالجد (حنفي — لا مقاسمة)':'Blocked by Grandfather (Hanafi — full block, no Muqasama)')
+          :`${S.lang==='ur'?'محروم':'Blocked'} by ${who}`});
+        hi[k]=0;}
+    });
+  }
+  const nonHanafiGFWithSiblings=hi.grandfather&&madhhab!=='hanafi'&&(hi.fb+hi.fs+hi.pb+hi.ps>0);
+  // Full brothers block paternal half brothers
+  if(hi.fb>0&&hi.pb>0){excl.push({heir:getLbl('pb',S.lang)+' ×'+hi.pb,reason:S.lang==='ur'?'حقیقی بھائی کی موجودگی میں علاتی بھائی محروم':'Blocked by Full Brothers'});hi.pb=0;}
+  if(hi.fb>0&&hi.ps>0){excl.push({heir:getLbl('ps',S.lang)+' ×'+hi.ps,reason:S.lang==='ur'?'حقیقی بھائی کی موجودگی میں علاتی بہن محروم':'Blocked by Full Brother'});hi.ps=0;}
+  // 2+ Full sisters without any brother: block paternal half sisters
+  if(hi.fb===0&&hi.fs>=2&&hi.ps>0){
+    excl.push({heir:getLbl('ps',S.lang)+' ×'+hi.ps,reason:S.lang==='ur'?'دو+ حقیقی بہنیں (ثلثان) — علاتی بہن محروم':'Full Sisters take 2/3; Paternal Half Sisters excluded'});hi.ps=0;
+  }
+  // Child/Father/Grandfather blocks maternal siblings (Quran 4:12)
+  if(hasChild||hi.father||hi.grandfather){
+    if(hi.mb>0){excl.push({heir:getLbl('mb',S.lang)+' ×'+hi.mb,reason:S.lang==='ur'?'اولاد/والد کی موجودگی میں اخیافی بھائی محروم (النساء:١٢)':'Blocked by child/father (Quran 4:12)'});hi.mb=0;}
+    if(hi.ms>0){excl.push({heir:getLbl('ms',S.lang)+' ×'+hi.ms,reason:S.lang==='ur'?'اولاد/والد کی موجودگی میں اخیافی بہن محروم':'Blocked by child/father'});hi.ms=0;}
+  }
+  // Closer Asaba block extended Asaba (nephews, uncles, cousins)
+  const hasCloseAsaba=(hasSon||hi.father||hi.grandfather||hi.fb>0||hi.pb>0);
+  if(hasCloseAsaba){
+    ['fbn','pbn','pbn_sons','punc','punc_pat','punc_cousin'].forEach(k=>{
+      if(hi[k]>0){excl.push({heir:getLbl(k,S.lang)+' ×'+hi[k],reason:S.lang==='ur'?'قریبی عصبہ کی موجودگی میں محروم':'Blocked by closer Asaba'});hi[k]=0;}
+    });
+  } else {
+    // Full nephews block paternal nephews
+    if(hi.fbn>0&&hi.pbn>0){excl.push({heir:getLbl('pbn',S.lang)+' ×'+hi.pbn,reason:S.lang==='ur'?'حقیقی بھتیجے کی موجودگی میں علاتی بھتیجا محروم':'Blocked by Full Nephew'});hi.pbn=0;}
+    // Nephews block uncles
+    if((hi.fbn>0||hi.pbn>0)&&(hi.punc>0||hi.punc_pat>0)){
+      ['punc','punc_pat'].forEach(k=>{if(hi[k]>0){excl.push({heir:getLbl(k,S.lang),reason:S.lang==='ur'?'بھتیجے کی موجودگی میں چچا محروم':'Blocked by Nephew'});hi[k]=0;}});
+    }
+    // Full uncles block paternal uncles
+    if(hi.punc>0&&hi.punc_pat>0){excl.push({heir:getLbl('punc_pat',S.lang)+' ×'+hi.punc_pat,reason:S.lang==='ur'?'حقیقی چچا کی موجودگی میں علاتی چچا محروم':'Blocked by Full Uncle'});hi.punc_pat=0;}
+    // Uncles block cousins
+    if((hi.punc>0||hi.punc_pat>0)&&(hi.pbn_sons>0||hi.punc_cousin>0)){
+      ['pbn_sons','punc_cousin'].forEach(k=>{if(hi[k]>0){excl.push({heir:getLbl(k,S.lang),reason:S.lang==='ur'?'چچا کی موجودگی میں چچازاد محروم':'Blocked by Uncle'});hi[k]=0;}});
+    }
+    // Full uncle's sons block paternal uncle's sons
+    if(hi.pbn_sons>0&&hi.punc_cousin>0){excl.push({heir:getLbl('punc_cousin',S.lang),reason:S.lang==='ur'?'حقیقی چچازاد کی موجودگی میں علاتی چچازاد محروم':'Blocked by Full Cousin'});hi.punc_cousin=0;}
+  }
+
+  // ── ذوی الارحام blocking ──
+  // Dhul-Arham only inherit if NO Furud or Asaba heirs
+  // (will be handled after computing furud/asaba)
+
+  log('Step 1 — Hajb (الحجب)','الحجب',
+    excl.length?`${excl.length} ${S.lang==='ur'?'وارث محروم':S.lang==='ar'?'ورثة محجوبون':'heir(s) excluded'} — ${S.lang==='ur'?'حجب جدول ملاحظہ کریں':'see Hajb table.'}`
+    :S.lang==='ur'?'کوئی حجب نہیں — تمام ورثاء شامل':S.lang==='ar'?'لا حجب — جميع الورثة يرثون':'No heirs excluded — all proceed.');
+
+  // ═══ STEP 2: ASSIGN FURUD (Fixed Shares) ═══
+  const furudList=[];
+  const asabaList=[];
+  const dhawList=[];
+
+  const addFurud=(key,cnt,num,den,shared=false,note='')=>
+    furudList.push({key,label:getLbl(key,S.lang),ar:HEIR_NAMES[key]?.ar||'',cnt,num,den,shared,note});
+
+  // ── Spouses ──
+  const spousePresent=(hi.husband&&!isM)||(hi.wife&&isM);
+  // Al-Akdariyyah must be detected BEFORE the normal spouse furud is assigned,
+  // since it assigns its own (post-'Awl) spouse fraction and must not double it.
+  const isAkdariyya=madhhab!=='hanafi'&&hi.grandfather&&spousePresent&&hi.mother&&!hasChild
+    &&(hi.fs+hi.ps)===1&&hi.fb===0&&hi.pb===0&&hi.mb===0&&hi.ms===0;
+  if(hi.husband&&!isM&&!isAkdariyya) addFurud('husband',1,hasChild?1:1,hasChild?4:2);
+  if(hi.wife&&isM&&!isAkdariyya)     addFurud('wife',hi.wc,hasChild?1:1,hasChild?8:4,true);
+
+  // ── Umariyyatain check ──
+  const hasFatherFigure=hi.father||hi.grandfather;
+  const umarCase=spousePresent&&hasFatherFigure&&hi.mother&&!hasChild;
+
+  // ── Al-Akdariyyah (الأكدرية) — Maliki/Shafi'i/Hanbali exceptional case ──
+  // Triggers ONLY for: spouse + mother + grandfather + EXACTLY ONE full or
+  // consanguine sister (no other siblings at all), no children. Named after
+  // Zayd ibn Thabit's ruling. Does NOT apply under Hanafi, which has no
+  // Muqasama at all (grandfather simply blocks the sister outright there —
+  // an ordinary, unremarkable result needing no exception).
+  // It bundles THREE deviations from the ordinary rules that only combine
+  // in this exact case:
+  //  1. The sister keeps her Quranic 1/2 fard despite the grandfather's
+  //     presence (ordinarily he would convert her into an Asaba co-heir
+  //     under Muqasama with no independent fard).
+  //  2. The mother is fixed at 1/6 — NOT 1/3 — even though only ONE sibling
+  //     is present (ordinarily 2+ siblings are required to reduce her).
+  //  3. After 'Awl, the grandfather's and sister's shares are pooled and
+  //     re-divided between just the two of them 2:1, so the sister — being
+  //     female — never ends up with a bigger portion than the grandfather.
+  if(isAkdariyya){
+    const sisKey=hi.fs===1?'fs':'ps';
+    const spKey=hi.husband?'husband':'wife';
+    const spFrac=spKey==='husband'?new Frac(1,2):new Frac(1,4);
+    const moFrac=new Frac(1,6), gfFrac=new Frac(1,6), siFrac=new Frac(1,2);
+    const sumFrac=spFrac.add(moFrac).add(gfFrac).add(siFrac);
+    // 'Awl normalisation (division by the over-subscribed sum) if needed —
+    // harmless no-op if sumFrac already equals 1.
+    const spTrue=spFrac.div(sumFrac), moTrue=moFrac.div(sumFrac), gfTrue=gfFrac.div(sumFrac), siTrue=siFrac.div(sumFrac);
+    // Pool grandfather + sister, then re-divide 2:1
+    const pool=gfTrue.add(siTrue);
+    const gfFinal=pool.mul(new Frac(2,3)), siFinal=pool.mul(new Frac(1,3));
+    addFurud(spKey,1,spTrue.n,spTrue.d,false,S.lang==='ur'?'اکدریہ':'Akdariyyah');
+    addFurud('mother',1,moTrue.n,moTrue.d,false,S.lang==='ur'?'اکدریہ — سدس (ثلث نہیں)':'Akdariyyah — fixed 1/6');
+    addFurud('grandfather',1,gfFinal.n,gfFinal.d,false,S.lang==='ur'?'اکدریہ — عول کے بعد بہن کے ساتھ ادغام و ازسرِنو 2:1 تقسیم':'Akdariyyah — pooled & re-split 2:1 with sister');
+    addFurud(sisKey,1,siFinal.n,siFinal.d,false,S.lang==='ur'?'اکدریہ — عول کے بعد دادا کے ساتھ ادغام و ازسرِنو 2:1 تقسیم':'Akdariyyah — pooled & re-split 2:1 with grandfather');
+    log('Step 2a — Al-Akdariyyah (الأكدرية)','الأكدرية',
+      S.lang==='ur'
+        ?'مسئلہ اکدریہ فعال (زید بن ثابت رضی اللہ عنہ کا فیصلہ): بہن کا فرض بحال، ماں کا حصہ سدس پر مقرر، عول کے بعد دادا اور بہن کے حصے ملا کر 2:1 پر ازسرِنو تقسیم۔'
+        :S.lang==='ar'
+        ?'مسألة الأكدرية مفعّلة (قضاء زيد بن ثابت رضي الله عنه).'
+        :"Al-Akdariyyah is active (Zayd ibn Thabit's ruling): sister's fard restored, mother fixed at 1/6, grandfather+sister pooled after 'Awl and re-split 2:1.");
+  }
+
+  // ── Muqasama eligibility (grandfather + full/paternal siblings, non-Hanafi) ──
+  // Scoped to the standard textbook combination: no son, no daughter present
+  // (both of those already give the residue elsewhere / restrict the grandfather
+  // to his 1/6), and siblings from a SINGLE tier only (full, or paternal — not a
+  // mixed full+paternal group, an already-rare combination whose Muqasama
+  // treatment has more nuance than is safe to encode without further dedicated
+  // verification). Outside this scope, Step 6a's warning below still applies.
+  const fullTierCnt=hi.fb+hi.fs, patTierCnt=hi.pb+hi.ps;
+  const isMuqasamaCase=madhhab!=='hanafi'&&hi.grandfather&&!isAkdariyya&&!hasSon&&!hasDaughter
+    &&((fullTierCnt>0&&patTierCnt===0)||(fullTierCnt===0&&patTierCnt>0));
+
+  // ── Father ──
+  if(hi.father){
+    if(hasSon){
+      addFurud('father',1,1,6,false,S.lang==='ur'?'بیٹے کی موجودگی میں سدس فرض':'1/6 (son present)');
+    } else if(hasDaughter){
+      addFurud('father',1,1,6,false,S.lang==='ur'?'سدس فرض + بقیہ عصبہ':'1/6 + Asaba residue');
+      asabaList.push({key:'father',type:'asaba_father_with_daughter',cnt:1});
+    } else {
+      asabaList.push({key:'father',label:getLbl('father',S.lang),ar:'الأب',type:'asaba_pure',cnt:1});
+    }
+  }
+
+  // ── Grandfather (like father when no father) ──
+  if(hi.grandfather&&!hi.father&&!isAkdariyya){
+    if(hasSon){
+      addFurud('grandfather',1,1,6,false,S.lang==='ur'?'سدس فرض (پوتے کی موجودگی)':'1/6 fard');
+    } else if(hasDaughter){
+      addFurud('grandfather',1,1,6,false,S.lang==='ur'?'سدس فرض + عصبہ':'1/6 + Asaba');
+      asabaList.push({key:'grandfather',type:'asaba_father_with_daughter',cnt:1});
+    } else if(isMuqasamaCase){
+      // Minimum guaranteed 1/6 of the whole estate — added as an ordinary furud
+      // entry so it correctly participates in the standard 'Awl/Tashih machinery
+      // above (which already handles interaction with other fixed-share heirs
+      // correctly). Step 6a below then compares this against Muqasama and 1/3-
+      // of-residue, and upgrades him if either is more favourable.
+      addFurud('grandfather',1,1,6,false,S.lang==='ur'?'مقاسمہ کا کم از کم — سدس کل':'Muqasama minimum — 1/6 of whole');
+    } else {
+      asabaList.push({key:'grandfather',label:getLbl('grandfather',S.lang),ar:'الجد الصحيح',type:'asaba_pure',cnt:1});
+    }
+  }
+
+  // ── Mother ──
+  if(hi.mother&&!isAkdariyya){
+    const sibCnt=hi.fb+hi.fs+hi.pb+hi.ps+hi.mb+hi.ms;
+    if(hasChild||sibCnt>=2){
+      addFurud('mother',1,1,6);
+    } else if(umarCase){
+      // Umariyyatain/Gharrawain: mother = 1/3 of the REMAINDER after the spouse's
+      // share, NOT 1/3 (or 1/6) of the whole estate. We compute this as an exact
+      // fraction right here — using the spouse's already-assigned num/den — so this
+      // fraction fully participates in the Step-3 Tashih/Asl al-Masala calculation
+      // below. (Previously this was patched in AFTER asl was fixed, using a rounded
+      // decimal against an asl too small to represent thirds — that produced wrong
+      // pts for the mother AND a wrong residue for the father/grandfather's Asaba
+      // share, since residue = asl − fixedPts depends on asl being correct.)
+      const spEntry=furudList.find(x=>x.key==='husband'||x.key==='wife');
+      const spNum=spEntry?spEntry.num:0, spDen=spEntry?spEntry.den:1;
+      // remaining = (spDen−spNum)/spDen ; mother's share = remaining/3 = (spDen−spNum)/(3·spDen)
+      addFurud('mother',1,spDen-spNum,3*spDen,false,
+        S.lang==='ur'?'مسئلہ عمریہ — ثلث الباقی':S.lang==='ar'?'الغراوان — ثلث الباقي':'Umariyyatain — 1/3 of remainder');
+    } else {
+      addFurud('mother',1,1,3);
+    }
+  }
+
+  // ── Grandmothers (if no mother) ──
+  // Both gm_pat and gm_mat share 1/6 if both present
+  const bothGM=hi.gm_pat&&hi.gm_mat;
+  if(hi.gm_pat&&!hi.mother){
+    addFurud('gm_pat',1,1,bothGM?12:6,bothGM,S.lang==='ur'?(bothGM?'نصف سدس — دونوں دادی/نانی':'سدس'):S.lang==='ar'?(bothGM?'نصف السدس مع الجدة الأموية':'السدس'):(bothGM?'Half of 1/6 (shared with mat. GM)':'1/6'));
+  }
+  if(hi.gm_mat&&!hi.mother){
+    addFurud('gm_mat',1,1,bothGM?12:6,bothGM,S.lang==='ur'?(bothGM?'نصف سدس — دونوں دادی/نانی':'سدس'):S.lang==='ar'?(bothGM?'نصف السدس مع الجدة الأبوية':'السدس'):(bothGM?'Half of 1/6 (shared with pat. GM)':'1/6'));
+  }
+
+  // ── Daughters (no sons → fixed furud) ──
+  if(hi.daughters>0&&hi.sons===0){
+    const n=hi.daughters===1?1:2,d=hi.daughters===1?2:3;
+    addFurud('daughters',hi.daughters,n,d,true);
+  }
+
+  // ── Granddaughters (no son, no grandson) ──
+  if(hi.granddaughters>0&&hi.sons===0&&hi.grandsons===0){
+    if(hi.daughters===0){
+      const n=hi.granddaughters===1?1:2,d=hi.granddaughters===1?2:3;
+      addFurud('granddaughters',hi.granddaughters,n,d,true);
+    } else if(hi.daughters===1){
+      addFurud('granddaughters',hi.granddaughters,1,6,true,S.lang==='ur'?'تکملۂ ثلثین — ایک بیٹی کے ساتھ':S.lang==='ar'?'تكملة الثلثين مع البنت الواحدة':'Supplement to 2/3 with 1 daughter');
+    }
+  }
+
+  // ── Full Sisters (no brothers, no father/grandfather/sons) ──
+  if(hi.fs>0&&hi.fb===0&&!hi.father&&!hi.grandfather&&!hasSon){
+    if(hasDaughter){
+      // عصبہ مع الغیر — with daughter
+      asabaList.push({key:'fs',type:'asaba_mghayr',cnt:hi.fs});
+    } else {
+      const n=hi.fs===1?1:2,d=hi.fs===1?2:3;
+      addFurud('fs',hi.fs,n,d,true);
+    }
+  }
+
+  // ── Paternal Half Sisters alone ──
+  if(hi.ps>0&&hi.pb===0&&hi.fb===0&&!hi.father&&!hi.grandfather&&!hasSon){
+    if(hasDaughter){
+      asabaList.push({key:'ps',type:'asaba_mghayr',cnt:hi.ps});
+    } else {
+      const fsGot1Half=furudList.some(x=>x.key==='fs'&&x.num===1&&x.den===2);
+      if(fsGot1Half){
+        addFurud('ps',hi.ps,1,6,true,S.lang==='ur'?'تکملۂ ثلثین — ایک حقیقی بہن کے ساتھ':'Supplement to 2/3 (1 full sister)');
+      } else {
+        const n=hi.ps===1?1:2,d=hi.ps===1?2:3;
+        addFurud('ps',hi.ps,n,d,true);
+      }
+    }
+  }
+
+  // ── Maternal Siblings (fixed share, shared equally male/female) ──
+  const matSib=hi.mb+hi.ms;
+  if(matSib>0){
+    const n=matSib===1?1:1,d=matSib===1?6:3;
+    addFurud('mb_ms',matSib,n,d,true);
+  }
+
+  // ── Asaba Groups ──
+  if(hi.sons>0)
+    asabaList.push({key:'sons',type:'asaba_2_1',sCount:hi.sons,dCount:hi.daughters});
+  if(hi.grandsons>0&&hi.sons===0)
+    asabaList.push({key:'grandsons',type:'asaba_2_1',sCount:hi.grandsons,dCount:hi.granddaughters});
+  if(hi.fb>0&&!isMuqasamaCase)
+    asabaList.push({key:'fb',type:'asaba_2_1',sCount:hi.fb,dCount:hi.fs});
+  if(hi.pb>0&&!isMuqasamaCase)
+    asabaList.push({key:'pb',type:'asaba_2_1',sCount:hi.pb,dCount:hi.ps});
+  // Pure asaba (males only, by priority order)
+  if(hi.fbn>0) asabaList.push({key:'fbn',label:getLbl('fbn',S.lang),ar:HEIR_NAMES.fbn.ar,type:'asaba_pure',cnt:hi.fbn});
+  if(hi.pbn>0) asabaList.push({key:'pbn',label:getLbl('pbn',S.lang),ar:HEIR_NAMES.pbn.ar,type:'asaba_pure',cnt:hi.pbn});
+  if(hi.punc>0) asabaList.push({key:'punc',label:getLbl('punc',S.lang),ar:HEIR_NAMES.punc.ar,type:'asaba_pure',cnt:hi.punc});
+  if(hi.punc_pat>0) asabaList.push({key:'punc_pat',label:getLbl('punc_pat',S.lang),ar:HEIR_NAMES.punc_pat.ar,type:'asaba_pure',cnt:hi.punc_pat});
+  if(hi.pbn_sons>0) asabaList.push({key:'pbn_sons',label:getLbl('pbn_sons',S.lang),ar:HEIR_NAMES.pbn_sons.ar,type:'asaba_pure',cnt:hi.pbn_sons});
+  if(hi.punc_cousin>0) asabaList.push({key:'punc_cousin',label:getLbl('punc_cousin',S.lang),ar:HEIR_NAMES.punc_cousin.ar,type:'asaba_pure',cnt:hi.punc_cousin});
+
+  if(nonHanafiGFWithSiblings&&!isAkdariyya&&!isMuqasamaCase){
+    // Full Muqasama (grandfather sharing the residue with full/paternal siblings
+    // — the Maliki/Shafi'i/Hanbali position) IS implemented above (Step 6a), but
+    // only for the standard textbook combination — no son, no daughter, and
+    // siblings from a single tier (full, OR paternal, not mixed). This flags the
+    // rarer combinations still outside that scope (e.g. a daughter also present,
+    // or mixed full+paternal siblings) where the figures below fall back to an
+    // unverified approximation.
+    log('Step 6a — ⚠ Grandfather + Siblings — Unscoped Combination','الجد مع الإخوة',
+      S.lang==='ur'
+        ?'تنبیہ: یہ مخصوص امتزاج (مثلاً بیٹی کی موجودگی، یا حقیقی+علاتی بھائی بہن اکٹھے) پروگرام کے مقاسمہ ماڈیول کے دائرہ کار سے باہر ہے — نیچے کا نتیجہ غیر تصدیق شدہ ہے۔ براہِ کرم اس مسئلہ کی دستی تصدیق کریں۔'
+        :S.lang==='ar'
+        ?'تنبيه: هذا التركيب خارج نطاق وحدة المقاسمة المطبقة — يُرجى التحقق يدوياً.'
+        :'Warning: This specific combination (e.g. a daughter also present, or mixed full+paternal siblings) falls outside the scope of the Muqasama module implemented above — the figures below are unverified. Please check this case manually.');
+  }
+
+
+  // ── ذوی الارحام — only if no furud and no asaba ──
+  const dhawKeys=['nawasa','nawasi','bhanja','bhanji','phuphi','khala','mamu','nana'];
+  dhawKeys.forEach(k=>{if(hi[k]>0) dhawList.push({key:k,cnt:hi[k]});});
+
+  const hasAsaba=asabaList.length>0;
+  const hasFurudOrAsaba=furudList.length>0||hasAsaba;
+
+  if(dhawList.length>0&&hasFurudOrAsaba){
+    dhawList.forEach(d=>{
+      excl.push({heir:getLbl(d.key,S.lang)+' ×'+d.cnt,reason:S.lang==='ur'?'اصحابِ فروض/عصبات کی موجودگی میں ذوی الارحام محروم':S.lang==='ar'?'محجوب بأصحاب الفروض والعصبات':'Blocked — Furud/Asaba heirs present (Dhul-Arham rule)'});
+    });
+    dhawList.length=0;
+  }
+
+  log('Step 2 — Assign Shares (تعيين الحصص)','تعيين الحصص',
+    S.lang==='ur'
+      ?`اصحابِ فروض: ${furudList.length} | عصبات: ${asabaList.length} | ذوی الارحام: ${dhawList.length} | النساء: ١١-١٢ و ١٧٦`
+      :S.lang==='ar'
+      ?`أصحاب الفروض: ${furudList.length} | العصبات: ${asabaList.length} | ذوو الأرحام: ${dhawList.length} | النساء:١١-١٢،١٧٦`
+      :`Furud heirs: ${furudList.length}. Asaba groups: ${asabaList.length}. Dhaw al-Arham: ${dhawList.length}. Quran 4:11-12 & 4:176.`);
+
+  // ═══ STEP 3: TASHIH — تصحيح المسألة ═══
+  // Proven algorithm (SM Faraid v2 + Sirajiyyah):
+  // Phase 1 : asl = LCM of all furud denominators
+  // Phase 2 : sum fracs → detect AWL (sum > 1)
+  // Phase 3 : build integer parts map hd{}
+  // Phase 4 : asaba residue expansion (rem % asabaUnits = 0)
+  // Phase 5 : tashih loop — find smallest m so parts divisible by count
+  // Phase 5b: re-check asaba after tashih expansion
+  // NO GCD reduction — preserves correctness for asl 6–96–120+
+
+  const realFurud = furudList.filter(x => !x.umar);
+
+  // Phase 1: asl = LCM of denominators
+  let asl = 1;
+  for(const x of realFurud){ if(x.den > 0) asl = lcm(asl, x.den); }
+  if(!asl || isNaN(asl)) asl = 1;
+
+  // Phase 2: sum of fractions → AWL detection
+  let sumFv = 0;
+  for(const x of realFurud) sumFv += x.num / x.den;
+  const isAwlCase = sumFv > 1 + 1e-9;
+
+  // Phase 3: initial integer parts
+  const hd = {};
+  for(const x of realFurud) hd[x.key] = { pts: x.num * (asl / x.den), cnt: x.cnt || 1 };
+
+  // Asaba units
+  let asabaUnits = 0;
+  const mainAsabaForTashih = asabaList.filter(a => a.type==='asaba_2_1' || a.type==='asaba_mghayr');
+  if(mainAsabaForTashih.length > 0){
+    const a = mainAsabaForTashih[0];
+    if(a.type==='asaba_2_1') asabaUnits = (a.sCount||0)*2 + (a.dCount||0);
+    else asabaUnits = a.cnt || 1;
+  } else {
+    const pureA = asabaList.filter(a => a.type==='asaba_pure');
+    if(pureA.length > 0) asabaUnits = pureA.reduce((s,a) => s + (a.cnt||1), 0);
+  }
+
+  if(isAwlCase){
+    // AWL: asl = sum of numerator parts
+    asl = Object.values(hd).reduce((s,h) => s + h.pts, 0);
+  } else {
+    // Phase 4: expand so asaba residue is divisible by asaba units
+    if(asabaUnits > 0){
+      const fs = Object.values(hd).reduce((s,h) => s + h.pts, 0);
+      const rem = asl - fs;
+      if(rem > 0 && rem % asabaUnits !== 0){
+        const factor = asabaUnits / gcd(rem, asabaUnits);
+        if(factor > 1){ asl *= factor; for(const k of Object.keys(hd)) hd[k].pts *= factor; }
+      }
+    }
+  }
+
+  // Phase 5: tashih — for each shared group, expand so pts divisible by count
+  let tashihMult = 1;
+  for(const h of Object.values(hd)){
+    if(h.cnt < 2) continue;
+    const p = Math.round(h.pts * 1e6) / 1e6;
+    if(Math.abs(p % h.cnt) > 1e-4){
+      for(let m = 2; m <= h.cnt * 1000; m++){
+        if(Math.abs((p * m) % h.cnt) < 1e-4){ tashihMult = lcm(tashihMult, m); break; }
+      }
+    }
+  }
+  if(tashihMult > 1 && tashihMult < 1000000){
+    asl = Math.round(asl * tashihMult);
+    for(const k of Object.keys(hd)) hd[k].pts = Math.round(hd[k].pts * tashihMult);
+  }
+
+  // Phase 5b: re-check asaba residue after tashih
+  if(!isAwlCase && asabaUnits > 0){
+    const fs2 = Object.values(hd).reduce((s,h) => s + Math.round(h.pts), 0);
+    const rem2 = Math.round(asl) - fs2;
+    if(rem2 > 0 && rem2 % asabaUnits !== 0){
+      const factor2 = asabaUnits / gcd(rem2, asabaUnits);
+      if(factor2 > 1 && factor2 < 100000){
+        asl = Math.round(asl * factor2);
+        for(const k of Object.keys(hd)) hd[k].pts = Math.round(hd[k].pts * factor2);
+      }
+    }
+  }
+
+  // Phase 6: write integer pts back to realFurud
+  asl = Math.round(asl);
+  for(const x of realFurud){
+    x.pts = Math.round(hd[x.key] ? hd[x.key].pts : x.num * (asl / x.den));
+  }
+
+  // (Dhaw al-Arham's Asl al-Masala and per-heir shares are computed later, in the
+  // dedicated four-class Tanzil section below — see Step 6b.)
+
+  let fixedPts = realFurud.reduce((s,x) => s + (x.pts||0), 0);
+
+  log('Step 3 — Tashih (التصحيح)','تصحيح المسألة',
+    S.lang==='ur'
+      ?`اصل مسئلہ = ${asl} | فروض = ${fixedPts}/${asl} | بقیہ = ${asl-fixedPts} | عصبہ وحدات = ${asabaUnits||0}`
+      :S.lang==='ar'
+      ?`أصل المسألة = ${asl} | المحدد = ${fixedPts}/${asl} | الباقي = ${asl-fixedPts} | وحدات العصبة = ${asabaUnits||0}`
+      :`Asl al-Masala = ${asl}. Fixed = ${fixedPts}/${asl}. Residue = ${asl-fixedPts}. Asaba units = ${asabaUnits||0}.`);
+
+  // ═══ STEP 4: UMARIYYATAIN / GHARRAWAIN (informational log only) ═══
+  // The mother's exact 1/3-of-remainder fraction was already assigned in Step 2
+  // and has already correctly participated in the Step-3 Asl al-Masala / Tashih
+  // calculation above (asl, pts, and hence the father/grandfather's Asaba residue
+  // are all already correct at this point) — this step only logs it, it must not
+  // mutate any shares.
+  if(umarCase){
+    const spEntry=furudList.find(x=>x.key==='husband'||x.key==='wife');
+    const spFrac=spEntry?spEntry.num/spEntry.den:0;
+    const motherEntry=furudList.find(x=>x.key==='mother');
+    const motherFrac=motherEntry?motherEntry.num/motherEntry.den:0;
+    log('Step 4 — Umariyyatain (الغراوَين)','الغراوَين',
+      S.lang==='ur'
+        ?`زوج/زوجہ ${(spFrac*100).toFixed(1)}% + والد + والدہ + بلا اولاد۔ والدہ = ثلث الباقی = ${(motherFrac*100).toFixed(2)}٪ (حضرت عمر رضی اللہ عنہ کا فیصلہ)`
+        :S.lang==='ar'
+        ?`الزوج/الزوجة ${(spFrac*100).toFixed(1)}% + الأب + الأم + لا ولد. الأم = ثلث الباقي = ${(motherFrac*100).toFixed(2)}% (قضاء عمر رضي الله عنه)`
+        :`Spouse ${(spFrac*100).toFixed(1)}% + Father/GP + Mother + no children. Mother = 1/3 of remainder = ${(motherFrac*100).toFixed(2)}%. (Ruling of Umar RA)`);
+  }
+
+  // ═══ STEP 5: AWL / RADD / NORMAL ═══
+  let rule='normal';
+  const spouseKeys=['husband','wife'];
+  const isSpouseOnly=furudList.length===1&&spouseKeys.includes(furudList[0].key)&&!hasAsaba&&dhawList.length===0;
+  const hasSpouseInFurud=furudList.some(x=>spouseKeys.includes(x.key));
+  const hasOtherFurud=furudList.some(x=>!spouseKeys.includes(x.key));
+
+  // ── Radd on spouses: Hanafi = yes (متاخرین), Shafi'i = no (جمہور) ──
+  const raddOnSpouse=(madhhab==='hanafi');
+
+  if(isAwlCase){
+    // Phase 2 already detected and applied Awl (raised asl to the fard sum) even
+    // when an Asaba (e.g. father-with-daughter) is present — that residuary heir
+    // only inherits leftover residue, so it does not prevent Awl when the fard
+    // shares alone already exceed the estate. Label it correctly here too.
+    rule='awl';
+  }
+
+  if(fixedPts>asl&&!hasAsaba){
+    rule='awl';
+    const oldAsl=asl;
+    asl=fixedPts;
+    log('Step 5 — Awl (العول)','العول',
+      S.lang==='ur'
+        ?`فروض کا مجموع (${fixedPts}/${oldAsl}) ترکے سے زیادہ — عول لاگو۔ أصل المسألة ${oldAsl} سے بڑھ کر ${fixedPts} ہوا۔ تمام حصص تناسب سے کم۔`
+        :S.lang==='ar'
+        ?`مجموع الفروض (${fixedPts}/${oldAsl}) يزيد على التركة — العول واجب. أصل المسألة ارتفع من ${oldAsl} إلى ${fixedPts}.`
+        :`Shares ${fixedPts}/${oldAsl} exceed estate. AWL: Asl raised ${oldAsl}→${fixedPts}. All reduced proportionally.`);
+
+  } else if(fixedPts<asl&&!hasAsaba&&dhawList.length===0&&!isMuqasamaCase){
+    rule='radd';
+    const surp=asl-fixedPts;
+
+    if(isSpouseOnly){
+      furudList.forEach(x=>{x.fardPts=x.pts||0;x.raddPts=surp;x.pts=(x.pts||0)+surp;});
+      log('Step 5 — Radd (الرد) — Sole Spouse','رد — منفرد زوج/زوجہ',
+        S.lang==='ur'?`منفرد زوج/زوجہ — پوری میراث۔ فرض + رد (متاخرین)`:`Sole spouse: full estate. Fard + complete Radd.`);
+    } else {
+      const nonSpouseFurud=furudList.filter(x=>
+        raddOnSpouse ? !x.umar : !spouseKeys.includes(x.key)&&!x.umar
+      );
+      const nonSpousePts=nonSpouseFurud.reduce((s,x)=>s+(x.pts||0),0);
+      if(nonSpousePts>0){
+        // Rescale the WHOLE Asl al-Masala by nonSpousePts so every heir's post-Radd
+        // share is an exact integer — not a rounded decimal. Previously raddPts was
+        // computed as (fardPts/nonSpousePts)*surp directly against the old asl, which
+        // is only an integer when nonSpousePts happens to divide evenly; otherwise the
+        // displayed pts were independently rounded per-heir and no longer summed to
+        // asl (percentages/money stayed correct, but the on-screen "shares out of
+        // Asl al-Masala" did not add up — exactly the kind of mismatch the correction
+        // must eliminate). Multiplying everything by nonSpousePts clears the fraction.
+        const oldFixedByKey={};
+        furudList.forEach(x=>{oldFixedByKey[x.key]=x.pts||0;});
+        const isRedistributed=x=>nonSpouseFurud.includes(x);
+        furudList.forEach(x=>{
+          const oldPts=oldFixedByKey[x.key];
+          x.fardPts=oldPts*nonSpousePts;
+          if(isRedistributed(x)){
+            x.raddPts=oldPts*surp;
+            x.pts=x.fardPts+x.raddPts;
+          } else {
+            // spouse excluded from Radd (Jumhur/Shafi'i view) — no surplus, just rescaled
+            x.pts=x.fardPts;
+          }
+        });
+        asl=asl*nonSpousePts;
+        const excluded=raddOnSpouse?'':S.lang==='ur'?' (زوجین کے علاوہ — جمہور)':' (Spouses excluded — Jumhur)';
+        log('Step 5 — Radd (الرد)','الرد',
+          S.lang==='ur'
+            ?`بقیہ ${surp} حصے اصحابِ فروض کو واپس${excluded}${raddOnSpouse?' (زوجین سمیت — حنفی/متاخرین)':''}`
+            :S.lang==='ar'
+            ?`الباقي ${surp} يعود لأصحاب الفروض${raddOnSpouse?' (مع الزوجين — الحنفية)':' (دون الزوجين — الجمهور)'}`
+            :`Surplus ${surp}pts returned to Furud heirs${excluded}${raddOnSpouse?' (Spouses included — Hanafi)':''}.`);
+      } else {
+        log('Step 5 — Distribution','توزيع','No Radd applicable.');
+      }
+    }
+  } else {
+    log('Step 5 — Distribution (التوزيع)','التوزيع',
+      hasAsaba
+        ?(S.lang==='ur'?`فروض = ${fixedPts}/${asl} | بقیہ ${asl-fixedPts} حصے عصبہ کو`:S.lang==='ar'?`الفروض = ${fixedPts}/${asl} | الباقي ${asl-fixedPts} للعصبة`:`Fixed = ${fixedPts}/${asl}. Residue ${asl-fixedPts}pts → Asaba.`)
+        :(dhawList.length>0?(S.lang==='ur'?`بقیہ ${asl-fixedPts} حصے ذوی الارحام کو`:`Residue → Dhaw al-Arham`)
+          :(S.lang==='ur'?`حصص ${fixedPts}/${asl} بالکل متوازن — عول/رد نہیں`:S.lang==='ar'?`الحصص متوازنة ${fixedPts}/${asl} — لا عول ولا رد`:`Shares balance exactly. No Awl or Radd.`)));
+  }
+
+  // ═══ STEP 6: COMPUTE RESIDUE ═══
+  const totalFixedPts=furudList.reduce((s,x)=>s+(x.pts||0),0);
+  let residuePts=Math.max(0,asl-totalFixedPts);
+
+  // ═══ STEP 7: BUILD FINAL RESULTS ═══
+  const final=[];
+
+  // ── Furud heirs ──
+  furudList.forEach(x=>{
+    let pts=x.pts||0;
+    let amt=(pts/asl)*net;
+    const isFatherWithDaughter=asabaList.some(a=>a.key===x.key&&a.type==='asaba_father_with_daughter');
+    let asabaAmt=0;
+    let asabaResiduePts=0;
+    if(isFatherWithDaughter){asabaAmt=(residuePts/asl)*net;amt+=asabaAmt;asabaResiduePts=residuePts;residuePts=0;}
+    if(x.umar) amt=(x.num/x.den)*net;
+    const fardAmt=x.fardPts!=null?((x.fardPts/asl)*net):null;
+    const raddAmt=x.raddPts!=null?((x.raddPts/asl)*net):null;
+    // Display pts must include the Asaba residue (e.g. father's 1/6 fard + residue
+    // when daughters are present) — otherwise the shown "shares out of Asl al-Masala"
+    // silently undercounts this heir even though the percentage/amount is correct.
+    const displayPts=(x.pts||0)+asabaResiduePts;
+    final.push({
+      key:x.key,label:x.label,ar:x.ar,cnt:x.cnt,
+      pct:net>0?amt/net*100:0,total:amt,
+      indiv:x.cnt>1&&x.shared?amt/x.cnt:amt,
+      type:'furud',frac:x.umar?null:[x.num,x.den],
+      note:x.note||'',fardAmt,raddAmt,
+      asabaAmt:asabaAmt>0?asabaAmt:null,
+      pts:Math.round(displayPts),
+      indivPts:(x.cnt>1&&x.shared&&displayPts>0)?Math.round(displayPts/x.cnt):Math.round(displayPts)
+    });
+  });
+
+  // ── Asaba heirs ──
+  const mainAsaba=asabaList.filter(a=>a.type!=='asaba_father_with_daughter');
+  if(mainAsaba.length>0&&residuePts>0){
+    const asabaMoney=(residuePts/asl)*net;
+    const firstAsaba=mainAsaba[0];
+
+    if(firstAsaba.type==='asaba_2_1'){
+      const sC=firstAsaba.sCount||0,dC=firstAsaba.dCount||0;
+      const totalUnits=sC*2+dC;
+      const perUnit=totalUnits>0?asabaMoney/totalUnits:0;
+      if(sC>0){
+        const mKey=firstAsaba.key;
+        const mTotal=perUnit*2*sC;
+        const mPts=totalUnits>0?(residuePts/totalUnits)*2*sC:0;
+        final.push({key:mKey,label:getLbl(mKey,S.lang),ar:HEIR_NAMES[mKey]?.ar||'',
+          cnt:sC,pct:net>0?mTotal/net*100:0,total:mTotal,indiv:mTotal/sC,
+          type:'asaba',frac:null,note:'',pts:Math.round(mPts),indivPts:Math.round(mPts/sC)});
+      }
+      if(dC>0){
+        const fKeyMap={sons:'daughters',grandsons:'granddaughters',fb:'fs',pb:'ps'};
+        const fKey=fKeyMap[firstAsaba.key]||firstAsaba.key;
+        const fTotal=perUnit*dC;
+        const fPts=totalUnits>0?(residuePts/totalUnits)*dC:0;
+        final.push({key:fKey,label:getLbl(fKey,S.lang),ar:HEIR_NAMES[fKey]?.ar||'',
+          cnt:dC,pct:net>0?fTotal/net*100:0,total:fTotal,indiv:fTotal/dC,
+          type:'asaba',frac:null,note:'',pts:Math.round(fPts),indivPts:Math.round(fPts/dC)});
+      }
+    } else if(firstAsaba.type==='asaba_mghayr'){
+      // عصبہ مع الغیر — sisters with daughters
+      const fKey=firstAsaba.key;
+      final.push({key:fKey,label:getLbl(fKey,S.lang),ar:HEIR_NAMES[fKey]?.ar||'',
+        cnt:firstAsaba.cnt,pct:net>0?asabaMoney/net*100:0,
+        total:asabaMoney,indiv:asabaMoney/firstAsaba.cnt,
+        type:'asaba',frac:null,
+        note:S.lang==='ur'?'عصبہ مع الغیر':S.lang==='ar'?'عصبة مع الغير':'Asaba with Female',
+        pts:Math.round(residuePts),indivPts:Math.round(residuePts/firstAsaba.cnt)});
+    } else if(firstAsaba.type==='asaba_pure'){
+      final.push({key:firstAsaba.key,label:firstAsaba.label||getLbl(firstAsaba.key,S.lang),
+        ar:firstAsaba.ar||HEIR_NAMES[firstAsaba.key]?.ar||'',
+        cnt:firstAsaba.cnt,pct:net>0?asabaMoney/net*100:0,
+        total:asabaMoney,indiv:asabaMoney/firstAsaba.cnt,
+        type:'asaba',frac:null,note:'',
+        pts:Math.round(residuePts),indivPts:Math.round(residuePts/firstAsaba.cnt)});
+    }
+  }
+
+  // ── Muqasama (مقاسمہ) — grandfather + full/paternal siblings, non-Hanafi ──
+  // Grandfather already holds his guaranteed-minimum 1/6-of-whole-estate as an
+  // ordinary furud entry (added earlier, already reflected in `final` and in
+  // `residuePts`/`asl` via the standard 'Awl/Tashih machinery). Now compare
+  // that fixed 1/6 against his other two classical options and keep whichever
+  // is most favourable to him — grandfather always takes the best of the three:
+  //   (a) Muqasama — share the pool with siblings as if he were "one of them"
+  //       (counted as a single male, i.e. double a sister's unit);
+  //   (b) 1/3 of the pool, taken outright;
+  //   (c) his current fixed 1/6-of-whole (already applied by default).
+  // Whatever he does NOT take goes to the siblings via ordinary 2:1 division.
+  if(isMuqasamaCase){
+    const gfIdx0=final.findIndex(f=>f.key==='grandfather');
+    const gfFixedPts=gfIdx0>=0?final[gfIdx0].pts:0;
+    const pool=residuePts+gfFixedPts; // whole amount available to grandfather+siblings
+    // Which sibling tier is actually present decides which fraction counts —
+    // NOT whether a brother specifically is present (a lone full sister, with
+    // no full brother, must still use the "full" tier, not fall through to
+    // paternal siblings who aren't even there).
+    const useFullTier=fullTierCnt>0;
+    const maleCnt=useFullTier?hi.fb:hi.pb, femaleCnt=useFullTier?hi.fs:hi.ps;
+    const maleKey=useFullTier?'fb':'pb', femaleKey=useFullTier?'fs':'ps';
+    const totalMuqasamaUnits=2+2*maleCnt+femaleCnt; // grandfather = 1 male unit = "2"
+    const valMuqasama=totalMuqasamaUnits>0?(2/totalMuqasamaUnits):0;
+    const valThird=1/3;
+    const valFixed=pool>0?(gfFixedPts/pool):1;
+    let choice='fixed';
+    if(valMuqasama>=valThird&&valMuqasama>valFixed) choice='muqasama';
+    else if(valThird>valMuqasama&&valThird>valFixed) choice='third';
+
+    const pushSib=(key,cnt,pts,aslNow)=>{
+      if(cnt<=0||pts<=0) return;
+      const amt=(pts/aslNow)*net;
+      final.push({key,label:getLbl(key,S.lang),ar:HEIR_NAMES[key]?.ar||'',
+        cnt,pct:net>0?amt/net*100:0,total:amt,indiv:amt/cnt,
+        type:'asaba',frac:null,
+        note:S.lang==='ur'?'مقاسمہ — دادا کے ساتھ':S.lang==='ar'?'مقاسمة مع الجد':'Muqasama with grandfather',
+        pts:Math.round(pts),indivPts:Math.round(pts/cnt)});
+    };
+
+    if(choice==='fixed'){
+      const sibUnits=2*maleCnt+femaleCnt;
+      if(sibUnits>0&&residuePts>0){
+        pushSib(maleKey,maleCnt,(residuePts*2*maleCnt)/sibUnits,asl);
+        pushSib(femaleKey,femaleCnt,(residuePts*femaleCnt)/sibUnits,asl);
+      }
+      log('Step 6a — Muqasama (المقاسمة)','المقاسمة',
+        S.lang==='ur'?'دادا نے سدس (کم از کم ضمانتی حصہ) کو مقاسمہ اور ثلث سے بہتر پایا — سدس ہی لیا، بقیہ بھائی بہنوں میں 2:1 تقسیم۔':S.lang==='ar'?'اختار الجد السدس.':"Grandfather's fixed 1/6 was better than Muqasama or 1/3 — kept as-is; residue split 2:1 among siblings.");
+    } else if(choice==='muqasama'){
+      const scale=totalMuqasamaUnits;
+      final.forEach(f=>{f.pts=Math.round(f.pts*scale);f.indivPts=Math.round(f.indivPts*scale);});
+      asl=asl*scale;
+      const gfIdx1=final.findIndex(f=>f.key==='grandfather');
+      if(gfIdx1>=0) final.splice(gfIdx1,1);
+      const gfPts=pool*2; // his 2-unit share of the (unscaled) pool, expressed in the new asl
+      final.push({key:'grandfather',label:getLbl('grandfather',S.lang),ar:'الجد الصحيح',
+        cnt:1,pct:net>0?(gfPts/asl)*100:0,total:(gfPts/asl)*net,indiv:(gfPts/asl)*net,
+        type:'asaba',frac:null,note:S.lang==='ur'?'مقاسمہ':'Muqasama',pts:gfPts,indivPts:gfPts});
+      pushSib(maleKey,maleCnt,pool*2*maleCnt,asl);
+      pushSib(femaleKey,femaleCnt,pool*femaleCnt,asl);
+      log('Step 6a — Muqasama (المقاسمة)','المقاسمة',
+        S.lang==='ur'?'دادا نے مقاسمہ کو سدس اور ثلث سے بہتر پایا — بھائی بہنوں کے ساتھ گویا ایک بھائی کی طرح شریک ہوا (2:1)۔':S.lang==='ar'?'اختار الجد المقاسمة.':'Muqasama was more favourable than 1/6 or 1/3 — grandfather shares as one male unit (2:1) with the siblings.');
+    } else { // choice==='third'
+      const scale=3;
+      final.forEach(f=>{f.pts=Math.round(f.pts*scale);f.indivPts=Math.round(f.indivPts*scale);});
+      asl=asl*scale;
+      const newPool=pool*scale;
+      const gfIdx2=final.findIndex(f=>f.key==='grandfather');
+      if(gfIdx2>=0) final.splice(gfIdx2,1);
+      const gfPts=newPool/3;
+      final.push({key:'grandfather',label:getLbl('grandfather',S.lang),ar:'الجد الصحيح',
+        cnt:1,pct:net>0?(gfPts/asl)*100:0,total:(gfPts/asl)*net,indiv:(gfPts/asl)*net,
+        type:'asaba',frac:null,note:S.lang==='ur'?'مقاسمہ — ثلث الباقی':'1/3 of pool',pts:gfPts,indivPts:gfPts});
+      const remainder=newPool-gfPts;
+      const sibUnits=2*maleCnt+femaleCnt;
+      if(sibUnits>0){
+        pushSib(maleKey,maleCnt,(remainder*2*maleCnt)/sibUnits,asl);
+        pushSib(femaleKey,femaleCnt,(remainder*femaleCnt)/sibUnits,asl);
+      }
+      log('Step 6a — Muqasama (المقاسمة)','المقاسمة',
+        S.lang==='ur'?'دادا نے ثلث الباقی کو سدس اور مقاسمہ سے بہتر پایا — ثلث لے کر باقی بھائی بہنوں میں 2:1 تقسیم کیا۔':S.lang==='ar'?'اختار الجد الثلث.':"1/3 of the pool was more favourable than 1/6 or Muqasama — grandfather takes it outright; the rest splits 2:1 among siblings.");
+    }
+  }
+
+  // ── ذوی الارحام — چار طبقات بمطابق تنزیل (Ahl al-Tanzil, Al-Sirajiyyah) ──
+  // طبقہ اول: فروع المیت (میت کی اولاد کی اولاد، بذریعہ بیٹی)         → نواسا/نواسی
+  // طبقہ دوم: اصول المیت (وہ اصل جو خود وارث نہیں، مثلاً نانا)         → نانا
+  // طبقہ سوم: فروع الابوین (بہن بھائی کی اولاد، بذریعہ بہن)            → بھانجا/بھانجی
+  // طبقہ چہارم: فروع الاجداد (دادا/دادی و نانا/نانی کی اولاد)          → پھوپھی/خالہ/ماموں
+  // اصول: قریب تر طبقہ دور کے طبقے کو مکمل محروم کر دیتا ہے (بعینہ حجب کے اصول کی طرح)۔
+  // طبقہ ۱ و ۳ میں مذکر:مؤنث تقسیم 2:1 ہے (اکثریتِ قائلینِ تنزیل کا مسلک — گویا وہ اپنے
+  // متعلقہ اصل وارث یعنی بیٹا/بیٹی یا بھائی/بہن کی جگہ کھڑے ہیں)۔
+  // طبقہ ۴ کی داخلی تقسیم سیدنا عبداللہ بن مسعود رضی اللہ عنہ کے اصول پر مبنی ہے:
+  // "خالہ ماں کے درجے میں، پھوپھی باپ کے درجے میں" (سنن دارمی، حدیث ۳۰۱۴) —
+  // یعنی باپ کی طرف (پھوپھی) اور ماں کی طرف (خالہ+ماموں) کا تناسب 2:1، اور ماں کی
+  // طرف کے اندر ماموں:خالہ = 2:1۔ (نوٹ: بعض حنفی فقہاء — امام محمد و امام ابویوسف
+  // رحمہما اللہ — کے مابین ذوی الارحام کے حساب کے طریقۂ کار میں جزوی اختلاف منقول ہے؛
+  // یہ پروگرام مسلکِ اکثریت پر عمل کرتا ہے۔)
+  if(dhawList.length>0&&!hasFurudOrAsaba){
+    const dhawKeyCnt={};
+    dhawList.forEach(d=>{dhawKeyCnt[d.key]=(dhawKeyCnt[d.key]||0)+d.cnt;});
+    const has=k=>(dhawKeyCnt[k]||0)>0;
+    const CLASS1=['nawasa','nawasi'], CLASS2=['nana'], CLASS3=['bhanja','bhanji'], CLASS4=['phuphi','khala','mamu'];
+    let activeKeys=null, classNum=0;
+    if(CLASS1.some(has)){activeKeys=CLASS1;classNum=1;}
+    else if(CLASS2.some(has)){activeKeys=CLASS2;classNum=2;}
+    else if(CLASS3.some(has)){activeKeys=CLASS3;classNum=3;}
+    else if(CLASS4.some(has)){activeKeys=CLASS4;classNum=4;}
+
+    if(activeKeys){
+      // فارتر طبقے کے افراد محروم — ایکسکلوژن لسٹ میں لاگ
+      dhawList.forEach(d=>{
+        if(!activeKeys.includes(d.key)){
+          excl.push({heir:getLbl(d.key,S.lang)+' ×'+d.cnt,
+            reason:S.lang==='ur'?`قریب تر طبقۂ ذوی الارحام (طبقہ ${classNum}) کی موجودگی میں محروم`
+              :S.lang==='ar'?`محجوب — طبقة أقرب من ذوي الأرحام (${classNum})`
+              :`Blocked — nearer Dhaw al-Arham class (${classNum}) present`});
+        }
+      });
+
+      const shares={}; // key -> exact Frac of the whole estate
+      if(classNum===1||classNum===3){
+        const [mKey,fKey]=classNum===1?['nawasa','nawasi']:['bhanja','bhanji'];
+        const mC=dhawKeyCnt[mKey]||0, fC=dhawKeyCnt[fKey]||0;
+        const totalUnits=2*mC+1*fC;
+        if(mC>0) shares[mKey]=new Frac(2*mC,totalUnits);
+        if(fC>0) shares[fKey]=new Frac(fC,totalUnits);
+      } else if(classNum===2){
+        shares.nana=new Frac(1,1);
+      } else if(classNum===4){
+        const pCnt=dhawKeyCnt.phuphi||0, kCnt=dhawKeyCnt.khala||0, mCnt=dhawKeyCnt.mamu||0;
+        const pSide=pCnt>0?2:0, mSide=(kCnt>0||mCnt>0)?1:0;
+        const sideTotal=pSide+mSide;
+        if(pCnt>0) shares.phuphi=new Frac(pSide,sideTotal);
+        if(kCnt>0||mCnt>0){
+          const maternalFrac=new Frac(mSide,sideTotal);
+          const subTotal=2*mCnt+1*kCnt;
+          if(mCnt>0) shares.mamu=maternalFrac.mul(new Frac(2*mCnt,subTotal));
+          if(kCnt>0) shares.khala=maternalFrac.mul(new Frac(kCnt,subTotal));
+        }
+      }
+
+      // مشترک اصل مسئلہ (asl) — تمام حصص کے مخارج کا LCM
+      let dhawAsl=1;
+      Object.values(shares).forEach(f=>{dhawAsl=lcm(dhawAsl,f.d);});
+      asl=dhawAsl;
+
+      Object.keys(shares).forEach(key=>{
+        const f=shares[key];
+        const pts=Math.round(f.n*(dhawAsl/f.d));
+        const cnt=dhawKeyCnt[key];
+        const amt=(pts/dhawAsl)*net;
+        final.push({key,label:getLbl(key,S.lang),ar:HEIR_NAMES[key]?.ar||'',
+          cnt,pct:net>0?amt/net*100:0,total:amt,indiv:amt/cnt,
+          type:'dhaw',frac:[f.n,f.d],
+          note:S.lang==='ur'?`ذوی الارحام — طبقہ ${classNum} (تنزیل)`:S.lang==='ar'?`ذوو الأرحام — الطبقة ${classNum} (بالتنزيل)`:`Dhaw al-Arham — Class ${classNum} (Tanzil)`,
+          pts,indivPts:Math.round(pts/cnt)});
+      });
+
+      log('Step 6b — Dhaw al-Arham (ذوو الأرحام)','ذوو الأرحام',
+        S.lang==='ur'
+          ?`طبقہ ${classNum} موجود — تنزیل کے اصول پر تقسیم (ابن مسعود رضی اللہ عنہ کا اصول: خالہ=ماں کے درجے میں، پھوپھی=باپ کے درجے میں)۔ اصل مسئلہ = ${dhawAsl}۔`
+          :S.lang==='ar'
+          ?`الطبقة ${classNum} حاضرة — التوزيع بالتنزيل. أصل المسألة = ${dhawAsl}.`
+          :`Class ${classNum} present — distributed by Tanzil (Ibn Mas'ud's principle). Asl al-Masala = ${dhawAsl}.`);
+    }
+  }
+
+  // ── Final step: Tashih al-Masala — reduce the Asl al-Masala to its
+  // simplest (GCD-minimal) form. E.g. show "3" instead of "6" or "12" when
+  // every heir's share happens to divide evenly by 2 or 4 — there is no
+  // reason to carry an unnecessarily large base number when a smaller one
+  // represents the exact same shares. This is purely a ratio-preserving
+  // simplification (every heir's percentage and money amount stays
+  // identical — only the displayed integers shrink) applied once, after
+  // Tashih/'Awl/Radd/Umariyyatain/Muqasama/Dhaw al-Arham have all already
+  // produced the final integer shares, so it works correctly regardless of
+  // which path was taken, without needing to special-case each one.
+  if(final.length>0){
+    let g=asl;
+    final.forEach(f=>{ if(f.pts>0) g=gcd(g,f.pts); });
+    if(g>1){
+      asl=asl/g;
+      final.forEach(f=>{
+        f.pts=f.pts/g;
+        f.indivPts=f.cnt>1?Math.round(f.pts/f.cnt):f.pts;
+      });
+    }
+  }
+
+  log('Step 6 — Final Distribution (التوزيع النهائي)','التوزيع النهائي',
+    S.lang==='ur'
+      ?`${final.length} وارث | قاعدہ: ${rule==='awl'?'عول':rule==='radd'?'رد':'عادی'} | خالص ترکہ: ${net.toLocaleString()} روپے`
+      :S.lang==='ar'
+      ?`${final.length} وارث | القاعدة: ${rule==='awl'?'العول':rule==='radd'?'الرد':'عادي'} | الصافي: ${net.toLocaleString()}`
+      :`${final.length} heir(s). Rule: ${rule}. Net: PKR ${net.toLocaleString()}.`);
+
+  return{final,excl,steps,rule,asl,net,madhhab,
+    decName:S.dec.name,decDate:S.dec.date,gender,
+    tashihAsl:asl,fixedPts,dhawPresent:dhawList.length>0};
+}
+
+
+
+// ═══════════════════════════════════════════════════════════
+// FORMAT & COLORS
+// ═══════════════════════════════════════════════════════════
+const fmtPKR=v=>v.toLocaleString('en-PK',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtPct=v=>(Math.round(v*100)/100).toFixed(2);
+const PC=['#1B6B4A','#C9A84C','#8B1A1A','#1565C0','#6B3FA0','#D84315','#00796B','#5D4037','#E91E63','#F57C00','#2E7D32','#455A64'];
+
+// ═══════════════════════════════════════════════════════════
+// RENDER RESULTS
+// ═══════════════════════════════════════════════════════════
+function renderResults(r){
+  const langFont=S.lang==='ur'?"'JameelNooriNastaleeq',serif":
+                 S.lang==='ar'?"'UthmanTahaNaskh',serif":
+                 "'Segoe UI',system-ui,sans-serif";
+  const resPg=document.getElementById('pg-results');
+  if(resPg) resPg.style.fontFamily=langFont;
+
+  const cont=document.getElementById('res-content');
+  if(!r||!r.final||r.final.length===0){
+    cont.innerHTML=`<div class="ib dg"><strong>${t('noHeirs')}</strong></div>`;return;
+  }
+  const totD=r.final.reduce((s,x)=>s+x.total,0);
+  const mhLbl=r.madhhab==='hanafi'?t('mh_h'):t('mh_s');
+  const ruleTag=r.rule==='awl'?`<span class="rtag tawl">${t('awlMsg')||'عول'}</span>`:r.rule==='radd'?`<span class="rtag trdd">${t('raddMsg')||'رد'}</span>`:`<span class="rtag ta">${t('normMsg')||'عادی'}</span>`;
+  const pie=r.final.filter(x=>x.total>0).map((x,i)=>({lbl:x.label,pct:r.net>0?x.total/r.net*100:0,col:PC[i%PC.length]}));
+  const isRTL=S.lang==='ur'||S.lang==='ar';
+
+  cont.innerHTML=`
+  <div class="card" style="direction:${isRTL?'rtl':'ltr'}">
+    <div class="ch"><div class="ci">📊</div><div>
+      <h2>${t('estateSumm')}${r.decName?' — '+r.decName:''}</h2>
+      <p>${r.decDate?r.decDate+' | ':''} ${mhLbl} | ${ruleTag}</p>
+    </div></div>
+    <div class="rsum">
+      <div class="sc"><div class="sl2">${t('summNet')}</div><div class="sv">${fmtPKR(r.net)}</div><div class="ssub">PKR</div></div>
+      <div class="sc"><div class="sl2">${t('heirCnt')}</div><div class="sv">${r.final.length}</div><div class="ssub">${t('heirCnt')}</div></div>
+      <div class="sc dng"><div class="sl2">${t('exclCnt')}</div><div class="sv">${r.excl.length}</div><div class="ssub">${t('exclCnt')}</div></div>
+      <div class="sc gld"><div class="sl2">${t('baseLbl')}</div><div class="sv">${r.tashihAsl}</div><div class="ssub">${t('tashihLbl')||t('secTashih')||'تصحیح المسألة'}</div></div>
+    </div>
+    ${r.rule==='awl'?`<div class="ind awl">${t('awlMsg')}</div>`:''}
+    ${r.rule==='radd'?`<div class="ind rdd">${t('raddMsg')}</div>`:''}
+    ${r.rule==='normal'?`<div class="ind nrm">${t('normMsg')}</div>`:''}
+  </div>
+
+  <div class="card no-print" style="direction:${isRTL?'rtl':'ltr'}">
+    <div class="ch"><div class="ci">🥧</div><div><h2>${t('secDistChart')}</h2></div></div>
+    <div class="piebox">
+      <div class="piew"><canvas id="pc" width="175" height="175"></canvas></div>
+      <div class="piel">${pie.map(d=>`<div class="li"><div class="ldot" style="background:${d.col}"></div><div><strong>${d.lbl}</strong><br><span style="color:var(--tm)">${fmtPct(d.pct)}% — ${fmtPKR(d.pct/100*r.net)} PKR</span></div></div>`).join('')}</div>
+    </div>
+  </div>
+
+  <div class="card" style="direction:${isRTL?'rtl':'ltr'}">
+    <div class="ch"><div class="ci">⚖️</div><div><h2>${t('secHeirDetails')}</h2></div></div>
+    ${r.rule==='radd'?`<div class="ib gl" style="font-size:0.78rem;margin-bottom:10px"><strong>📋 ${isRTL?(S.lang==='ar'?'تفصيل الفريضة والرد':'فرض اور رد کی تفصیل'):t('secFardRadd')}</strong><p>${isRTL?(S.lang==='ar'?'كل وارث يحصل على حصته الشرعية المقررة (فرض) ثم يُضاف إليها نصيبه من الفائض (رد)':'ہر وارث کو پہلے اس کا مقررہ فقہی حصہ (فرض) ملتا ہے، پھر باقی ترکہ "رد" کے اصول کے تحت واپس دیا جاتا ہے'):'Each heir first receives their prescribed Islamic share (Fard), then the remaining estate is returned to them via Radd.'}</p></div>`:''}
+    <div class="ib em" style="font-size:0.75rem;margin-bottom:10px">
+      <strong>⚖️ ${t('tashihLbl')||t('secTashih')}</strong>
+      <p>${isRTL?(S.lang==='ar'?`أصل المسألة = ${r.tashihAsl} — كل الأسهم محسوبة من هذا العدد`:`اصل المسألة = ${r.tashihAsl} — تمام حصے اسی عدد سے`):`Asl al-Masala = ${r.tashihAsl} — all shares are parts of this base number`}</p>
+    </div>
+    <div class="rtw"><table class="rt">
+      <thead><tr><th>${t('col_heir')}</th><th>${t('col_cnt')}</th><th>${t('col_fix')}</th>
+      <th style="font-size:0.65rem">${t('ptsLbl')||t('col_fix')} ${r.tashihAsl}</th>
+      ${r.rule==='radd'?`<th>${isRTL?(S.lang==='ar'?'الفرض (PKR)':'فرض (PKR)'):t('colFard')}</th><th>${isRTL?(S.lang==='ar'?'الرد (PKR)':'رد (PKR)'):t('colRadd')}</th>`:''}
+      <th>${t('col_pct')}</th><th>${t('col_total')}</th><th>${t('col_per')}</th></tr></thead>
+      <tbody>
+      ${r.final.map(x=>{
+        const tag=x.type==='furud'?`<span class="rtag tf">${t('bdg_furud')||'فریضہ'}</span>`:x.type==='dhaw'?`<span class="rtag" style="background:#6B3FA0;color:#fff">${t('bdg_dhaw')||'ذوی'}</span>`:`<span class="rtag ta">${t('bdg_asaba')||'عصبہ'}</span>`;
+        const fr=x.frac?`<span class="frc"><span class="ft">${x.frac[0]}</span><span>${x.frac[1]}</span></span>${x.note?'<br><span style="font-size:0.65rem;color:var(--tm)">'+x.note+'</span>':''}`:tag;
+        const raddCols=r.rule==='radd'&&x.fardAmt!=null
+          ?`<td style="color:var(--em);font-weight:700">${fmtPKR(x.fardAmt)}</td><td style="color:var(--gold-d);font-weight:700">${fmtPKR(x.raddAmt||0)}</td>`
+          :(r.rule==='radd'?'<td>—</td><td>—</td>':'');
+        // Tashih pts display
+        const ptsDisplay = x.cnt>1&&x.indivPts
+          ? `<span style="font-weight:700;color:var(--em)">${x.indivPts}</span><span style="color:var(--tm);font-size:0.7rem">×${x.cnt}</span>`
+          : `<span style="font-weight:700;color:var(--em)">${x.pts||'—'}</span>`;
+        return`<tr><td><span class="hn">${x.label}</span></td>
+          <td>${x.cnt}</td><td>${fr}</td>
+          <td style="text-align:center">${ptsDisplay}</td>${raddCols}
+          <td><span class="pb">${fmtPct(r.net>0?x.total/r.net*100:0)}%</span></td>
+          <td><span class="mn">${fmtPKR(x.total)}</span></td>
+          <td><span class="mn" style="color:var(--gold-d)">${fmtPKR(x.indiv)}</span></td></tr>`;
+      }).join('')}
+      </tbody>
+      <tfoot><tr>
+        <td colspan="${r.rule==='radd'?'6':'4'}"><strong>${t('totalRow')}</strong></td>
+        <td><span class="pb">${fmtPct(r.net>0?totD/r.net*100:0)}%</span></td>
+        <td><strong class="mn">${fmtPKR(totD)}</strong></td>
+        <td style="font-size:0.72rem;color:var(--tm)">${Math.abs(totD-r.net)<1?t('balanced'):'Δ '+fmtPKR(Math.abs(r.net-totD))}</td>
+      </tr></tfoot>
+    </table></div>
+  </div>
+
+  ${r.excl.length>0?`
+  <div class="card" style="direction:${isRTL?'rtl':'ltr'}">
+    <div class="ch"><div class="ci">🚫</div><div><h2>${t('excTitle')}</h2></div></div>
+    <div class="rtw"><table class="rt">
+      <thead><tr><th>${t('col_heir')}</th><th>Reason / سبب</th></tr></thead>
+      <tbody>${r.excl.map(e=>`<tr><td class="hn">${e.heir}</td><td>${e.reason} <span class="rtag thj">${t('secExcl')}</span></td></tr>`).join('')}</tbody>
+    </table></div>
+  </div>`:''}
+
+  <div class="card no-print" style="direction:${isRTL?'rtl':'ltr'}">
+    <div class="ch"><div class="ci">📝</div><div><h2>${t('stepsTitle')}</h2></div></div>
+    ${r.steps.map((s,i)=>`<div class="sti"><div class="stn">${i+1}</div><div class="stc"><h4>${wrapArabicSpans(s.title)}</h4><p>${s.text}</p></div></div>`).join('')}
+    <div class="sti"><div class="stn">✓</div><div class="stc"><h4>${t('totalRow')||t('lbl_complete')}</h4><p>Net: PKR ${fmtPKR(r.net)} | Distributed: PKR ${fmtPKR(totD)} | ${mhLbl}</p></div></div>
+  </div>
+
+  <div class="card" style="direction:${isRTL?'rtl':'ltr'}">
+    <div class="ch"><div class="ci">💰</div><div><h2>${t('estDedTitle')}</h2></div></div>
+    <div class="rtw"><table class="rt">
+      <thead><tr><th class="t" data-k="col_item">${t('col_item')}</th><th>PKR</th><th class="t" data-k="col_priority">${t('col_priority')}</th></tr></thead>
+      <tbody>
+        <tr><td><strong>${t('item_total')}</strong></td><td><strong>${fmtPKR(S.est.total)}</strong></td><td>—</td></tr>
+        <tr><td>${t('item_fun')}</td><td style="color:var(--dg)">− ${fmtPKR(S.est.funeral)}</td><td><span class="badge bdg">1st</span></td></tr>
+        <tr><td>${t('item_debt')}</td><td style="color:var(--dg)">− ${fmtPKR(S.est.debts)}</td><td><span class="badge bdg">2nd</span></td></tr>
+        <tr><td>${t('item_was')}</td><td style="color:var(--dg)">− ${fmtPKR(Math.min(S.est.wasiyyah,(S.est.total-S.est.funeral-S.est.debts)/3))}</td><td><span class="badge bgl">3rd</span></td></tr>
+        <tr><td><strong>${t('item_net')}</strong></td><td><strong class="mn">${fmtPKR(r.net)}</strong></td><td><span class="badge bem">${t('heirCnt')}</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>`;
+
+  setTimeout(()=>drawPie(pie),100);
+}
+
+// ═══════════════════════════════════════════════════════════
+// PIE CHART
+// ═══════════════════════════════════════════════════════════
+function drawPie(data){
+  const cv=document.getElementById('pc');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const cx=87,cy=87,r=80;
+  let s=-Math.PI/2;
+  const tot=data.reduce((a,d)=>a+d.pct,0);
+  ctx.clearRect(0,0,175,175);
+  if(tot<=0){ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.fillStyle='#eee';ctx.fill();return;}
+  data.forEach(d=>{
+    const sl=(d.pct/tot)*2*Math.PI;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,s+sl);ctx.closePath();
+    ctx.fillStyle=d.col;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();s+=sl;
+  });
+  ctx.beginPath();ctx.arc(cx,cy,33,0,2*Math.PI);
+  ctx.fillStyle=document.documentElement.getAttribute('data-theme')==='dark'?'#221A0A':'#FDF8F0';ctx.fill();
+}
+
+// ═══════════════════════════════════════════════════════════
+// PRINT
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// PDF GENERATION — client-side, self-hosted (jsPDF + html2canvas), no
+// external/online service. Renders the results page to a canvas (preserving
+// the exact on-screen fonts, incl. Uthmani Taha / Jameel Noori Nastaleeq),
+// then slices it into A4 pages and triggers a real file download. This is
+// used instead of window.print() because the native print dialog is not
+// consistently reliable across Android mobile browsers/PWA contexts —
+// doc.save() below produces an actual .pdf Blob download, which is uniformly
+// supported on both desktop and Android.
+// ═══════════════════════════════════════════════════════════
+async function printReport(){
+  if(!S.results){
+    alert(S.lang==='ur'?'پہلے حساب کریں۔':S.lang==='ar'?'يرجى إجراء الحساب أولاً.':'Please calculate first.');return;
+  }
+  if(typeof html2canvas==='undefined'||!window.jspdf){
+    alert(S.lang==='ur'?'PDF لائبریری لوڈ نہیں ہوئی۔ صفحہ ری لوڈ کر کے دوبارہ کوشش کریں۔':S.lang==='ar'?'تعذر تحميل مكتبة PDF. أعد تحميل الصفحة وحاول مرة أخرى.':'PDF library failed to load. Please reload the page and try again.');
+    return;
+  }
+  const btns=document.querySelectorAll('[onclick="printReport()"]');
+  btns.forEach(b=>{b.disabled=true;b.style.opacity='0.6';});
+  document.querySelectorAll('.pg').forEach(p=>p.style.display='none');
+  const resPage=document.getElementById('pg-results');
+  resPage.style.display='block';
+  document.body.classList.add('pdf-mode');
+  // Let the browser apply .pdf-mode layout/reflow before capturing.
+  await new Promise(r=>setTimeout(r,120));
+  try{
+    const canvas=await html2canvas(resPage,{scale:2,useCORS:true,backgroundColor:'#ffffff',windowWidth:resPage.scrollWidth});
+    const imgData=canvas.toDataURL('image/jpeg',0.95);
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF('p','mm','a4');
+    const pageW=210,pageH=297;
+    const imgW=pageW;
+    const imgH=(canvas.height*imgW)/canvas.width;
+    let heightLeft=imgH,position=0;
+    pdf.addImage(imgData,'JPEG',0,position,imgW,imgH);
+    heightLeft-=pageH;
+    while(heightLeft>0){
+      position=heightLeft-imgH;
+      pdf.addPage();
+      pdf.addImage(imgData,'JPEG',0,position,imgW,imgH);
+      heightLeft-=pageH;
+    }
+    const safeName=(S.dec.name||'Report').trim().replace(/[^\w\u0600-\u06FF -]/g,'').replace(/\s+/g,'_')||'Report';
+    pdf.save(`SM_Miras_${safeName}.pdf`);
+  }catch(err){
+    console.error('PDF generation failed:',err);
+    alert(S.lang==='ur'?'PDF بنانے میں خرابی ہوئی۔ دوبارہ کوشش کریں۔':S.lang==='ar'?'فشل إنشاء PDF. حاول مرة أخرى.':'PDF generation failed. Please try again.');
+  }finally{
+    document.body.classList.remove('pdf-mode');
+    document.querySelectorAll('.pg').forEach(p=>p.style.display='');
+    showPg('results');
+    btns.forEach(b=>{b.disabled=false;b.style.opacity='';});
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// PWA — Install prompt + full offline Service Worker
+// ═══════════════════════════════════════════════════════════
+let deferredPrompt=null;
+
+// beforeinstallprompt: browser signals app is installable
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  // Only show banner if not already installed
+  if(!window.matchMedia('(display-mode: standalone)').matches){
+    const banner=document.getElementById('install-banner');
+    if(banner) banner.style.display='flex';
+  }
+});
+
+// Install button clicked
+document.getElementById('install-btn').addEventListener('click',async()=>{
+  const banner=document.getElementById('install-banner');
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    const{outcome}=await deferredPrompt.userChoice;
+    deferredPrompt=null;
+    if(outcome==='accepted'){
+      if(banner) banner.style.display='none';
+    }
+  }
+});
+
+// After successful install — hide banner permanently
+window.addEventListener('appinstalled',()=>{
+  const banner=document.getElementById('install-banner');
+  if(banner) banner.style.display='none';
+  deferredPrompt=null;
+});
+
+// If already running as standalone (installed) — hide banner
+if(window.matchMedia('(display-mode: standalone)').matches){
+  window.addEventListener('load',()=>{
+    const banner=document.getElementById('install-banner');
+    if(banner) banner.style.display='none';
+  });
+}
+
+// ── Service Worker Registration ──
+// SW کو same-origin سے register کرنا ضروری ہے۔
+// HTML کے ساتھ sw.js فائل رکھیں (نیچے الگ فائل دی گئی ہے)۔
+if('serviceWorker' in navigator &&
+   (location.protocol==='https:' || location.protocol==='http:')){
+
+  // sw.js کو register کریں — یہ فائل HTML کے ساتھ ہونی چاہیے
+  const swPath = location.pathname.replace(/[^/]*$/, '') + 'sw.js';
+
+  navigator.serviceWorker.register(swPath)
+    .then(reg=>{
+      console.log('SM Miras SW registered:', reg.scope);
+      // Update check
+      reg.addEventListener('updatefound',()=>{
+        const nw=reg.installing;
+        nw.addEventListener('statechange',()=>{
+          if(nw.state==='installed'&&navigator.serviceWorker.controller){
+            console.log('SM Miras: New version available');
+          }
+        });
+      });
+    })
+    .catch(err=>{
+      // sw.js نہیں ملی — ایپ بغیر offline support کے چلے گی
+      console.info('SM Miras: sw.js not found — running without offline support. Place sw.js in same folder.');
+    });
+
+  // Already running as installed PWA
+  if(window.matchMedia('(display-mode: standalone)').matches){
+    const banner=document.getElementById('install-banner');
+    if(banner) banner.style.display='none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═════════════════════════════════════════
+updateEstate();
+selMadh('hanafi');
+updateSpouseByGender('male');
+// Show only welcome page on load
+document.querySelectorAll('.pg').forEach(p=>{p.style.display='none';});
+document.getElementById('pg-welcome').style.display='block';
+document.getElementById('pg-welcome').classList.add('active');
+// Apply initial language
+setLang('en');
+</script>
+</body>
+</html>
